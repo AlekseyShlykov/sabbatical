@@ -27,6 +27,7 @@ import {
   clearStage,
   setBackground,
   preloadRasters,
+  loadAssetManifest,
 } from "./scene.js";
 import { backgroundForLocation } from "./locationAssets.js";
 import {
@@ -82,8 +83,11 @@ async function bootstrap() {
   const startLang = save?.language || pickInitialLang();
   await setLanguage(startLang);
 
-  // Load data
-  const [locRes] = await Promise.all([fetch(LOCATIONS_URL)]);
+  // Load data + asset manifest in parallel.
+  const [locRes] = await Promise.all([
+    fetch(LOCATIONS_URL),
+    loadAssetManifest(),
+  ]);
   if (!locRes.ok) throw new Error("locations.json missing");
   locationsData = await locRes.json();
   await loadStoryForLanguage(getLanguage());
@@ -252,6 +256,10 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
     return;
   }
 
+  // Start preload of target location assets immediately, parallel with
+  // walk animation / fade. enterLocation() will await the same promise.
+  preloadLocationAssets(toLoc);
+
   // Re-entering the current location: skip the walk animation.
   if (skipTravel || fromId === toId) {
     if (needsVisitCharge && !spendAction()) {
@@ -268,13 +276,6 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
     return;
   }
 
-  if (getFlag("tutorialMap") && toId === "orangehouse") {
-    void preloadRasters([
-      ["assets/backgrounds/", "houseorangeinside"],
-      ["assets/characters/", "mrred"],
-    ]);
-  }
-
   await performMapTravel(fromId, toId);
 
   await withFade(async () => {
@@ -286,6 +287,46 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
     noteVisit(toId);
     await enterLocation(toLoc, { skipActionCharge: true });
   });
+}
+
+/** Очередь in-flight прелоадов локаций — чтобы не дёргать декод повторно. */
+const locationPreloadPromises = new Map();
+
+/**
+ * Запустить (или вернуть текущий) промис на прелоад фона и портретов
+ * целевой локации. Не ждёт окончания: вызов — fire-and-forget из карты,
+ * `enterLocation` дождётся ту же самую промис-цепочку.
+ */
+function preloadLocationAssets(loc) {
+  if (!loc) return Promise.resolve();
+  const existing = locationPreloadPromises.get(loc.id);
+  if (existing) return existing;
+
+  const passageName = resolveTwinePassage(loc);
+  let bg = backgroundForLocation(loc);
+  if (passageName && storyGraph?.[passageName]) {
+    const fromPassage = initialBackgroundFromPassage(storyGraph[passageName]);
+    if (fromPassage) bg = fromPassage;
+  }
+  const specs = [];
+  if (bg) specs.push(["assets/backgrounds/", bg]);
+  const ids = Array.isArray(loc.characters) ? loc.characters : [];
+  for (const id of ids) specs.push(["assets/characters/", String(id).toLowerCase()]);
+  if (loc.id === "orangehouse" || passageName === "orange house inside") {
+    specs.push(["assets/characters/", "mrred"]);
+  }
+
+  const p = preloadRasters(specs).catch((err) => {
+    console.warn(`[preload] failed for ${loc.id}:`, err);
+  });
+  locationPreloadPromises.set(loc.id, p);
+  // После завершения убираем из карты — кэш scene.js уже сохранит результат.
+  p.finally(() => {
+    if (locationPreloadPromises.get(loc.id) === p) {
+      locationPreloadPromises.delete(loc.id);
+    }
+  });
+  return p;
 }
 
 /** После 10-го действия: на карту, анимация к оранжевому дому, сцена «дома». */
@@ -355,11 +396,8 @@ async function enterLocation(loc, { skipActionCharge = false } = {}) {
     const fromPassage = initialBackgroundFromPassage(storyGraph[passageName]);
     if (fromPassage) bg = fromPassage;
   }
-  const preloadSpecs = [["assets/backgrounds/", bg]];
-  if (loc.id === "orangehouse" || passageName === "orange house inside") {
-    preloadSpecs.push(["assets/characters/", "mrred"]);
-  }
-  await preloadRasters(preloadSpecs);
+  // Гарантируем, что фон+портреты подгружены (если ещё нет — старт сейчас).
+  await preloadLocationAssets(loc);
   await setBackground(bg);
   document.getElementById("location-title").textContent = localizedTitle(loc.title);
   goTo("location");

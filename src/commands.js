@@ -10,6 +10,7 @@
 import {
   setBackground,
   showCharacter,
+  showCharacters,
   hideCharacter,
   clearStage,
 } from "./scene.js";
@@ -133,7 +134,8 @@ function parseCharacterIds(text) {
 }
 
 async function showSeveral(ids) {
-  for (const id of ids) await showCharacter(id);
+  if (!ids || ids.length === 0) return;
+  await showCharacters(ids);
 }
 
 /** Parse + dispatch one `//...` command body (without leading slashes). */

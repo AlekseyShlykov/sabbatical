@@ -6,7 +6,7 @@ const veil = () => document.getElementById("veil");
 const prefersReduced = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const DUR = 380;
+const DUR = 240;
 
 /** Show a screen by data-screen id, fading the previous out. */
 export function showScreen(screenId) {

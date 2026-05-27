@@ -88,14 +88,14 @@ button { font: inherit; color: inherit; }
 .screen.is-active { opacity: 1; }
 .screen[hidden] { display: none; }
 
-/* Fade veil (transitions.js) */
+/* Fade veil (transitions.js) — длительность согласована с DUR в transitions.js */
 .veil {
   position: fixed; inset: 0;
   background: #0f0d0a;
   opacity: 0;
   pointer-events: none;
   z-index: 9000;
-  transition: opacity var(--t-mid) var(--ease);
+  transition: opacity 240ms var(--ease);
 }
 .veil.is-on { opacity: 1; pointer-events: auto; }
 

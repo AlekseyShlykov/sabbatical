@@ -6,6 +6,7 @@
 const BG_DIR = "assets/backgrounds/";
 const CHAR_DIR = "assets/characters/";
 const EXTS = [".webp", ".jpg", ".png"];
+const MANIFEST_URL = "data/assets.json";
 
 /** Фоны, где один персонаж (mrred) стоит слева ~на трети экрана. */
 const LEFT_THIRD_LAYOUT_BGS = new Set([
@@ -27,10 +28,29 @@ let renderGeneration = 0;           // drop stale concurrent renderSlots()
 const rasterUrlCache = new Map();   // `${dir}|${name}` → url | null
 const existsCache = new Map();      // url → boolean
 const decodedCache = new Set();     // url already decoded in memory
+let assetManifest = null;           // { "assets/backgrounds/bar": [".webp", ".jpg"] }
 
 export function initScene() {
   els.bg = document.getElementById("stage-bg");
   els.slots = document.getElementById("stage-slots");
+}
+
+/**
+ * Загрузить манифест ассетов (создаётся `scripts/optimize-assets.mjs`).
+ * Если файла нет — спокойно работаем по старой схеме (HEAD-probe).
+ */
+export async function loadAssetManifest() {
+  if (assetManifest) return assetManifest;
+  try {
+    const res = await fetch(MANIFEST_URL, { cache: "force-cache" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    assetManifest = data?.files || {};
+  } catch (err) {
+    console.warn("[scene] asset manifest unavailable, falling back to probes", err);
+    assetManifest = {};
+  }
+  return assetManifest;
 }
 
 /* ---------------- background ---------------- */
@@ -122,6 +142,10 @@ async function renderSlots() {
   );
   if (gen !== renderGeneration) return;
 
+  await Promise.all(urls.map((url) => (url ? decodeRasterUrl(url) : null)));
+  if (gen !== renderGeneration) return;
+
+  const frag = document.createDocumentFragment();
   for (let i = 0; i < ids.length; i++) {
     const id = ids[i];
     const url = urls[i];
@@ -132,18 +156,17 @@ async function renderSlots() {
     const img = document.createElement("img");
     img.alt = "";
     img.draggable = false;
+    img.decoding = "sync";
     if (url) {
-      await decodeRasterUrl(url);
-      if (gen !== renderGeneration) return;
       img.src = url;
     } else {
       console.warn(`[scene] character image missing: ${id}`);
       slot.hidden = true;
     }
     slot.appendChild(img);
-    els.slots.appendChild(slot);
+    frag.appendChild(slot);
   }
-  if (gen !== renderGeneration) return;
+  els.slots.appendChild(frag);
   applySpeakerStates();
 }
 
@@ -192,9 +215,23 @@ function probeImage(url) {
   });
 }
 
+function urlFromManifest(dir, name) {
+  if (!assetManifest) return null;
+  const key = (dir + name).replace(/^\/+/, "");
+  const exts = assetManifest[key];
+  if (!Array.isArray(exts) || exts.length === 0) return null;
+  return dir + name + exts[0];
+}
+
 async function firstExistingImage(dir, name) {
   const key = `${dir}|${name}`;
   if (rasterUrlCache.has(key)) return rasterUrlCache.get(key);
+
+  const manifestUrl = urlFromManifest(dir, name);
+  if (manifestUrl) {
+    rasterUrlCache.set(key, manifestUrl);
+    return manifestUrl;
+  }
 
   let found = null;
   for (const ext of EXTS) {

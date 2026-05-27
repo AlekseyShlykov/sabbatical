@@ -1,29 +1,31 @@
 #!/usr/bin/env node
 /**
  * Compress raster assets: WebP (primary) + light fallbacks (JPEG or PNG).
+ * Also writes data/assets.json manifest so the client skips HEAD probes.
  * Run: npm install && npm run optimize-assets
  */
 import sharp from "sharp";
-import { readdir, stat, unlink } from "fs/promises";
+import { readdir, stat, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-/** @type {Record<string, { maxWidth?: number; maxHeight?: number; webpQuality?: number }>} */
+/** @type {Record<string, { maxWidth?: number; maxHeight?: number; webpQuality?: number; jpegQuality?: number }>} */
 const FILE_RULES = {
-  "assets/map/player.png": { maxWidth: 320, maxHeight: 480, webpQuality: 85 },
-  "assets/map/mark.png": { maxWidth: 160, maxHeight: 160, webpQuality: 85 },
-  "assets/map/tomap.png": { maxWidth: 160, maxHeight: 160, webpQuality: 85 },
-  "assets/map/dot1.png": { maxWidth: 64, maxHeight: 64, webpQuality: 80 },
+  "assets/map/player.png": { maxWidth: 320, maxHeight: 480, webpQuality: 82 },
+  "assets/map/mark.png": { maxWidth: 160, maxHeight: 160, webpQuality: 82 },
+  "assets/map/tomap.png": { maxWidth: 160, maxHeight: 160, webpQuality: 82 },
+  "assets/map/dot1.png": { maxWidth: 64, maxHeight: 64, webpQuality: 78 },
 };
 
-/** @type {Record<string, { maxWidth?: number; maxHeight?: number; webpQuality?: number }>} */
+/** Меньше пиксели + ниже качество = быстрее загрузка локаций без заметной потери. */
+/** @type {Record<string, { maxWidth?: number; maxHeight?: number; webpQuality?: number; jpegQuality?: number }>} */
 const DIR_RULES = {
-  "assets/backgrounds": { maxWidth: 1536, maxHeight: 1536, webpQuality: 82 },
-  "assets/intro": { maxWidth: 1536, maxHeight: 1536, webpQuality: 82 },
-  "assets/characters": { maxWidth: 896, maxHeight: 1344, webpQuality: 84 },
-  "assets/map": { maxWidth: 1402, maxHeight: 1122, webpQuality: 82 },
+  "assets/backgrounds": { maxWidth: 1280, maxHeight: 1280, webpQuality: 72, jpegQuality: 78 },
+  "assets/intro": { maxWidth: 1280, maxHeight: 1280, webpQuality: 72, jpegQuality: 78 },
+  "assets/characters": { maxWidth: 768, maxHeight: 1152, webpQuality: 76, jpegQuality: 80 },
+  "assets/map": { maxWidth: 1402, maxHeight: 1122, webpQuality: 78, jpegQuality: 82 },
 };
 
 const RASTER = new Set([".png", ".jpg", ".jpeg"]);
@@ -53,7 +55,12 @@ function fmtMb(bytes) {
 
 async function optimizeFile(absPath) {
   const rel = path.relative(ROOT, absPath).split(path.sep).join("/");
-  const { maxWidth = 1536, maxHeight = 1536, webpQuality = 82 } = rulesFor(rel);
+  const {
+    maxWidth = 1280,
+    maxHeight = 1280,
+    webpQuality = 75,
+    jpegQuality = 80,
+  } = rulesFor(rel);
   const before = (await stat(absPath)).size;
 
   const input = sharp(absPath).rotate();
@@ -69,10 +76,11 @@ async function optimizeFile(absPath) {
   });
 
   const webpPath = absPath.replace(/\.(png|jpe?g)$/i, ".webp");
-  await pipeline.clone().webp({ quality: webpQuality, effort: 4 }).toFile(webpPath);
+  await pipeline.clone().webp({ quality: webpQuality, effort: 5 }).toFile(webpPath);
   const webpSize = (await stat(webpPath)).size;
 
   let fallbackSize = 0;
+  let fallbackExt = "";
   if (hasAlpha) {
     await pipeline
       .clone()
@@ -81,10 +89,18 @@ async function optimizeFile(absPath) {
     const { rename } = await import("fs/promises");
     await rename(absPath + ".opt.tmp", absPath);
     fallbackSize = (await stat(absPath)).size;
+    fallbackExt = ".png";
   } else {
     const jpgPath = absPath.replace(/\.png$/i, ".jpg");
-    await pipeline.clone().jpeg({ quality: 84, mozjpeg: true }).toFile(jpgPath);
+    const tmpJpg = jpgPath + ".opt.tmp";
+    await pipeline
+      .clone()
+      .jpeg({ quality: jpegQuality, mozjpeg: true })
+      .toFile(tmpJpg);
+    const { rename } = await import("fs/promises");
+    await rename(tmpJpg, jpgPath);
     fallbackSize = (await stat(jpgPath)).size;
+    fallbackExt = ".jpg";
     if (/\.png$/i.test(absPath)) {
       try {
         await unlink(absPath);
@@ -94,7 +110,7 @@ async function optimizeFile(absPath) {
     }
   }
 
-  return { rel, before, fallbackSize, webpSize, hasAlpha };
+  return { rel, before, fallbackSize, webpSize, hasAlpha, fallbackExt };
 }
 
 async function main() {
@@ -103,6 +119,9 @@ async function main() {
   let totalBefore = 0;
   let totalFallback = 0;
   let totalWebp = 0;
+
+  /** key (asset path without extension) → ordered list of available extensions */
+  const manifest = {};
 
   console.log(`Optimizing ${files.length} raster files…\n`);
 
@@ -117,10 +136,24 @@ async function main() {
       console.log(
         `${r.rel}\n  ${fmtMb(r.before)} → ${kind} ${fmtMb(r.fallbackSize)} + WebP ${fmtMb(r.webpSize)} (${saved}% saved)`
       );
+
+      const key = r.rel.replace(/\.(png|jpe?g|webp)$/i, "");
+      const exts = new Set(manifest[key] || []);
+      exts.add(".webp");
+      if (r.fallbackExt) exts.add(r.fallbackExt);
+      manifest[key] = [".webp", ".jpg", ".png"].filter((e) => exts.has(e));
     } catch (err) {
       console.error(`FAIL ${path.relative(ROOT, file)}:`, err.message);
     }
   }
+
+  const manifestPath = path.join(ROOT, "data", "assets.json");
+  await writeFile(
+    manifestPath,
+    JSON.stringify({ version: 1, files: manifest }, null, 2) + "\n",
+    "utf8"
+  );
+  console.log(`\nManifest written: ${path.relative(ROOT, manifestPath)}`);
 
   console.log(
     `\nTotal: ${fmtMb(totalBefore)} → fallbacks ${fmtMb(totalFallback)} + WebP ${fmtMb(totalWebp)}`

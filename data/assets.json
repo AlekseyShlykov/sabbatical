@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "files": {
+    "assets/backgrounds/bar": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/bar2": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/bar3": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/barout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/barout2": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/beach": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/deepforrest": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/forrest": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseblackout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseblueinside": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseblueout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/housegreeninside": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/housegreenout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseorangeinside": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseorangeout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseorangewindow": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/housepurpleinside": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/housepurpleout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseredinside": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseredout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/housewhiteinside": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/housewhiteout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseyellowinside": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/houseyellowout": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/backgrounds/lighthouse": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/characters/mrblack": [
+      ".webp",
+      ".png"
+    ],
+    "assets/characters/mrblue": [
+      ".webp",
+      ".png"
+    ],
+    "assets/characters/mrpurple": [
+      ".webp",
+      ".png"
+    ],
+    "assets/characters/mrred": [
+      ".webp",
+      ".png"
+    ],
+    "assets/characters/msgreen": [
+      ".webp",
+      ".png"
+    ],
+    "assets/characters/mswhite": [
+      ".webp",
+      ".png"
+    ],
+    "assets/characters/msyellow": [
+      ".webp",
+      ".png"
+    ],
+    "assets/intro/intro0": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/intro/intro1": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/map/dot1": [
+      ".webp",
+      ".png"
+    ],
+    "assets/map/map": [
+      ".webp",
+      ".jpg"
+    ],
+    "assets/map/mark": [
+      ".webp",
+      ".png"
+    ],
+    "assets/map/player": [
+      ".webp",
+      ".png"
+    ],
+    "assets/map/tomap": [
+      ".webp",
+      ".png"
+    ]
+  }
+}
