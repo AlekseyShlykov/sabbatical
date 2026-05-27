@@ -1,0 +1,428 @@
+{
+  "mapSize": {
+    "width": 1402,
+    "height": 1122
+  },
+  "startLocation": "orangehouse",
+  "initiallyUnlocked": [
+    "bar",
+    "beach",
+    "blackhouse",
+    "bluehouse",
+    "forest",
+    "greenhouse",
+    "lighthouse",
+    "orangehouse",
+    "purplehouse",
+    "redhouse",
+    "thicket",
+    "whitehouse",
+    "yellowhouse"
+  ],
+  "storyOrder": [
+    "orangehouse",
+    "bluehouse",
+    "forest",
+    "bar",
+    "whitehouse",
+    "lighthouse",
+    "beach"
+  ],
+  "debugShowPaths": false,
+  "locations": [
+    {
+      "id": "forest",
+      "title": {
+        "ru": "Лес",
+        "en": "Forest"
+      },
+      "mapPosition": {
+        "x": 253,
+        "y": 228
+      },
+      "connectedLocations": [
+        "blackhouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Forrest",
+      "markAnchor": {
+        "x": 252,
+        "y": 227
+      }
+    },
+    {
+      "id": "thicket",
+      "title": {
+        "ru": "Чаща",
+        "en": "Thicket"
+      },
+      "mapPosition": {
+        "x": 677,
+        "y": 177
+      },
+      "connectedLocations": [
+        "greenhouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Thicket",
+      "markAnchor": {
+        "x": 676,
+        "y": 176
+      }
+    },
+    {
+      "id": "greenhouse",
+      "title": {
+        "ru": "Зелёный дом",
+        "en": "Green House"
+      },
+      "mapPosition": {
+        "x": 590,
+        "y": 302
+      },
+      "connectedLocations": [
+        "blackhouse",
+        "thicket",
+        "purplehouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Green house",
+      "markAnchor": {
+        "x": 589,
+        "y": 302
+      }
+    },
+    {
+      "id": "blackhouse",
+      "title": {
+        "ru": "Чёрный дом",
+        "en": "Black House"
+      },
+      "mapPosition": {
+        "x": 343,
+        "y": 391
+      },
+      "connectedLocations": [
+        "forest",
+        "greenhouse",
+        "bluehouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Black house",
+      "markAnchor": {
+        "x": 345,
+        "y": 395
+      }
+    },
+    {
+      "id": "orangehouse",
+      "title": {
+        "ru": "Оранжевый дом",
+        "en": "Orange House"
+      },
+      "mapPosition": {
+        "x": 347,
+        "y": 774
+      },
+      "connectedLocations": [
+        "bluehouse",
+        "beach"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "orange house",
+      "markAnchor": {
+        "x": 345,
+        "y": 777
+      }
+    },
+    {
+      "id": "beach",
+      "title": {
+        "ru": "Пляж",
+        "en": "Beach"
+      },
+      "mapPosition": {
+        "x": 226,
+        "y": 746
+      },
+      "connectedLocations": [
+        "orangehouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Beach",
+      "markAnchor": {
+        "x": 226,
+        "y": 749
+      }
+    },
+    {
+      "id": "bluehouse",
+      "title": {
+        "ru": "Синий дом",
+        "en": "Blue House"
+      },
+      "mapPosition": {
+        "x": 286,
+        "y": 607
+      },
+      "connectedLocations": [
+        "redhouse",
+        "blackhouse",
+        "orangehouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [
+        "mrblue"
+      ],
+      "twinePassage": "Blue house",
+      "markAnchor": {
+        "x": 285,
+        "y": 609
+      }
+    },
+    {
+      "id": "whitehouse",
+      "title": {
+        "ru": "Белый дом",
+        "en": "White House"
+      },
+      "mapPosition": {
+        "x": 1129,
+        "y": 670
+      },
+      "connectedLocations": [
+        "redhouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "White house",
+      "markAnchor": {
+        "x": 1129,
+        "y": 672
+      }
+    },
+    {
+      "id": "yellowhouse",
+      "title": {
+        "ru": "Жёлтый дом",
+        "en": "Yellow House"
+      },
+      "mapPosition": {
+        "x": 1009,
+        "y": 842
+      },
+      "connectedLocations": [
+        "redhouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Yellow house",
+      "markAnchor": {
+        "x": 1005,
+        "y": 847
+      }
+    },
+    {
+      "id": "pier",
+      "title": {
+        "ru": "Причал",
+        "en": "Dock"
+      },
+      "mapPosition": {
+        "x": 589,
+        "y": 896
+      },
+      "connectedLocations": [
+        "orangehouse",
+        "bar"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "markAnchor": {
+        "x": 589,
+        "y": 896
+      }
+    },
+    {
+      "id": "bar",
+      "mapMarkAt": "pier",
+      "title": {
+        "ru": "Бар",
+        "en": "Bar"
+      },
+      "mapPosition": {
+        "x": 589,
+        "y": 896
+      },
+      "connectedLocations": [
+        "redhouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [
+        "mrred",
+        "msyellow",
+        "mrpurple"
+      ],
+      "twinePassage": "Bar",
+      "markAnchor": {
+        "x": 589,
+        "y": 896
+      }
+    },
+    {
+      "id": "redhouse",
+      "title": {
+        "ru": "Красный дом",
+        "en": "Red House"
+      },
+      "mapPosition": {
+        "x": 737,
+        "y": 638
+      },
+      "connectedLocations": [
+        "bar",
+        "purplehouse",
+        "yellowhouse",
+        "whitehouse",
+        "bluehouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Red house",
+      "path4Pin": {
+        "x": 737,
+        "y": 642
+      },
+      "markAnchor": {
+        "x": 737,
+        "y": 642
+      }
+    },
+    {
+      "id": "lighthouse",
+      "title": {
+        "ru": "Маяк",
+        "en": "Lighthouse"
+      },
+      "mapPosition": {
+        "x": 1101,
+        "y": 215
+      },
+      "connectedLocations": [
+        "purplehouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "Lighthouse",
+      "markAnchor": {
+        "x": 1101,
+        "y": 215
+      }
+    },
+    {
+      "id": "purplehouse",
+      "title": {
+        "ru": "Фиолетовый дом",
+        "en": "Purple House"
+      },
+      "mapPosition": {
+        "x": 901,
+        "y": 470
+      },
+      "connectedLocations": [
+        "redhouse",
+        "greenhouse",
+        "lighthouse"
+      ],
+      "availableInStoryMode": true,
+      "characters": [],
+      "twinePassage": "purple house",
+      "path4Pin": {
+        "x": 905,
+        "y": 470
+      },
+      "markAnchor": {
+        "x": 905,
+        "y": 470
+      }
+    }
+  ],
+  "paths": [
+    {
+      "from": "bar",
+      "to": "redhouse",
+      "svgPathId": "path_bar_bluehouse"
+    },
+    {
+      "from": "forest",
+      "to": "blackhouse",
+      "svgPathId": "path_blackhouse_forrest"
+    },
+    {
+      "from": "redhouse",
+      "to": "purplehouse",
+      "svgPathId": "path_bluehouse_orangehouse_short"
+    },
+    {
+      "from": "redhouse",
+      "to": "purplehouse",
+      "svgPathId": "path_bluehouse_orangehouse"
+    },
+    {
+      "from": "redhouse",
+      "to": "yellowhouse",
+      "svgPathId": "path_bluehouse_pier"
+    },
+    {
+      "from": "redhouse",
+      "to": "whitehouse",
+      "svgPathId": "path_bluehouse_villa"
+    },
+    {
+      "from": "redhouse",
+      "to": "bluehouse",
+      "svgPathId": "path_bluehouse_yellow_west"
+    },
+    {
+      "from": "blackhouse",
+      "to": "greenhouse",
+      "svgPathId": "path_forrest_greenhouse"
+    },
+    {
+      "from": "blackhouse",
+      "to": "bluehouse",
+      "svgPathId": "path_forrest_yellow_west"
+    },
+    {
+      "from": "greenhouse",
+      "to": "thicket",
+      "svgPathId": "path_greenhouse_lighthouse_bay"
+    },
+    {
+      "from": "greenhouse",
+      "to": "purplehouse",
+      "svgPathId": "path_greenhouse_orangehouse"
+    },
+    {
+      "from": "lighthouse",
+      "to": "purplehouse",
+      "svgPathId": "path_lighthouse_orangehouse"
+    },
+    {
+      "from": "orangehouse",
+      "to": "bluehouse",
+      "svgPathId": "path_redhouse_yellow_west"
+    },
+    {
+      "from": "orangehouse",
+      "to": "beach",
+      "svgPathId": "path_redhouse_yellowhouse"
+    }
+  ]
+}

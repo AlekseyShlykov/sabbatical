@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#efe6d3" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Sabbatical</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preload" as="image" href="assets/map/map.webp" type="image/webp" />
+    <link rel="preload" as="image" href="assets/map/map.png" />
+  </head>
+  <body>
+    <!-- =======================================================
+         SPLASH / LANGUAGE SELECT
+         ======================================================= -->
+    <section class="screen screen--splash" data-screen="splash" hidden>
+      <div class="splash__bg" aria-hidden="true"></div>
+      <div class="splash__vignette" aria-hidden="true"></div>
+      <div class="splash__inner">
+        <h1 class="splash__title" data-i18n="gameTitle">Сабботикал</h1>
+        <p class="splash__subtitle" data-i18n="splash.subtitle"></p>
+
+        <div class="splash__actions">
+          <button class="btn btn--primary" data-action="start" data-i18n="splash.start"></button>
+          <button class="btn btn--ghost" data-action="continue" data-i18n="splash.continue" hidden></button>
+        </div>
+
+        <div class="splash__lang">
+          <span class="splash__lang-label" data-i18n="splash.languageLabel"></span>
+          <div class="lang-switch" role="group" aria-label="Language">
+            <button class="lang-switch__btn" data-lang="ru">RU</button>
+            <button class="lang-switch__btn" data-lang="en">EN</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         INTRO
+         ======================================================= -->
+    <section class="screen screen--intro" data-screen="intro" hidden>
+      <div class="intro__art">
+        <img class="intro__img" alt="" />
+      </div>
+      <div class="intro__panel">
+        <p class="intro__text" data-i18n="intro.placeholder"></p>
+        <button class="btn btn--primary" data-action="intro-continue" data-i18n="intro.continue"></button>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         MODE SELECT
+         ======================================================= -->
+    <section class="screen screen--mode" data-screen="modeSelect" hidden>
+      <div class="splash__bg" aria-hidden="true"></div>
+      <div class="splash__vignette" aria-hidden="true"></div>
+      <div class="mode__inner">
+        <h2 class="mode__title" data-i18n="modeSelect.title"></h2>
+        <div class="mode__cards">
+          <button class="mode-card" data-mode="story">
+            <span class="mode-card__title" data-i18n="modeSelect.story"></span>
+            <span class="mode-card__hint" data-i18n="modeSelect.storyHint"></span>
+          </button>
+          <button class="mode-card" data-mode="free">
+            <span class="mode-card__title" data-i18n="modeSelect.free"></span>
+            <span class="mode-card__hint" data-i18n="modeSelect.freeHint"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         MAP
+         ======================================================= -->
+    <section class="screen screen--map" data-screen="map" hidden>
+      <div class="map" id="map">
+        <div class="map__viewport" id="map-viewport">
+          <picture class="map__bg-picture">
+            <source srcset="assets/map/map.webp" type="image/webp" />
+            <img class="map__bg" src="assets/map/map.png" alt="" draggable="false" />
+          </picture>
+          <div class="map__layer map__layer--paths" id="map-paths">
+            <div class="map__paths-frame" id="map-paths-overlay" aria-hidden="true"></div>
+            <div class="map__paths-trail" id="map-paths-trail"></div>
+          </div>
+          <div class="map__layer map__layer--marks" id="map-marks"></div>
+          <div class="map__layer map__layer--path-ends" id="map-path-ends" aria-hidden="true"></div>
+          <div class="map__layer map__layer--player" id="map-player">
+            <img class="map__player" src="assets/map/player.png" alt="" draggable="false" />
+          </div>
+        </div>
+      </div>
+      <div class="map__topbar">
+        <button class="btn btn--ghost btn--small" data-action="open-menu" data-i18n="map.menu"></button>
+        <span class="map__title" data-i18n="map.title"></span>
+      </div>
+      <div class="map__hint" id="map-hint" data-i18n="map.hint"></div>
+    </section>
+
+    <!-- =======================================================
+         LOCATION (scene + dialogue)
+         ======================================================= -->
+    <section class="screen screen--location" data-screen="location" hidden>
+      <div class="stage" id="stage">
+        <img class="stage__bg" id="stage-bg" alt="" />
+        <div class="stage__slots" id="stage-slots"></div>
+      </div>
+
+      <div class="location__topbar">
+        <button class="btn btn--icon btn--leave"
+                data-action="leave"
+                data-i18n-attr="title:scene.leave,aria-label:scene.leave">
+          <picture>
+            <source srcset="assets/map/tomap.webp" type="image/webp" />
+            <img class="btn--icon__img" src="assets/map/tomap.png" alt="" draggable="false" />
+          </picture>
+        </button>
+        <span class="location__title" id="location-title"></span>
+      </div>
+
+      <aside class="panel" id="dialogue-panel">
+        <div class="panel__line" id="dialogue-line" data-speaker=""></div>
+        <div class="panel__actions" id="dialogue-actions"></div>
+      </aside>
+    </section>
+
+    <!-- =======================================================
+         MENU OVERLAY
+         ======================================================= -->
+    <div class="overlay" id="overlay" hidden>
+      <div class="overlay__sheet">
+        <h3 class="overlay__title" data-i18n="menu.title"></h3>
+        <div class="overlay__actions">
+          <button class="btn btn--primary" data-action="menu-resume" data-i18n="menu.resume"></button>
+          <button class="btn btn--ghost" data-action="menu-to-map" data-i18n="menu.toMap"></button>
+          <button class="btn btn--ghost" data-action="menu-change-lang" data-i18n="menu.changeLanguage"></button>
+          <button class="btn btn--ghost" data-action="menu-change-mode" data-i18n="menu.changeMode"></button>
+          <button class="btn btn--danger" data-action="menu-new-game" data-i18n="menu.newGame"></button>
+          <button class="btn btn--ghost" data-action="menu-close" data-i18n="menu.close"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden SVG container for path lookups -->
+    <div id="svg-cache" aria-hidden="true" hidden></div>
+
+    <!-- Day HUD: book progress + hours/actions (map & location) -->
+    <aside class="game-hud" id="game-hud" hidden aria-label="Progress">
+      <div class="game-hud__books" id="hud-books">
+        <div class="hud-book hud-book--science">
+          <span class="hud-book__label" data-i18n="hud.science"></span>
+          <span class="hud-book__pct" data-hud-pct="science">0%</span>
+          <div class="hud-book__track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="hud-book__fill hud-book__fill--science" data-hud-fill="science"></div>
+          </div>
+          <span class="hud-book__today" data-hud-today="science"></span>
+        </div>
+        <div class="hud-book hud-book--novel">
+          <span class="hud-book__label" data-i18n="hud.novel"></span>
+          <span class="hud-book__pct" data-hud-pct="novel">0%</span>
+          <div class="hud-book__track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="hud-book__fill hud-book__fill--novel" data-hud-fill="novel"></div>
+          </div>
+          <span class="hud-book__today" data-hud-today="novel"></span>
+        </div>
+      </div>
+      <div class="game-hud__day">
+        <span class="game-hud__day-label" data-i18n="hud.day"></span>
+        <span class="game-hud__day-num" id="hud-day-num">1</span>
+        <span class="game-hud__date" id="hud-date"></span>
+        <span class="game-hud__clock" id="hud-clock" aria-hidden="true">8:00</span>
+        <span class="game-hud__actions" id="hud-actions"></span>
+      </div>
+    </aside>
+
+    <!-- Fade veil used by transitions.js -->
+    <div class="veil" id="veil" aria-hidden="true"></div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

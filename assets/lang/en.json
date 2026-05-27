@@ -1,0 +1,62 @@
+{
+  "gameTitle": "Sabbatical",
+  "languageName": "English",
+  "splash": {
+    "subtitle": "a quiet story you can take your time with",
+    "start": "Start Adventure",
+    "continue": "Continue",
+    "languageLabel": "Language"
+  },
+  "intro": {
+    "placeholder": "Intro text will be here",
+    "continue": "Continue"
+  },
+  "modeSelect": {
+    "title": "How would you like to walk?",
+    "story": "Story",
+    "storyHint": "A calm story, step by step",
+    "free": "Free Exploration",
+    "freeHint": "Wander wherever you wish"
+  },
+  "map": {
+    "title": "Island Map",
+    "hint": "Tap a mark to travel there",
+    "menu": "Menu",
+    "noPath": "No path leads there yet",
+    "locked": "This place is not open yet",
+    "alreadyHere": "You are already here"
+  },
+  "scene": {
+    "leave": "Leave",
+    "enter": "Enter"
+  },
+  "dialogue": {
+    "next": "Next",
+    "end": "End"
+  },
+  "hud": {
+    "day": "Day",
+    "science": "Scholarly book",
+    "novel": "Novel",
+    "actions": "{left} left · {used}/{max}",
+    "todayProgress": "+{n}% today",
+    "noActions": "No actions left today. Rest to start a new day.",
+    "dailyBookCap": "You can only add 3% to this book per day.",
+    "dayEndReturnHome": "The day is over — time to head home."
+  },
+  "menu": {
+    "title": "Menu",
+    "resume": "Resume",
+    "toMap": "To the map",
+    "newGame": "New game",
+    "changeLanguage": "Change language",
+    "changeMode": "Change mode",
+    "close": "Close",
+    "confirmNew": "Start a new game? Progress will be lost."
+  },
+  "errors": {
+    "missingPassage": "Passage not found",
+    "missingPath": "SVG path not found",
+    "missingImage": "Image not found"
+  }
+}

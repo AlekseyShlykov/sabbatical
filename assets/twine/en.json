@@ -1,0 +1,835 @@
+{
+  "passages": [
+    {
+      "name": "start",
+      "text": "//location dock, background barout2\n//show mrred\nmrred: Hello, and welcome to our island! I'm Mike, and this is my island. I mean it belongs to me, and I personally greet everyone who rents a house from me!\n",
+      "links": [
+        {
+          "name": "Hi, Mike! Nice to meet you",
+          "link": "Привет, Майк! Приятно познакомиться"
+        },
+        {
+          "name": "Wow — a whole island!",
+          "link": "Ничего себе, целый остров!"
+        }
+      ]
+    },
+    {
+      "name": "Blue house",
+      "text": "You're at the blue house. You can knock or call out to see if anyone is home.\n",
+      "links": [
+        {
+          "name": "Shout \"Hello, anyone home?\"",
+          "link": "Покричать \"Привет, есть кто дома?\""
+        },
+        {
+          "name": "Knock on the door",
+          "link": "Постучать в дверь"
+        }
+      ]
+    },
+    {
+      "name": "Покричать \"Привет, есть кто дома?\"",
+      "text": "//appears mrblue\nmrblue: Hello! Why shout? You could have knocked.\n",
+      "links": [
+        {
+          "name": "Sorry — I wasn't sure anyone was home",
+          "link": "Извините, не знал есть ли кто дома"
+        },
+        {
+          "name": "Well… I thought that would be easier",
+          "link": "Ну... я подумал что так будет проще"
+        }
+      ]
+    },
+    {
+      "name": "Постучать в дверь",
+      "text": "//appears mrblue\nmrblue: Hello, neighbour! Nice to meet you! I'm John, but everyone calls me Mister Blue. Have you heard our little island joke?\n",
+      "links": [
+        {
+          "name": "What joke?",
+          "link": "Что за шутка?"
+        },
+        {
+          "name": "Yes — Mike already told me about it",
+          "link": "Да, Майк уже рассказал мне о ней"
+        }
+      ]
+    },
+    {
+      "name": "Извините, не знал есть ли кто дома",
+      "text": "mrblue: All right, forget it. Nice to meet you, neighbour! I'm John, but everyone calls me Mister Blue. Have you heard our little island joke?\n",
+      "links": [
+        {
+          "name": "What joke?",
+          "link": "Что за шутка?"
+        },
+        {
+          "name": "Yes — Mike already told me about it",
+          "link": "Да, Майк уже рассказал мне о ней"
+        }
+      ]
+    },
+    {
+      "name": "Ну... я подумал что так будет проще",
+      "text": "mrblue: All right, forget it. Nice to meet you, neighbour! I'm John, but everyone calls me Mister Blue. Have you heard our little island joke?\n",
+      "links": [
+        {
+          "name": "What joke?",
+          "link": "Что за шутка?"
+        },
+        {
+          "name": "Yes — Mike already told me about it",
+          "link": "Да, Майк уже рассказал мне о ней"
+        }
+      ]
+    },
+    {
+      "name": "Что за шутка?",
+      "text": "mrblue: We're a small community here — we don't love strangers much, and we value everyone minding their own business.\nmrblue: We started calling each other by the colours our houses are painted. It began as a joke, then it stuck.\nmrblue: By the way, we rented you this place because you're a redhead. Okay, only partly true. We really do like scientists here, especially professors and writers. And you're both a professor and a writer!\n",
+      "links": [
+        {
+          "name": "Yes — I'm planning to write a book",
+          "link": "Да, я планирую написать книгу"
+        },
+        {
+          "name": "Thanks — I'd better go",
+          "link": "Спасибо, я пожалуй пойду"
+        }
+      ]
+    },
+    {
+      "name": "Спасибо, я пожалуй пойду",
+      "text": "//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Black house",
+      "text": "The black house stands quiet. You can knock or call out to see if anyone is home.\n",
+      "links": [
+        {
+          "name": "Shout \"Hello, anyone home?\"",
+          "link": "black2"
+        },
+        {
+          "name": "Knock on the door",
+          "link": "black2"
+        }
+      ]
+    },
+    {
+      "name": "black2",
+      "text": "No one answers — it seems no one is home.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Вернуться на карту",
+      "text": "//return to world map\n",
+      "links": []
+    },
+    {
+      "name": "purple house",
+      "text": "The purple house on the hill. You can knock or call out to see if anyone is home.\n",
+      "links": [
+        {
+          "name": "Shout \"Hello, anyone home?\"",
+          "link": "purple2"
+        },
+        {
+          "name": "Knock on the door",
+          "link": "purple2"
+        }
+      ]
+    },
+    {
+      "name": "White house",
+      "text": "The white house behind the fence. You can knock or call out to see if anyone is home.\n",
+      "links": [
+        {
+          "name": "Shout \"Hello, anyone home?\"",
+          "link": "white2"
+        },
+        {
+          "name": "Knock on the door",
+          "link": "white2"
+        }
+      ]
+    },
+    {
+      "name": "purple2",
+      "text": "No one answers — it seems no one is home.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "white2",
+      "text": "No one answers — it seems no one is home.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Green house",
+      "text": "The green house in the garden. You can knock or call out to see if anyone is home.\n",
+      "links": [
+        {
+          "name": "Shout \"Hello, anyone home?\"",
+          "link": "green2"
+        },
+        {
+          "name": "Knock on the door",
+          "link": "green2"
+        }
+      ]
+    },
+    {
+      "name": "Yellow house",
+      "text": "The yellow house by the water. You can knock or call out to see if anyone is home.\n",
+      "links": [
+        {
+          "name": "Shout \"Hello, anyone home?\"",
+          "link": "yellow2"
+        },
+        {
+          "name": "Knock on the door",
+          "link": "yellow2"
+        }
+      ]
+    },
+    {
+      "name": "green2",
+      "text": "No one answers — it seems no one is home.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "yellow2",
+      "text": "No one answers — it seems no one is home.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Red house",
+      "text": "The red house on the rise. You can knock or call out to see if anyone is home.\n",
+      "links": [
+        {
+          "name": "Shout \"Hello, anyone home?\"",
+          "link": "red2"
+        },
+        {
+          "name": "Knock on the door",
+          "link": "red2"
+        }
+      ]
+    },
+    {
+      "name": "red2",
+      "text": "No one answers — it seems no one is home.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Beach",
+      "text": "A beautiful, very secluded beach.\n",
+      "links": [
+        {
+          "name": "Take a short walk",
+          "link": "Немного прогуляться"
+        },
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Немного прогуляться",
+      "text": "//you meet msgreen\nmsgreen: Hello, newcomer! I'm Monica, but you can call me Miss Green. As you see, I've taken my colour — I even dress to match.\nmsgreen: Lucky it suits me. After decades in a white coat, it's not easy to switch. But enough about me. What brought you here?\n",
+      "links": [
+        {
+          "name": "I'm not sure myself",
+          "link": "Я и сам не знаю"
+        },
+        {
+          "name": "Write a book",
+          "link": "Написать книгу"
+        }
+      ]
+    },
+    {
+      "name": "Я и сам не знаю",
+      "text": "msgreen: Yes — sometimes lost souls end up here, with nowhere else to go. And it seems like a pretty good place. I see you're already ginger and living in the orange house. I think you'll fit into our little community, if you want.\n",
+      "links": [
+        {
+          "name": "Thanks — I should go!",
+          "link": "Спасибо, но мне пора!"
+        },
+        {
+          "name": "Were you a doctor?",
+          "link": "Вы были врачом?"
+        }
+      ]
+    },
+    {
+      "name": "Написать книгу",
+      "text": "msgreen: Really? What's it about? A novel? A scholarly book? You look more like a lecturer than a belletrist.\n",
+      "links": [
+        {
+          "name": "I wanted to write a scholarly book, but I'm secretly thinking about a novel",
+          "link": "Я сначала хотел написать научную книгу, но в душе думаю о романе"
+        },
+        {
+          "name": "It will be a scholarly book about my theory",
+          "link": "Это будет научная книга о моей теории"
+        }
+      ]
+    },
+    {
+      "name": "Спасибо, но мне пора!",
+      "text": "//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Вы были врачом?",
+      "text": "msgreen: Yes — all my life, and now I'm retired. I still help out — I treat aches and give advice. After all, this is an island of old folks; people come here when they want quiet.\n",
+      "links": [
+        {
+          "name": "Yes — that's why I came too",
+          "link": "Да, понимаю, я сюда приехал за этим же"
+        }
+      ]
+    },
+    {
+      "name": "Да, понимаю, я сюда приехал за этим же",
+      "text": "msgreen: You'll certainly find peace here. Just don't get caught up in political games. You'd think eight people would be enough — yet grudges always turn up. What do you need the quiet for?\n",
+      "links": [
+        {
+          "name": "Just to rest",
+          "link": "Просто отдохнуть"
+        },
+        {
+          "name": "Write a book",
+          "link": "Написать книгу"
+        }
+      ]
+    },
+    {
+      "name": "Просто отдохнуть",
+      "text": "msgreen: Oh, there's more than enough rest here. But enough — that's plenty for a first meeting. We're almost all introverts. We'll see each other again; lovely to meet you!\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Я сначала хотел написать научную книгу, но в душе думаю о романе",
+      "text": "msgreen: I hope I'm among the first eight readers! But enough — that's plenty for a first meeting. We're almost all introverts. We'll see each other again; lovely to meet you!\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Это будет научная книга о моей теории",
+      "text": "msgreen: I hope I'm among the first eight readers! But enough — that's plenty for a first meeting. We're almost all introverts. We'll see each other again; lovely to meet you!\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Forrest",
+      "text": "What a pleasant road! Good for walking!\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Thicket",
+      "text": "A bit eerie. Woods, but very dark. You don't expect that on this island.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Lighthouse",
+      "text": "A wonderful view of the ocean and the whole island!\n",
+      "links": [
+        {
+          "name": "Admire the view",
+          "link": "Полюбоваться видом"
+        },
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Bar",
+      "text": "//in the bar mrred, msyellow, mrpurple\n\nmrred: Sorry — we'd be glad to talk, but a little later; we have private business and would rather not be interrupted.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Полюбоваться видом",
+      "text": "You stand and gaze into the distance.\n//appears mswhite\nmswhite: (muttering) Why is there no quiet place anywhere!\nmswhite: Hello — let's get acquainted! I think I heard you're a writer?\n",
+      "links": [
+        {
+          "name": "Almost — I came to write a book, but it's scholarly",
+          "link": "Почти, я приехал написать книгу, но она научная"
+        },
+        {
+          "name": "Yes — I'm going to write a novel",
+          "link": "Да, я собираюсь написать роман"
+        }
+      ]
+    },
+    {
+      "name": "Почти, я приехал написать книгу, но она научная",
+      "text": "mswhite: Oh? How interesting — I'm not a big fan of thick science books. I hope you're not writing a dictionary?\n",
+      "links": [
+        {
+          "name": "No — it's an account of my theory",
+          "link": "Нет, это описание моей теории"
+        },
+        {
+          "name": "That was a bit rude",
+          "link": "Это было немного грубо"
+        }
+      ]
+    },
+    {
+      "name": "Да, я собираюсь написать роман",
+      "text": "mswhite: Interesting! I'm intrigued. But wait — don't tell me. Just promise you'll let me read at least the first chapter!\n",
+      "links": [
+        {
+          "name": "All right",
+          "link": "lighthouse2"
+        },
+        {
+          "name": "As soon as I've written it",
+          "link": "lighthouse2"
+        },
+        {
+          "name": "It's very personal — I'm not ready yet",
+          "link": "lighthouse2"
+        }
+      ]
+    },
+    {
+      "name": "Нет, это описание моей теории",
+      "text": "mswhite: (sighing) How interesting! But forgive me — you should go. I wanted to be alone, and since I've lived here longer than you, I'd be grateful if you left.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Это было немного грубо",
+      "text": "mswhite: Perhaps you're in the wrong place at the wrong time. Let's talk later.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "lighthouse2",
+      "text": "mswhite: Oh — forgive me, you should go. I wanted to be alone, and since I've lived here longer than you, I'd be grateful if you left.\n",
+      "links": [
+        {
+          "name": "Back to the map",
+          "link": "Вернуться на карту"
+        }
+      ]
+    },
+    {
+      "name": "Привет, Майк! Приятно познакомиться",
+      "text": "mrred: Let me tell you a bit about our island. I'll bring you up to speed.\nmrred: This is a place for people who want peace and quiet. You can enjoy your retirement, relax, or write a book. I heard you're planning to write one.\n",
+      "links": [
+        {
+          "name": "Yes — I brought everything I need to sail away in a year with a finished book",
+          "link": "Да, взял все необходимое чтобы через год уплыть отсюда с написанной книгой"
+        },
+        {
+          "name": "And you know that?",
+          "link": "И это вам известно?"
+        }
+      ]
+    },
+    {
+      "name": "Ничего себе, целый остров!",
+      "text": "mrred: Yes — I bought it many, many years ago with money from my old business. Now I'm retired; I just enjoy my old age and the company of wonderful people I rent to. They're friends more than tenants. I hope we'll become friends too.\n",
+      "links": [
+        {
+          "name": "Absolutely",
+          "link": "Обязательно"
+        },
+        {
+          "name": "I'd prefer more privacy",
+          "link": "Я бы хотел больше уединения"
+        }
+      ]
+    },
+    {
+      "name": "Обязательно",
+      "text": "mrred: Just go easy with that wish! This is an island for people who want peace and quiet. We don't pry into each other's affairs. You can enjoy your retirement, relax, or write a book. I heard you're planning to write one.\n",
+      "links": [
+        {
+          "name": "Yes — I brought everything I need to sail away in a year with a finished book",
+          "link": "Да, взял все необходимое чтобы через год уплыть отсюда с написанной книгой"
+        },
+        {
+          "name": "And you know that?",
+          "link": "И это вам известно?"
+        }
+      ]
+    },
+    {
+      "name": "Я бы хотел больше уединения",
+      "text": "mrred: Who wouldn't! This is an island for people who want peace and quiet. You can enjoy your retirement, relax, or write a book. I heard you're planning to write one.\n",
+      "links": [
+        {
+          "name": "Yes — I brought everything I need to sail away in a year with a finished book",
+          "link": "Да, взял все необходимое чтобы через год уплыть отсюда с написанной книгой"
+        },
+        {
+          "name": "And you know that?",
+          "link": "И это вам известно?"
+        }
+      ]
+    },
+    {
+      "name": "Да, взял все необходимое чтобы через год уплыть отсюда с написанной книгой",
+      "text": "mrred: Excellent! Let me show you your house.\n",
+      "links": [
+        {
+          "name": "Let's go",
+          "link": "Давайте"
+        }
+      ]
+    },
+    {
+      "name": "И это вам известно?",
+      "text": "mrred: No secret — my agent looked into you before renting the house! You're fifty-six, a professor at an elite university, going through something like a creative crisis, and you need time alone.\n\nmrred: This place is perfect for that. Let me show you your house.\n",
+      "links": [
+        {
+          "name": "Let's go",
+          "link": "Давайте"
+        }
+      ]
+    },
+    {
+      "name": "Давайте",
+      "text": "//after «let's go»: tutorial map — only the orange house\n",
+      "links": []
+    },
+    {
+      "name": "orange house inside",
+      "text": "//background orange house inside\n//show mrred\nmrred: Here is your house. Food is delivered once a week, on Mondays. If you get tired of the standard meals, come to me at the bar and say what to order. You can just leave a note. You won't be able to call — there's no mobile signal on the island.\n",
+      "links": [
+        {
+          "name": "That's a bit unsettling",
+          "link": "Это жутковато"
+        },
+        {
+          "name": "That's what I need — a break from the phone",
+          "link": "То что мне нужно, отдохну от телефона"
+        }
+      ]
+    },
+    {
+      "name": "Это жутковато",
+      "text": "//background orange house inside\nmrred: They've been offering to put up a tower for ages, but I refuse. I like the atmosphere of my youth. If you need anything — just come and tell me.\nmrred: It helps with privacy too.\n",
+      "links": [
+        {
+          "name": "I see",
+          "link": "Понятно"
+        }
+      ]
+    },
+    {
+      "name": "То что мне нужно, отдохну от телефона",
+      "text": "//background orange house inside\nmrred: Yes — they've been offering to put up a tower for ages, but I refuse. I like the atmosphere of my youth. If you need anything — just come and tell me.\nmrred: It helps with privacy. And we value that here.\n",
+      "links": [
+        {
+          "name": "I see",
+          "link": "Понятно"
+        }
+      ]
+    },
+    {
+      "name": "Понятно",
+      "text": "mrred: You're polite! I like that.\nmrred: Through our whole conversation you never asked why I have a red streak in my hair.\n",
+      "links": [
+        {
+          "name": "I thought it would be impolite to ask",
+          "link": "Ну мне казалось это невежливым"
+        },
+        {
+          "name": "I simply never had the chance",
+          "link": "Просто не было возможности"
+        }
+      ]
+    },
+    {
+      "name": "Ну мне казалось это невежливым",
+      "text": "mrred: I'll tell you anyway — it matters.\nmrred: Every house on the island has its own colour — roof, walls, furniture. Besides privacy, we all value respect for personal matters. So instead of surnames we use colours. As you see, I'm Mister Red.\nmrred: Many people underline it with their hair or clothes. You're free to do as you like — just try to respect others' space and don't pry.\n",
+      "links": [
+        {
+          "name": "All right",
+          "link": "Хорошо"
+        },
+        {
+          "name": "Sounds mysterious",
+          "link": "Звучит таинственно"
+        }
+      ]
+    },
+    {
+      "name": "Просто не было возможности",
+      "text": "mrred: I'll tell you anyway — it matters.\nmrred: Every house on the island has its own colour — roof, walls, furniture. Besides privacy, we all value respect for personal matters. So instead of surnames we use colours. As you see, I'm Mister Red.\nmrred: Many people underline it with their hair or clothes. You're free to do as you like — just try to respect others' space and don't pry.\n",
+      "links": [
+        {
+          "name": "All right",
+          "link": "Хорошо"
+        },
+        {
+          "name": "Sounds mysterious",
+          "link": "Звучит таинственно"
+        }
+      ]
+    },
+    {
+      "name": "Хорошо",
+      "text": "mrred: Good. There's no mystery here — everyone is older, and everyone has a past. You don't always need to dig it up.\n\nmrred: All right, settle in, look around your home, walk the island, write your book, or drop in on someone — make yourself at home. I must go!\n//hide mrred\n",
+      "links": [
+        {
+          "name": "See you",
+          "link": "До встречи"
+        }
+      ]
+    },
+    {
+      "name": "Звучит таинственно",
+      "text": "mrred: There's no mystery — everyone is older, and everyone has a past. You don't always need to dig it up.\n\nmrred: All right, settle in, look around your home, walk the island, write your book, or drop in on someone — make yourself at home. I must go!\n//hide mrred\n",
+      "links": [
+        {
+          "name": "See you",
+          "link": "До встречи"
+        }
+      ]
+    },
+    {
+      "name": "До встречи",
+      "text": "//mode select: story or free exploration\n",
+      "links": []
+    },
+    {
+      "name": "orange house",
+      "text": "//background orange house inside\nThis is my home. I live here.\n",
+      "links": [
+        {
+          "name": "Rest a little",
+          "link": "Отдохнуть немного"
+        },
+        {
+          "name": "Sit down and write",
+          "link": "Сесть и писать книгу"
+        },
+        {
+          "name": "I'll explore the island",
+          "link": "Пойду исследовать остров"
+        }
+      ]
+    },
+    {
+      "name": "Отдохнуть немного",
+      "text": "//shows the house view again\n//new day\nI had a wonderful rest. What next?\n",
+      "links": [
+        {
+          "name": "I'll explore the island",
+          "link": "Пойду исследовать остров"
+        },
+        {
+          "name": "Sit down and write",
+          "link": "Сесть и писать книгу"
+        }
+      ]
+    },
+    {
+      "name": "Сесть и писать книгу",
+      "text": "//writing progress bar (see design notes in source)\nTime to dive into the book. What shall I work on today?\n",
+      "links": [
+        {
+          "name": "Scholarly book",
+          "link": "Научная книга"
+        },
+        {
+          "name": "Novel",
+          "link": "Роман"
+        }
+      ]
+    },
+    {
+      "name": "Пойду исследовать остров",
+      "text": "//island map opens\n",
+      "links": []
+    },
+    {
+      "name": "Научная книга",
+      "text": "//adds 1% to scholarly book progress\nI think it's time for a break!\n",
+      "links": [
+        {
+          "name": "Rest a little",
+          "link": "Отдохнуть немного"
+        },
+        {
+          "name": "I'll explore the island",
+          "link": "Пойду исследовать остров"
+        }
+      ]
+    },
+    {
+      "name": "Роман",
+      "text": "//adds 1% to novel progress\nI think it's time for a break!\n",
+      "links": [
+        {
+          "name": "Rest a little",
+          "link": "Отдохнуть немного"
+        },
+        {
+          "name": "I'll explore the island",
+          "link": "Пойду исследовать остров"
+        }
+      ]
+    },
+    {
+      "name": "Да, Майк уже рассказал мне о ней",
+      "text": "mrblue: You mean Mister Red?\nmrblue: All right, relax — I know it's hard to get used to; I'm not fully used to it myself, though I've lived here more than ten years.\n",
+      "links": [
+        {
+          "name": "Ten years?",
+          "link": "10 лет?"
+        }
+      ]
+    },
+    {
+      "name": "10 лет?",
+      "text": "mrblue: Yes — hard to believe! I moved here when I turned sixty-seven. I decided to live for myself, and this place has everything I need.\n",
+      "links": [
+        {
+          "name": "Interesting",
+          "link": "Интересно"
+        },
+        {
+          "name": "What do you need?",
+          "link": "А что вам нужно?"
+        }
+      ]
+    },
+    {
+      "name": "Да, я планирую написать книгу",
+      "text": "mrblue: Really? What kind of book? Scholarly? Or an adventure novel?\n",
+      "links": [
+        {
+          "name": "I want to write a scholarly book",
+          "link": "Хочу написать научную книгу"
+        },
+        {
+          "name": "I've wanted to write a novel for a long time",
+          "link": "Давно хочу написать роман"
+        }
+      ]
+    },
+    {
+      "name": "Хочу написать научную книгу",
+      "text": "mrblue: Great — you'll have people to discuss it with, especially Miss Green; she loves books here. If you meet her, she'll surely ask to read the first chapters.\n",
+      "links": [
+        {
+          "name": "Thanks — I'd better go",
+          "link": "Спасибо, я пожалуй пойду"
+        }
+      ]
+    },
+    {
+      "name": "Давно хочу написать роман",
+      "text": "mrblue: Well, scholarly books matter — someone reads them. I think you'll find people to talk to; especially Mister Black loves science here. If you meet him, he'll probably offer to review your book.\n",
+      "links": [
+        {
+          "name": "Thanks — I'd better go",
+          "link": "Спасибо, я пожалуй пойду"
+        }
+      ]
+    },
+    {
+      "name": "Интересно",
+      "text": "mrblue: Well, don't be too curious. People don't like that here. Talking about science and books is always welcome. But I wouldn't try to bring up the past.\n",
+      "links": [
+        {
+          "name": "Thanks — I'd better go",
+          "link": "Спасибо, я пожалуй пойду"
+        }
+      ]
+    },
+    {
+      "name": "А что вам нужно?",
+      "text": "mrblue: Sorry for being blunt, but that's none of your business. People don't like that here. Talking about science and books is always welcome. But I wouldn't try to bring up the past.\n",
+      "links": [
+        {
+          "name": "Thanks — I'd better go",
+          "link": "Спасибо, я пожалуй пойду"
+        }
+      ]
+    },
+    {
+      "name": "story_return_map",
+      "text": "//return to map\n",
+      "links": []
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "_comment": "Шаблон стартового состояния новой игры. Реальное состояние держится в памяти (state.js) и сохраняется в localStorage под ключом 'sabbatical_save_v1'.",
+  "screen": "splash",
+  "mode": null,
+  "language": "ru",
+  "currentLocation": null,
+  "visitedLocations": [],
+  "unlockedLocations": [],
+  "flags": {},
+  "storyProgress": 0
+}

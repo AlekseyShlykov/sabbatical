@@ -1,0 +1,11 @@
+{
+  "name": "sabbatical",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "optimize-assets": "node scripts/optimize-assets.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.2"
+  }
+}

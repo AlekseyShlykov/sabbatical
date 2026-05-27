@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1402" height="1122" viewBox="0 0 1402 1122" fill="none">
+  <g id="paths-debug" stroke="rgba(220,55,40,0.85)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path id="path_redhouse_yellow_west" d="M338 631V669.5L316.5 705L276.5 732L258 752L283.5 783.5L316.5 802L346.5 773.5"/>
+    <path id="path_bluehouse_yellow_west" d="M430.5 561L453 587L481.5 632.5L514.5 671L563 689.5L615.5 713.5L652.5 728L692.5 701L741 689.5L775 671L736.5 638"/>
+    <path id="path_bluehouse_pier" d="M773.5 672.5L843.5 686.5L865 738L843.5 786.5L815 826L830.5 852L879 877.5L900.5 896L1008.5 842"/>
+    <path id="path_bar_bluehouse" d="M652.5 729.5L635.5 775V810.5L671 847.5L691 873L712.5 903L617 936L585.5 890"/>
+    <path id="path_bluehouse_villa" d="M843.5 688L904.5 642.5H954.5L1000 661L1051.5 688L1090 719.5L1128.5 669.5"/>
+    <path id="path_bluehouse_orangehouse_short" d="M900.5 645.5L937.5 548.5L873.5 498.5L900.5 470"/>
+    <path id="path_greenhouse_orangehouse" d="M876 500L816.5 468.5H739.5L651 417.5L628.5 373L642.5 345L590 302"/>
+    <path id="path_forrest_greenhouse" d="M410.5 376L461.5 366H520L628.5 376"/>
+    <path id="path_greenhouse_lighthouse_bay" d="M642.5 345L746.5 288L826.5 249.5L746.5 195L677 176.5"/>
+    <path id="path_bluehouse_orangehouse" d="M736.5 467L726.5 523L684 547L628.5 577L604 602.5L615.5 635.5V688V709.5"/>
+    <path id="path_lighthouse_orangehouse" d="M936 550L1014.5 508.5L1048.5 457.5L1041.5 401.5L1065.5 354.5V330.5L1048.5 310.5L1041.5 292V272L1048.5 242L1077 215H1101"/>
+    <path id="path_blackhouse_forrest" d="M342 390.5L382 417.5L410.5 376L382 325L322 292L266.5 269.5L252.5 228"/>
+    <path id="path_forrest_yellow_west" d="M383.5 414.5L353.5 467V498.5L383.5 524L414.5 545.5L432 561L399 580L353.5 607L339 632.5L285 607"/>
+    <path id="path_redhouse_yellowhouse" d="M260 753L226 745.5"/>
+  </g>
+</svg>
