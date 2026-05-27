@@ -107,7 +107,19 @@ export function renderHud(state = getState()) {
     "is-exhausted",
     !storyHud && dc.actionsUsed >= MAX_ACTIONS_PER_DAY
   );
-  document.body.classList.toggle("has-game-hud", active && onGameScreen);
+  const hudOn = active && onGameScreen;
+  document.body.classList.toggle("has-game-hud", hudOn);
+  document.body.dataset.gameScreen =
+    hudOn && (state.screen === "map" || state.screen === "location")
+      ? state.screen
+      : "";
+
+  const navMap = document.getElementById("hud-nav-map");
+  const navLoc = document.getElementById("hud-nav-location");
+  const mapTitle = document.getElementById("hud-map-title");
+  if (navMap) navMap.hidden = !(hudOn && state.screen === "map");
+  if (navLoc) navLoc.hidden = !(hudOn && state.screen === "location");
+  if (mapTitle) mapTitle.hidden = !(hudOn && state.screen === "map");
 }
 
 function setBar(fillEl, pctEl, value) {

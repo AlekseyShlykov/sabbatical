@@ -22,7 +22,12 @@ import {
   setCurrentMarkHighlight,
 } from "./map.js";
 import { travel, clearTrail } from "./movement.js";
-import { initScene, clearStage, setBackground, resolveRasterUrl } from "./scene.js";
+import {
+  initScene,
+  clearStage,
+  setBackground,
+  preloadRasters,
+} from "./scene.js";
 import { backgroundForLocation } from "./locationAssets.js";
 import {
   initDialogue, setGraph, renderPassage,
@@ -52,14 +57,19 @@ import {
   getStoryFocusLocationId,
   isStoryMode,
 } from "./storyMode.js";
+import {
+  resetIntro,
+  renderIntroSlide,
+  advanceIntro,
+  introAssetNames,
+} from "./intro.js";
 
 const LOCATIONS_URL = "data/locations.json";
-const INTRO_DIR = "assets/intro/";
-const INTRO_BASE = "intro1";
 
 let locationsData = null;
 let storyGraph = null;       // language-bound graph for current language
 let sendingPlayerHome = false;
+let gameplayPreloadPromise = null;
 
 bootstrap().catch((err) => {
   console.error("[boot] fatal", err);
@@ -83,7 +93,7 @@ async function bootstrap() {
   initMap(locationsData);
   initDialogue();
   initHud();
-  void preloadGameplayAssets();
+  gameplayPreloadPromise = preloadGameplayAssets();
   setAfterPassageHook(maybeReturnHomeAfterVisit);
   setEndCallback(handleDialogueEnd);
   setReturnToMapCallback(handleReturnToMap);
@@ -100,8 +110,10 @@ async function bootstrap() {
   }
 
   wireGlobalUI();
+  subscribe(updateLeaveButton);
   hydrateLanguageButtons();
   toggleContinueButton();
+  updateLeaveButton();
 
   // Initial screen.
   // The "location" screen depends on transient state (current passage, stage
@@ -134,6 +146,9 @@ onLanguageChange(async (lang) => {
   if (getState().screen === "map") {
     void renderMap();
   }
+  if (getState().screen === "intro") {
+    void renderIntroSlide();
+  }
 });
 
 /* =========================================================
@@ -149,44 +164,31 @@ async function goTo(screenId) {
     await renderMap();
   }
   if (screenId === "intro") {
-    setupIntroImage();
+    resetIntro();
+    void renderIntroSlide();
+    void ensureGameplayPreload();
   }
 }
 
-function warmImage(url) {
-  if (!url) return;
-  const im = new Image();
-  im.src = url;
+function ensureGameplayPreload() {
+  if (!gameplayPreloadPromise) {
+    gameplayPreloadPromise = preloadGameplayAssets();
+  }
+  return gameplayPreloadPromise;
 }
 
-/** Подгрузка частых ассетов (WebP при наличии). */
+/** Подгрузка частых ассетов (WebP при наличии) с декодированием в кэш. */
 async function preloadGameplayAssets() {
-  const specs = [
+  await preloadRasters([
     ["assets/map/", "map"],
     ["assets/map/", "player"],
     ["assets/map/", "mark"],
-    ["assets/intro/", INTRO_BASE],
-    ["assets/backgrounds/", "houseorangeinside"],
+    ...introAssetNames().map((name) => ["assets/intro/", name]),
     ["assets/backgrounds/", "barout2"],
+    ["assets/backgrounds/", "houseorangeinside"],
+    ["assets/backgrounds/", "houseorangeout"],
     ["assets/characters/", "mrred"],
-  ];
-  const urls = await Promise.all(
-    specs.map(([dir, name]) => resolveRasterUrl(dir, name))
-  );
-  urls.filter(Boolean).forEach(warmImage);
-}
-
-async function setupIntroImage() {
-  const img = document.querySelector(".intro__img");
-  if (!img) return;
-  img.classList.remove("is-missing");
-  const url = await resolveRasterUrl(INTRO_DIR, INTRO_BASE);
-  if (!url) {
-    console.warn(`[intro] missing image: ${INTRO_DIR}${INTRO_BASE}`);
-    img.classList.add("is-missing");
-    return;
-  }
-  img.src = url;
+  ]);
 }
 
 /* =========================================================
@@ -266,6 +268,13 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
     return;
   }
 
+  if (getFlag("tutorialMap") && toId === "orangehouse") {
+    void preloadRasters([
+      ["assets/backgrounds/", "houseorangeinside"],
+      ["assets/characters/", "mrred"],
+    ]);
+  }
+
   await performMapTravel(fromId, toId);
 
   await withFade(async () => {
@@ -316,7 +325,21 @@ async function sendPlayerHome() {
   }
 }
 
+/** Выход на карту — только после выбора режима (конец онбординга). */
+function canLeaveToMap(state = getState()) {
+  return state.mode === "story" || state.mode === "free";
+}
+
+function updateLeaveButton() {
+  const btn = document.querySelector('[data-action="leave"]');
+  if (!btn) return;
+  const allowed = canLeaveToMap();
+  btn.hidden = !allowed;
+  btn.disabled = !allowed;
+}
+
 async function handleReturnToMap() {
+  if (!canLeaveToMap()) return;
   if (isDayCycleActive() && isDayExhausted()) {
     await sendPlayerHome();
     return;
@@ -332,6 +355,11 @@ async function enterLocation(loc, { skipActionCharge = false } = {}) {
     const fromPassage = initialBackgroundFromPassage(storyGraph[passageName]);
     if (fromPassage) bg = fromPassage;
   }
+  const preloadSpecs = [["assets/backgrounds/", bg]];
+  if (loc.id === "orangehouse" || passageName === "orange house inside") {
+    preloadSpecs.push(["assets/characters/", "mrred"]);
+  }
+  await preloadRasters(preloadSpecs);
   await setBackground(bg);
   document.getElementById("location-title").textContent = localizedTitle(loc.title);
   goTo("location");
@@ -403,8 +431,9 @@ async function openIslandFromHome() {
 }
 
 async function startPrologueDialogue() {
+  await ensureGameplayPreload();
   clearStage();
-  setBackground("barout2");
+  await setBackground("barout2");
   setFlag("prologue", true);
   setState({ currentLocation: "pier" });
   const titleEl = document.getElementById("location-title");
@@ -425,10 +454,16 @@ async function enterTutorialMap() {
     mapPlayerCoord: null,
   });
   clearStage();
+  await preloadRasters([
+    ["assets/backgrounds/", "houseorangeinside"],
+    ["assets/characters/", "mrred"],
+  ]);
   await withFade(() => goTo("map"));
 }
 
 async function leaveLocation() {
+  if (!canLeaveToMap()) return;
+
   const homeId = locationsData.startLocation;
   const pendingStoryHome = shouldCompleteStoryDayOne();
 
@@ -563,6 +598,7 @@ async function handleAction(action, btn) {
     case "start": {
       const state = getState();
       if (!state.mode && state.screen === "splash") {
+        void ensureGameplayPreload();
         await withFade(() => goTo("intro"));
       }
       return;
@@ -577,10 +613,13 @@ async function handleAction(action, btn) {
       return;
     }
     case "intro-continue": {
+      if (!(await advanceIntro())) return;
+      await ensureGameplayPreload();
       await withFade(() => startPrologueDialogue());
       return;
     }
     case "leave": {
+      if (!canLeaveToMap()) return;
       await leaveLocation();
       return;
     }
@@ -593,6 +632,7 @@ async function handleAction(action, btn) {
       return;
     case "menu-to-map":
       closeMenu();
+      if (!canLeaveToMap()) return;
       if (getState().screen !== "map") await leaveLocation();
       return;
     case "menu-change-lang":

@@ -22,9 +22,17 @@ const SPEED_PX_PER_SEC = 320;
 const MIN_DURATION = 400;
 const MAX_DURATION = 9000;
 const DOT_STEP_PX = 36;
+const DOT_STEP_PX_MOBILE = 72; /* 2× реже, чем на десктопе */
 
 const prefersReduced = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const isMobileViewport = () =>
+  window.matchMedia("(max-width: 640px)").matches;
+
+function dotStepPx() {
+  return isMobileViewport() ? DOT_STEP_PX_MOBILE : DOT_STEP_PX;
+}
 
 /**
  * Move player from `fromId` to `toId` along the SVG network.
@@ -71,7 +79,8 @@ export async function travel({ fromId, toId }) {
 
   const dotEls = [];
   if (layer) {
-    for (let d = DOT_STEP_PX; d < totalLen; d += DOT_STEP_PX) {
+    const step = dotStepPx();
+    for (let d = step; d < totalLen; d += step) {
       const pt = pointAtDistance(route, cum, d);
       const el = document.createElement("div");
       el.className = "dot-trail";

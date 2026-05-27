@@ -24,6 +24,10 @@ let currentSpeaker = null;          // null = narrator / no highlight
 let currentBg = null;
 let renderGeneration = 0;           // drop stale concurrent renderSlots()
 
+const rasterUrlCache = new Map();   // `${dir}|${name}` → url | null
+const existsCache = new Map();      // url → boolean
+const decodedCache = new Set();     // url already decoded in memory
+
 export function initScene() {
   els.bg = document.getElementById("stage-bg");
   els.slots = document.getElementById("stage-slots");
@@ -33,21 +37,21 @@ export function initScene() {
 
 export async function setBackground(name) {
   if (!name) return;
-  if (name === currentBg) return;
-  currentBg = name;
-  const url = await firstExistingImage(BG_DIR, name);
+  if (name === currentBg && els.bg?.src) return;
+  const url = await resolveRasterUrl(BG_DIR, name);
   if (!url) {
     console.warn(`[scene] background missing: ${name}`);
+    currentBg = name;
     els.bg.removeAttribute("src");
+    els.bg.classList.remove("is-fading");
     els.bg.style.background = "linear-gradient(160deg, #c9b78d, #6e8b76)";
     applyStageLayout(name);
     return;
   }
+  await decodeRasterUrl(url);
+  currentBg = name;
   els.bg.style.background = "";
-  els.bg.classList.add("is-fading");
-  await sleep(120);
-  els.bg.onload = () => els.bg.classList.remove("is-fading");
-  els.bg.onerror = () => els.bg.classList.remove("is-fading");
+  els.bg.classList.remove("is-fading");
   els.bg.src = url;
   applyStageLayout(name);
 }
@@ -113,9 +117,14 @@ async function renderSlots() {
   els.slots.dataset.count = String(Math.max(ids.length, 1));
   els.slots.innerHTML = "";
 
-  for (const id of ids) {
-    if (gen !== renderGeneration) return;
+  const urls = await Promise.all(
+    ids.map((id) => resolveRasterUrl(CHAR_DIR, id))
+  );
+  if (gen !== renderGeneration) return;
 
+  for (let i = 0; i < ids.length; i++) {
+    const id = ids[i];
+    const url = urls[i];
     const slot = document.createElement("div");
     slot.className = "slot";
     slot.dataset.character = id;
@@ -123,11 +132,11 @@ async function renderSlots() {
     const img = document.createElement("img");
     img.alt = "";
     img.draggable = false;
-    const url = await firstExistingImage(CHAR_DIR, id);
-    if (gen !== renderGeneration) return;
-
-    if (url) img.src = url;
-    else {
+    if (url) {
+      await decodeRasterUrl(url);
+      if (gen !== renderGeneration) return;
+      img.src = url;
+    } else {
       console.warn(`[scene] character image missing: ${id}`);
       slot.hidden = true;
     }
@@ -158,28 +167,46 @@ function applySpeakerStates() {
   }
 }
 
-/* ---------------- helpers ---------------- */
+/* ---------------- asset loading ---------------- */
 
-const imgExistsCache = new Map();
-async function imageExists(url) {
-  if (imgExistsCache.has(url)) return imgExistsCache.get(url);
-  const p = new Promise((resolve) => {
+async function assetExists(url) {
+  if (existsCache.has(url)) return existsCache.get(url);
+  let ok = false;
+  try {
+    const res = await fetch(url, { method: "HEAD", cache: "force-cache" });
+    ok = res.ok;
+  } catch {
+    ok = false;
+  }
+  if (!ok) ok = await probeImage(url);
+  existsCache.set(url, ok);
+  return ok;
+}
+
+function probeImage(url) {
+  return new Promise((resolve) => {
     const im = new Image();
     im.onload = () => resolve(true);
     im.onerror = () => resolve(false);
     im.src = url;
   });
-  imgExistsCache.set(url, p);
-  return p;
 }
 
 async function firstExistingImage(dir, name) {
+  const key = `${dir}|${name}`;
+  if (rasterUrlCache.has(key)) return rasterUrlCache.get(key);
+
+  let found = null;
   for (const ext of EXTS) {
     const url = dir + name + ext;
     // eslint-disable-next-line no-await-in-loop
-    if (await imageExists(url)) return url;
+    if (await assetExists(url)) {
+      found = url;
+      break;
+    }
   }
-  return null;
+  rasterUrlCache.set(key, found);
+  return found;
 }
 
 /** WebP-first asset URL (`dir` ends with `/`). */
@@ -187,4 +214,28 @@ export async function resolveRasterUrl(dir, name) {
   return firstExistingImage(dir, name);
 }
 
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+/** Decode raster into browser cache before showing on stage. */
+export async function decodeRasterUrl(url) {
+  if (!url || decodedCache.has(url)) return;
+  const im = new Image();
+  im.decoding = "async";
+  await new Promise((resolve) => {
+    im.onload = () => resolve();
+    im.onerror = () => resolve();
+    im.src = url;
+  });
+  try {
+    await im.decode();
+  } catch {
+    /* decode optional */
+  }
+  decodedCache.add(url);
+}
+
+/** Preload several assets (`dir` + `name` pairs) in parallel. */
+export async function preloadRasters(specs) {
+  const urls = await Promise.all(
+    specs.map(([dir, name]) => resolveRasterUrl(dir, name))
+  );
+  await Promise.all(urls.filter(Boolean).map((url) => decodeRasterUrl(url)));
+}

@@ -47,7 +47,7 @@
         <img class="intro__img" alt="" />
       </div>
       <div class="intro__panel">
-        <p class="intro__text" data-i18n="intro.placeholder"></p>
+        <p class="intro__text" id="intro-text"></p>
         <button class="btn btn--primary" data-action="intro-continue" data-i18n="intro.continue"></button>
       </div>
     </section>
@@ -94,10 +94,6 @@
           </div>
         </div>
       </div>
-      <div class="map__topbar">
-        <button class="btn btn--ghost btn--small" data-action="open-menu" data-i18n="map.menu"></button>
-        <span class="map__title" data-i18n="map.title"></span>
-      </div>
       <div class="map__hint" id="map-hint" data-i18n="map.hint"></div>
     </section>
 
@@ -108,18 +104,6 @@
       <div class="stage" id="stage">
         <img class="stage__bg" id="stage-bg" alt="" />
         <div class="stage__slots" id="stage-slots"></div>
-      </div>
-
-      <div class="location__topbar">
-        <button class="btn btn--icon btn--leave"
-                data-action="leave"
-                data-i18n-attr="title:scene.leave,aria-label:scene.leave">
-          <picture>
-            <source srcset="assets/map/tomap.webp" type="image/webp" />
-            <img class="btn--icon__img" src="assets/map/tomap.png" alt="" draggable="false" />
-          </picture>
-        </button>
-        <span class="location__title" id="location-title"></span>
       </div>
 
       <aside class="panel" id="dialogue-panel">
@@ -148,7 +132,7 @@
     <!-- Hidden SVG container for path lookups -->
     <div id="svg-cache" aria-hidden="true" hidden></div>
 
-    <!-- Day HUD: book progress + hours/actions (map & location) -->
+    <!-- Day HUD: books (row 1) + nav & day (row 2) on map & location -->
     <aside class="game-hud" id="game-hud" hidden aria-label="Progress">
       <div class="game-hud__books" id="hud-books">
         <div class="hud-book hud-book--science">
@@ -168,12 +152,29 @@
           <span class="hud-book__today" data-hud-today="novel"></span>
         </div>
       </div>
-      <div class="game-hud__day">
-        <span class="game-hud__day-label" data-i18n="hud.day"></span>
-        <span class="game-hud__day-num" id="hud-day-num">1</span>
-        <span class="game-hud__date" id="hud-date"></span>
-        <span class="game-hud__clock" id="hud-clock" aria-hidden="true">8:00</span>
-        <span class="game-hud__actions" id="hud-actions"></span>
+      <div class="game-hud__toolbar">
+        <div class="game-hud__nav game-hud__nav--map" id="hud-nav-map" hidden>
+          <button class="btn btn--ghost btn--small" data-action="open-menu" data-i18n="map.menu"></button>
+        </div>
+        <div class="game-hud__nav game-hud__nav--location" id="hud-nav-location" hidden>
+          <button class="btn btn--icon btn--leave"
+                  data-action="leave"
+                  data-i18n-attr="title:scene.leave,aria-label:scene.leave">
+            <picture>
+              <source srcset="assets/map/tomap.webp" type="image/webp" />
+              <img class="btn--icon__img" src="assets/map/tomap.png" alt="" draggable="false" />
+            </picture>
+          </button>
+          <span class="game-hud__screen-title" id="location-title"></span>
+        </div>
+        <span class="game-hud__screen-title game-hud__screen-title--map" id="hud-map-title" data-i18n="map.title"></span>
+        <div class="game-hud__day">
+          <span class="game-hud__day-label" data-i18n="hud.day"></span>
+          <span class="game-hud__day-num" id="hud-day-num">1</span>
+          <span class="game-hud__date" id="hud-date"></span>
+          <span class="game-hud__clock" id="hud-clock" aria-hidden="true">8:00</span>
+          <span class="game-hud__actions" id="hud-actions"></span>
+        </div>
       </div>
     </aside>
 
