@@ -45,7 +45,11 @@
     "todayProgress": "+{n}% today",
     "noActions": "No actions left today. Rest to start a new day.",
     "dailyBookCap": "You can only add 3% to this book per day.",
-    "dayEndReturnHome": "The day is over — time to head home."
+    "dayEndReturnHome": "Today's day is over — time to return home.",
+    "dayTitle": "Day {n}"
+  },
+  "dayTransition": {
+    "tapToContinue": "Tap to continue"
   },
   "menu": {
     "title": "Menu",
@@ -55,7 +59,11 @@
     "changeLanguage": "Change language",
     "changeMode": "Change mode",
     "close": "Close",
-    "confirmNew": "Start a new game? Progress will be lost."
+    "confirmNew": "Start a new game? Progress will be lost.",
+    "music": "Music",
+    "sounds": "Sounds",
+    "musicVolume": "Music volume",
+    "soundsVolume": "Sound volume"
   },
   "errors": {
     "missingPassage": "Passage not found",

@@ -118,6 +118,26 @@
     <div class="overlay" id="overlay" hidden>
       <div class="overlay__sheet">
         <h3 class="overlay__title" data-i18n="menu.title"></h3>
+        <div class="overlay__audio" id="menu-audio">
+          <div class="audio-row">
+            <label class="audio-row__toggle">
+              <input type="checkbox" id="audio-music-enabled" />
+              <span data-i18n="menu.music"></span>
+            </label>
+            <input class="audio-row__range" type="range" id="audio-music-volume"
+                   min="0" max="100" step="1"
+                   data-i18n-attr="aria-label:menu.musicVolume" />
+          </div>
+          <div class="audio-row">
+            <label class="audio-row__toggle">
+              <input type="checkbox" id="audio-sounds-enabled" />
+              <span data-i18n="menu.sounds"></span>
+            </label>
+            <input class="audio-row__range" type="range" id="audio-sounds-volume"
+                   min="0" max="100" step="1"
+                   data-i18n-attr="aria-label:menu.soundsVolume" />
+          </div>
+        </div>
         <div class="overlay__actions">
           <button class="btn btn--primary" data-action="menu-resume" data-i18n="menu.resume"></button>
           <button class="btn btn--ghost" data-action="menu-to-map" data-i18n="menu.toMap"></button>
@@ -180,6 +200,18 @@
 
     <!-- Fade veil used by transitions.js -->
     <div class="veil" id="veil" aria-hidden="true"></div>
+
+    <!-- End of day: notice before walking home -->
+    <div class="day-end-notice" id="day-end-notice" hidden>
+      <p class="day-end-notice__text" id="day-end-message"></p>
+      <p class="day-end-notice__hint" data-i18n="dayTransition.tapToContinue"></p>
+    </div>
+
+    <!-- New day title card -->
+    <div class="day-title-card" id="day-title-card" hidden>
+      <h2 class="day-title-card__text" id="day-title-text"></h2>
+      <p class="day-title-card__hint" data-i18n="dayTransition.tapToContinue"></p>
+    </div>
 
     <script type="module" src="src/main.js"></script>
   </body>

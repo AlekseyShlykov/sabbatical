@@ -94,6 +94,9 @@
       "availableInStoryMode": true,
       "characters": [],
       "twinePassage": "Green house",
+      "twinePassageByDay": {
+        "2": "Day 2. Green"
+      },
       "markAnchor": {
         "x": 589,
         "y": 302
@@ -185,6 +188,9 @@
         "mrblue"
       ],
       "twinePassage": "Blue house",
+      "twinePassageByDay": {
+        "2": "Day2. Blue."
+      },
       "markAnchor": {
         "x": 285,
         "y": 609

@@ -873,10 +873,6 @@ body.has-game-hud .map {
   background: rgba(72, 28, 28, 0.72);
 }
 
-body.has-game-hud .screen--location .stage {
-  top: calc(var(--hud-stack-h) + var(--safe-top));
-}
-
 /* =========================================================
    OVERLAY (menu)
    ========================================================= */
@@ -900,6 +896,40 @@ body.has-game-hud .screen--location .stage {
   box-shadow: var(--shadow-soft);
 }
 .overlay__title { margin: 0 0 14px; font-weight: 500; font-size: 18px; }
+.overlay__audio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--panel-border);
+}
+.audio-row {
+  display: grid;
+  grid-template-columns: 1fr minmax(88px, 42%);
+  gap: 10px;
+  align-items: center;
+}
+.audio-row__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.audio-row__toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+.audio-row__range {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.audio-row__range:disabled {
+  opacity: 0.45;
+}
 .overlay__actions { display: flex; flex-direction: column; gap: 8px; }
 .overlay__actions .btn { min-width: 0; }
 .overlay__actions .btn--primary { background: var(--accent); color: #fff; }
@@ -909,6 +939,58 @@ body.has-game-hud .screen--location .stage {
   border: 1px solid var(--panel-border);
 }
 .overlay__actions .btn--ghost:hover { background: rgba(0,0,0,0.04); }
+
+/* =========================================================
+   DAY END / NEW DAY TITLE
+   ========================================================= */
+.day-end-notice,
+.day-title-card {
+  position: fixed;
+  inset: 0;
+  z-index: 8500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+  text-align: center;
+  background: rgba(12, 10, 8, 0.72);
+  backdrop-filter: blur(6px);
+  color: #f6efdc;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 420ms var(--ease);
+}
+.day-end-notice.is-on,
+.day-title-card.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.day-end-notice[hidden],
+.day-title-card[hidden] {
+  display: none !important;
+}
+.day-end-notice__text {
+  margin: 0;
+  max-width: 22rem;
+  font-size: clamp(18px, 3.2vw, 24px);
+  line-height: 1.5;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+.day-title-card__text {
+  margin: 0;
+  font-size: clamp(36px, 8vw, 56px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.5);
+}
+.day-end-notice__hint,
+.day-title-card__hint {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(246, 239, 220, 0.72);
+}
 
 /* =========================================================
    MOBILE / TOUCH

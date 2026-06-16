@@ -39,6 +39,7 @@ style.md           ← source of truth: scene/panel/portraits/typography
   transitions.js   ← fade/screen helpers (no business logic)
   commands.js      ← обработчик //... директив (фон, показать, ...)
   twineLoader.js   ← Twine JSON → внутренний граф {steps, choices}
+  twinePassages.js ← пассажи Day N и привязка к календарному дню
   dialogue.js      ← движок диалога (typewriter, speaker, choices)
   scene.js         ← фон + слоты персонажей (DOM-слой, по style.md)
   map.js           ← карта: marks, player, layout
@@ -150,6 +151,28 @@ LEAVE  ────────────────────────�
 При смене языка движок перезагружает story-граф и перерисовывает текущий
 пассаж по имени.
 
+### Пассажи по дням (`Day N`)
+
+Сюжетные сцены на 2-й, 3-й и следующие дни — **отдельные пассажи** в Twine.
+Имя начинается с `Day N` (пробел или точка после номера):
+
+| Имя в Twine       | Когда играет        |
+| ----------------- | ------------------- |
+| `Blue house`      | день 1, повторы     |
+| `Day2. Blue.`     | только день 2       |
+| `Day 3. Green`    | только день 3       |
+
+В `data/locations.json`:
+
+```json
+"twinePassage": "Blue house",
+"twinePassageByDay": { "2": "Day2. Blue." }
+```
+
+Маршрут режима «История» на день N: `storyOrder` (день 1),
+`storyOrderDay2`, `storyOrderDay3`, … Логика выбора пассажа —
+`src/twinePassages.js`, маршрут по дням — `src/storyMode.js`.
+
 ---
 
 ## Map system
@@ -214,6 +237,8 @@ Pathfinding нет — пути авторские и заранее задан�
      "twinePassage": "foo_intro"
    }
    ```
+   Для сюжета на день 2+ добавь `"twinePassageByDay": { "2": "Day2. Foo." }`
+   и пассаж в Twine с именем `Day2. …` (см. раздел «Пассажи по дням»).
 3. Добавь обратную связь в `connectedLocations` соседа.
 4. В `assets/map/path2.svg` добавь `<path id="path_yellowhouse_foo" …/>`
    с реальной геометрией (можно нарисовать в Figma/Inkscape, сохранить).

@@ -1,4 +1,4 @@
-// storyMode.js — линейный маршрут дня 1 и дня 2 в режиме «Сюжет».
+// storyMode.js — линейные маршруты по дням в режиме «Сюжет».
 
 import { getState, update, unlock, setFlag, getFlag } from "./state.js";
 import { getDayCycle } from "./dayCycle.js";
@@ -21,60 +21,110 @@ export function getStoryOrder(locationsData) {
   return [...DEFAULT_STORY_DAY_ONE];
 }
 
-export function getStoryOrderDay2(locationsData) {
-  const order = locationsData?.storyOrderDay2;
+/** Маршрут сюжета для календарного дня N (`storyOrder` = день 1, `storyOrderDay2` = день 2, …). */
+export function getStoryOrderForDay(dayNum, locationsData) {
+  const n = Math.max(1, Math.floor(dayNum) || 1);
+  if (n === 1) return getStoryOrder(locationsData);
+  const key = `storyOrderDay${n}`;
+  const order = locationsData?.[key];
   if (Array.isArray(order) && order.length > 0) return [...order];
-  return [...DEFAULT_STORY_DAY_TWO];
+  if (n === 2) return [...DEFAULT_STORY_DAY_TWO];
+  return [];
 }
 
 export function isStoryMode(state = getState()) {
   return state.mode === "story";
 }
 
+export function storyDayEndedFlag(dayNum) {
+  const n = Math.max(1, Math.floor(dayNum) || 1);
+  return n === 1 ? "storyDay1Ended" : `storyDay${n}Ended`;
+}
+
+export function storyDayLocFlag(dayNum, locId) {
+  return `storyDay${Math.max(1, Math.floor(dayNum) || 1)}_${locId}`;
+}
+
 export function isStoryDayOneEnded() {
-  return Boolean(getFlag("storyDay1Ended"));
+  return Boolean(getFlag(storyDayEndedFlag(1)));
+}
+
+export function isStoryDayRouteEnded(dayNum) {
+  return Boolean(getFlag(storyDayEndedFlag(dayNum)));
+}
+
+export function isStoryDayLocationDone(dayNum, locId) {
+  if (dayNum === 1) {
+    return getState().visitedLocations.includes(locId);
+  }
+  return Boolean(getFlag(storyDayLocFlag(dayNum, locId)));
+}
+
+/** Маршрут дня N активен: предыдущие дни завершены, календарь ≥ N. */
+export function isStoryDayRouteActive(state, dayNum, locationsData) {
+  if (!isStoryMode(state)) return false;
+  const n = Math.max(1, Math.floor(dayNum) || 1);
+  if (getDayCycle().day < n) return false;
+  if (!getStoryOrderForDay(n, locationsData).length) return false;
+  if (isStoryDayRouteEnded(n)) return false;
+  for (let d = 1; d < n; d++) {
+    if (!isStoryDayRouteEnded(d)) return false;
+  }
+  return true;
+}
+
+/** Текущий активный сюжетный день (маршрут) или `null`. */
+export function getActiveStoryDayNumber(state = getState(), locationsData) {
+  if (!isStoryMode(state)) return null;
+  const calendarDay = getDayCycle().day;
+  for (let d = calendarDay; d >= 1; d--) {
+    if (isStoryDayRouteActive(state, d, locationsData)) return d;
+  }
+  return null;
+}
+
+// —— обратная совместимость (день 2) ——
+
+export function getStoryOrderDay2(locationsData) {
+  return getStoryOrderForDay(2, locationsData);
 }
 
 export function isStoryDay2Ended() {
-  return Boolean(getFlag("storyDay2Ended"));
+  return isStoryDayRouteEnded(2);
 }
 
-/** День 2 в режиме «Сюжет»: Синий → Зелёный. */
-export function isStoryDay2Active(state = getState()) {
-  return (
-    isStoryMode(state) &&
-    isStoryDayOneEnded() &&
-    !isStoryDay2Ended() &&
-    getDayCycle().day >= 2
-  );
-}
-
-function storyDay2Flag(locId) {
-  return `storyDay2_${locId}`;
+export function isStoryDay2Active(state = getState(), locationsData) {
+  if (!locationsData) return false;
+  return isStoryDayRouteActive(state, 2, locationsData);
 }
 
 export function isStoryDay2LocationDone(locId) {
-  return Boolean(getFlag(storyDay2Flag(locId)));
+  return isStoryDayLocationDone(2, locId);
 }
 
 export function isStoryLocation(locId, locationsData) {
   return getStoryOrder(locationsData).includes(locId);
 }
 
+export function isStoryDayRouteLocation(locId, dayNum, locationsData) {
+  return getStoryOrderForDay(dayNum, locationsData).includes(locId);
+}
+
 export function isStoryDay2Location(locId, locationsData) {
-  return getStoryOrderDay2(locationsData).includes(locId);
+  return isStoryDayRouteLocation(locId, 2, locationsData);
 }
 
 /** Первая ещё не завершённая точка текущего сюжетного маршрута. */
 export function getStoryFocusLocationId(state, locationsData) {
-  if (isStoryDay2Active(state)) {
-    const order = getStoryOrderDay2(locationsData);
+  const activeDay = getActiveStoryDayNumber(state, locationsData);
+  if (activeDay && activeDay > 1) {
+    const order = getStoryOrderForDay(activeDay, locationsData);
     for (const id of order) {
-      if (!isStoryDay2LocationDone(id)) return id;
+      if (!isStoryDayLocationDone(activeDay, id)) return id;
     }
     return null;
   }
-  if (!isStoryDay1Ended()) {
+  if (!isStoryDayOneEnded()) {
     const order = getStoryOrder(locationsData);
     for (const id of order) {
       if (!state.visitedLocations.includes(id)) return id;
@@ -87,8 +137,9 @@ export function getStoryFocusLocationId(state, locationsData) {
 export function isStoryMarkVisible(loc, state, locationsData) {
   if (!isStoryMode(state)) return true;
 
-  if (isStoryDay2Active(state)) {
-    if (!isStoryDay2Location(loc.id, locationsData)) {
+  const activeDay = getActiveStoryDayNumber(state, locationsData);
+  if (activeDay && activeDay > 1) {
+    if (!isStoryDayRouteLocation(loc.id, activeDay, locationsData)) {
       return (
         state.unlockedLocations.includes(loc.id) ||
         state.visitedLocations.includes(loc.id)
@@ -117,8 +168,9 @@ export function canTravelToStoryLocation(locId, state, locationsData) {
   const here = state.currentLocation || locationsData.startLocation;
   if (locId === here) return true;
 
-  if (isStoryDay2Active(state)) {
-    if (!isStoryDay2Location(locId, locationsData)) {
+  const activeDay = getActiveStoryDayNumber(state, locationsData);
+  if (activeDay && activeDay > 1) {
+    if (!isStoryDayRouteLocation(locId, activeDay, locationsData)) {
       return (
         state.unlockedLocations.includes(locId) ||
         state.visitedLocations.includes(locId)
@@ -145,8 +197,9 @@ export function canTravelToStoryLocation(locId, state, locationsData) {
  * @returns {{ pendingDayOneEnd: boolean }}
  */
 export function onStoryLocationVisited(locId, locationsData) {
-  if (isStoryDay2Active()) {
-    return onStoryDay2LocationVisited(locId, locationsData);
+  const activeDay = getActiveStoryDayNumber(getState(), locationsData);
+  if (activeDay && activeDay > 1) {
+    return { pendingDayOneEnd: false };
   }
 
   const order = getStoryOrder(locationsData);
@@ -170,25 +223,19 @@ export function onStoryLocationVisited(locId, locationsData) {
   return { pendingDayOneEnd: false };
 }
 
-function onStoryDay2LocationVisited(locId, locationsData) {
-  const order = getStoryOrderDay2(locationsData);
-  if (!order.includes(locId)) return { pendingDayOneEnd: false };
-  return { pendingDayOneEnd: false };
-}
-
-/** Завершить сюжетную сцену дня 2 в локации (после «вернуться на карту»). */
-export function completeStoryDay2Location(locId, locationsData) {
-  if (!isStoryDay2Active()) return;
-  const order = getStoryOrderDay2(locationsData);
+/** Завершить сюжетную сцену дня N в локации (после «вернуться на карту»). */
+export function completeStoryDayLocation(dayNum, locId, locationsData) {
+  if (!isStoryDayRouteActive(getState(), dayNum, locationsData)) return;
+  const order = getStoryOrderForDay(dayNum, locationsData);
   const idx = order.indexOf(locId);
-  if (idx < 0 || isStoryDay2LocationDone(locId)) return;
+  if (idx < 0 || isStoryDayLocationDone(dayNum, locId)) return;
 
-  setFlag(storyDay2Flag(locId), true);
+  setFlag(storyDayLocFlag(dayNum, locId), true);
   const next = order[idx + 1];
   if (next) unlock(next);
 
   if (idx === order.length - 1) {
-    setFlag("storyDay2Ended", true);
+    setFlag(storyDayEndedFlag(dayNum), true);
     update((s) => {
       for (const id of order) {
         if (!s.unlockedLocations.includes(id)) s.unlockedLocations.push(id);
@@ -196,6 +243,10 @@ export function completeStoryDay2Location(locId, locationsData) {
       return s;
     });
   }
+}
+
+export function completeStoryDay2Location(locId, locationsData) {
+  completeStoryDayLocation(2, locId, locationsData);
 }
 
 export function shouldCompleteStoryDayOne() {
@@ -206,17 +257,18 @@ export function shouldCompleteStoryDayOne() {
 export function getStoryNextUnvisitedLocation(state, locationsData) {
   if (!isStoryMode(state)) return null;
 
-  if (isStoryDay2Active(state)) {
-    const order = getStoryOrderDay2(locationsData);
+  const activeDay = getActiveStoryDayNumber(state, locationsData);
+  if (activeDay && activeDay > 1) {
+    const order = getStoryOrderForDay(activeDay, locationsData);
     const here = state.currentLocation || locationsData.startLocation;
     const hereIdx = order.indexOf(here);
     if (hereIdx < 0) return null;
 
     for (let i = hereIdx + 1; i < order.length; i++) {
       const next = order[i];
-      if (isStoryDay2LocationDone(next)) continue;
+      if (isStoryDayLocationDone(activeDay, next)) continue;
       if (i === hereIdx + 1) return next;
-      if (isStoryDay2LocationDone(order[i - 1])) return next;
+      if (isStoryDayLocationDone(activeDay, order[i - 1])) return next;
       return null;
     }
     return null;
@@ -240,7 +292,7 @@ export function getStoryNextUnvisitedLocation(state, locationsData) {
 
 export function markStoryDayOneEnded(locationsData) {
   setFlag("storyDay1PendingEnd", false);
-  setFlag("storyDay1Ended", true);
+  setFlag(storyDayEndedFlag(1), true);
   const order = getStoryOrder(locationsData);
   update((s) => {
     for (const id of order) {
@@ -248,4 +300,15 @@ export function markStoryDayOneEnded(locationsData) {
     }
     return s;
   });
+}
+
+/** Сброс флагов сюжетных дней при новой игре / смене режима. */
+export function clearStoryDayFlags(flags = {}) {
+  const next = { ...flags };
+  for (const key of Object.keys(next)) {
+    if (/^storyDay\d+(_|$)/.test(key)) delete next[key];
+  }
+  next.storyDay1Ended = false;
+  next.storyDay1PendingEnd = false;
+  return next;
 }

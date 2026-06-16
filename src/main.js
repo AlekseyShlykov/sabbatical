@@ -40,7 +40,8 @@ import {
   setOpenIslandMapCallback,
   initialBackgroundFromPassage,
 } from "./commands.js";
-import { initHud, showHudToast } from "./hud.js";
+import { initHud, showHudToast, renderHud } from "./hud.js";
+import { showDayEndNotice, showDayTitleCard } from "./dayTransition.js";
 import {
   isDayCycleActive,
   enableGameHud,
@@ -48,25 +49,41 @@ import {
   spendAction,
   isDayExhausted,
   advanceDay,
+  getDayCycle,
   MAX_ACTIONS_PER_DAY,
 } from "./dayCycle.js";
 import {
   getStoryOrder,
+  getStoryOrderForDay,
+  getActiveStoryDayNumber,
   shouldCompleteStoryDayOne,
   markStoryDayOneEnded,
   getStoryNextUnvisitedLocation,
-  isStoryDay2Active,
-  isStoryDay2LocationDone,
-  completeStoryDay2Location,
+  isStoryDayLocationDone,
+  completeStoryDayLocation,
   getStoryFocusLocationId,
   isStoryMode,
+  clearStoryDayFlags,
 } from "./storyMode.js";
+import {
+  pickTwinePassageForLocation,
+  isPassageAvailableOnDay,
+} from "./twinePassages.js";
 import {
   resetIntro,
   renderIntroSlide,
   advanceIntro,
   introAssetNames,
 } from "./intro.js";
+import {
+  startBackgroundMusic,
+  stopBackgroundMusic,
+  resetAudioSession,
+  setAmbientForLocation,
+  clearAmbient,
+  initAudioMenu,
+  syncAudioMenu,
+} from "./audio.js";
 
 const LOCATIONS_URL = "data/locations.json";
 
@@ -117,6 +134,7 @@ async function bootstrap() {
   }
 
   wireGlobalUI();
+  initAudioMenu();
   subscribe(updateLeaveButton);
   hydrateLanguageButtons();
   toggleContinueButton();
@@ -167,11 +185,13 @@ async function goTo(screenId) {
   showScreen(screenId);
 
   if (screenId === "map") {
+    clearAmbient();
     await waitFrames(2);
     await renderMap();
   }
   if (screenId === "intro") {
     resetIntro();
+    startBackgroundMusic();
     void renderIntroSlide();
     void ensureGameplayPreload();
   }
@@ -249,7 +269,7 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
       const here = state.currentLocation || locationsData.startLocation;
       const focus = getStoryFocusLocationId(state, locationsData);
       if (toId !== here && toId !== focus) return;
-    } else if (isStoryDay2Active(state)) {
+    } else if (getActiveStoryDayNumber(state, locationsData)) {
       const here = state.currentLocation || locationsData.startLocation;
       const focus = getStoryFocusLocationId(state, locationsData);
       if (toId !== here && toId !== focus) return;
@@ -327,7 +347,10 @@ function preloadLocationAssets(loc) {
   if (passageName === "Day2. Blue." || (loc.id === "bluehouse" && passageName === "Blue house")) {
     specs.push(["assets/characters/", "mrblue"]);
   }
-  if (passageName === "Day 2. Green" || (loc.id === "greenhouse" && passageName === "Green house")) {
+  if (
+    passageName === "Day 2. Green" ||
+    (loc.id === "greenhouse" && passageName === "Green house")
+  ) {
     specs.push(["assets/characters/", "msgreen"]);
   }
 
@@ -344,41 +367,48 @@ function preloadLocationAssets(loc) {
   return p;
 }
 
-/** После 10-го действия: на карту, анимация к оранжевому дому, сцена «дома». */
+/** После 10-го действия: сообщение, прогулка домой, титр нового дня. */
 async function sendPlayerHome() {
   if (sendingPlayerHome) return;
   if (!isDayCycleActive() || !isDayExhausted()) return;
 
-  const homeId = locationsData.startLocation;
-  const home = locationById(homeId);
+  const home = locationById(locationsData.startLocation);
   if (!home) return;
 
-  const state = getState();
-  if (state.screen === "location" && state.currentLocation === homeId) return;
-
   sendingPlayerHome = true;
-  const fromId = state.currentLocation || homeId;
-
   try {
-  if (getState().screen === "location") {
-    clearStage();
-    goTo("map");
-  }
-
-  showHudToast(t("hud.dayEndReturnHome"));
-
-  if (fromId !== homeId) {
-    await performMapTravel(fromId, homeId);
-    noteVisit(homeId);
-  } else {
-    setState({ currentLocation: homeId });
-    setCurrentMarkHighlight(homeId);
-  }
-
-  await withFade(() => enterLocation(home, { skipActionCharge: true }));
+    await finishDayAtHome();
   } finally {
     sendingPlayerHome = false;
   }
+}
+
+/** Сообщение → путь домой → смена дня → титр «День N». */
+async function finishDayAtHome({ fromId } = {}) {
+  const homeId = locationsData.startLocation;
+  const from = fromId ?? getState().currentLocation ?? homeId;
+  const nextDay = getDayCycle().day + 1;
+
+  if (getState().screen === "location") {
+    clearStage();
+    clearAmbient();
+    goTo("map");
+  }
+  await ensureMapViewportReady();
+
+  await showDayEndNotice();
+
+  if (from !== homeId) {
+    await performMapTravel(from, homeId);
+  } else {
+    setState({ currentLocation: homeId, mapPlayerCoord: null });
+    setCurrentMarkHighlight(homeId);
+  }
+
+  advanceDay();
+  renderHud(getState());
+  await showDayTitleCard(nextDay);
+  void renderMap();
 }
 
 /** Выход на карту — только после выбора режима (конец онбординга). */
@@ -401,8 +431,9 @@ async function handleReturnToMap() {
     return;
   }
   const locId = getState().currentLocation;
-  if (locId && isStoryDay2Active()) {
-    completeStoryDay2Location(locId, locationsData);
+  const activeStoryDay = getActiveStoryDayNumber(getState(), locationsData);
+  if (locId && activeStoryDay && activeStoryDay > 1) {
+    completeStoryDayLocation(activeStoryDay, locId, locationsData);
   }
   await leaveLocation();
 }
@@ -420,6 +451,7 @@ async function enterLocation(loc, { skipActionCharge = false } = {}) {
   await setBackground(bg);
   document.getElementById("location-title").textContent = localizedTitle(loc.title);
   goTo("location");
+  setAmbientForLocation(loc.id);
 
   const lineEl = document.getElementById("dialogue-line");
   const actionsEl = document.getElementById("dialogue-actions");
@@ -475,19 +507,26 @@ function resolveTwinePassage(loc) {
   if (loc.id === "orangehouse") {
     return "orange house";
   }
-  if (isStoryDay2Active()) {
-    if (loc.id === "bluehouse" && !isStoryDay2LocationDone("bluehouse")) {
-      return "Day2. Blue.";
-    }
-    if (
-      loc.id === "greenhouse" &&
-      isStoryDay2LocationDone("bluehouse") &&
-      !isStoryDay2LocationDone("greenhouse")
-    ) {
-      return "Day 2. Green";
-    }
+
+  const calendarDay = getDayCycle().day;
+  const activeStoryDay = getActiveStoryDayNumber(getState(), locationsData);
+  const storyOrder =
+    activeStoryDay && activeStoryDay > 1
+      ? getStoryOrderForDay(activeStoryDay, locationsData)
+      : [];
+
+  const passage = pickTwinePassageForLocation(loc, {
+    calendarDay,
+    activeStoryDay,
+    storyOrder,
+    isLocDoneOnStoryDay: (id) =>
+      isStoryDayLocationDone(activeStoryDay || 1, id),
+  });
+
+  if (!isPassageAvailableOnDay(passage, calendarDay)) {
+    return loc.twinePassage;
   }
-  return loc.twinePassage;
+  return passage;
 }
 
 async function openIslandFromHome() {
@@ -543,6 +582,7 @@ async function leaveLocation() {
 
   await withFade(async () => {
     clearStage();
+    clearAmbient();
     await goTo("map");
   });
 
@@ -563,24 +603,24 @@ async function leaveLocation() {
   await maybeStoryTravelAndEnterAfterLeave();
 }
 
-/** После пляжа в сюжете: прогулка на карте к оранжевому дому и вход в сцену дома. */
+/** После пляжа в сюжете: конец дня 1 и титр «День 2». */
 async function travelStoryHomeAfterBeach() {
-  const homeId = locationsData.startLocation;
-  const home = locationById(homeId);
-  if (!home) return;
-
-  const fromId = getState().currentLocation || homeId;
-  showHudToast(t("hud.dayEndReturnHome"));
-
-  if (fromId !== homeId) {
-    await performMapTravel(fromId, homeId);
-    setCurrentMarkHighlight(homeId);
-  } else {
-    setState({ currentLocation: homeId });
-    setCurrentMarkHighlight(homeId);
+  if (sendingPlayerHome) return;
+  sendingPlayerHome = true;
+  try {
+    const fromId = getState().currentLocation || locationsData.startLocation;
+    update((s) => {
+      if (!s.dayCycle) {
+        s.dayCycle = { day: 1, actionsUsed: 0, bookToday: { science: 0, novel: 0 } };
+      }
+      s.dayCycle.actionsUsed = MAX_ACTIONS_PER_DAY;
+      return s;
+    });
+    await finishDayAtHome({ fromId });
+    markStoryDayOneEnded(locationsData);
+  } finally {
+    sendingPlayerHome = false;
   }
-
-  await withFade(() => enterLocation(home, { skipActionCharge: true }));
 }
 
 /** В режиме «Сюжет»: после сцены — пройти по карте к следующей точке и войти в неё. */
@@ -618,17 +658,23 @@ async function maybeStoryTravelAndEnterAfterLeave() {
 /** После возврата в оранжевый дом (конец маршрута дня 1): новый день. */
 async function completeStoryDayOneIfNeeded() {
   if (!shouldCompleteStoryDayOne()) return;
+  if (sendingPlayerHome) return;
 
-  markStoryDayOneEnded(locationsData);
-  update((s) => {
-    if (!s.dayCycle) {
-      s.dayCycle = { day: 1, actionsUsed: 0, bookToday: { science: 0, novel: 0 } };
-    }
-    s.dayCycle.actionsUsed = MAX_ACTIONS_PER_DAY;
-    return s;
-  });
-  advanceDay();
-  void renderMap();
+  sendingPlayerHome = true;
+  try {
+    update((s) => {
+      if (!s.dayCycle) {
+        s.dayCycle = { day: 1, actionsUsed: 0, bookToday: { science: 0, novel: 0 } };
+      }
+      s.dayCycle.actionsUsed = MAX_ACTIONS_PER_DAY;
+      return s;
+    });
+    const homeId = locationsData.startLocation;
+    await finishDayAtHome({ fromId: homeId });
+    markStoryDayOneEnded(locationsData);
+  } finally {
+    sendingPlayerHome = false;
+  }
 }
 
 /* =========================================================
@@ -668,6 +714,7 @@ async function handleAction(action, btn) {
       const state = getState();
       if (!state.mode && state.screen === "splash") {
         void ensureGameplayPreload();
+        startBackgroundMusic();
         await withFade(() => goTo("intro"));
       }
       return;
@@ -720,6 +767,7 @@ async function handleAction(action, btn) {
         language: getLanguage(),
         unlockedLocations: [...locationsData.initiallyUnlocked],
       });
+      resetAudioSession();
       await withFade(() => goTo("splash"));
       toggleContinueButton();
       return;
@@ -727,6 +775,10 @@ async function handleAction(action, btn) {
 }
 
 async function chooseMode(mode) {
+  const resumeStoryExplore =
+    mode === "story" &&
+    (getFlag("postTutorialStoryStart") || getFlag("storyContinueExplore"));
+
   const startId = locationsData.startLocation;
   const storyOrder = getStoryOrder(locationsData);
   const unlocked =
@@ -745,18 +797,13 @@ async function chooseMode(mode) {
     visitedLocations: [],
     storyProgress: 0,
     mapPlayerCoord: null,
-    flags: {
+    flags: clearStoryDayFlags({
       ...getState().flags,
       tutorialMap: false,
       prologue: false,
-      storyDay1PendingEnd: false,
-      storyDay1Ended: false,
-      storyDay2Ended: false,
-      storyDay2_bluehouse: false,
-      storyDay2_greenhouse: false,
       storyContinueExplore: false,
       postTutorialStoryStart: false,
-    },
+    }),
   });
   enableGameHud();
   if (mode === "story" || mode === "free") {
@@ -771,7 +818,7 @@ async function chooseMode(mode) {
     });
   }
   if (mode === "story") {
-    await startStoryMode();
+    await startStoryMode({ resumeExplore: resumeStoryExplore });
     return;
   }
   noteVisit(startId);
@@ -781,10 +828,11 @@ async function chooseMode(mode) {
 }
 
 /** Режим «Сюжет»: сразу первая сцена; после «Пойду исследовать» — авто-переход по маршруту. */
-async function startStoryMode() {
+async function startStoryMode({ resumeExplore = false } = {}) {
   try {
     const storyOrder = getStoryOrder(locationsData);
-    const sceneId = storyOrder[0] || locationsData.startLocation;
+    const homeId = locationsData.startLocation;
+    const sceneId = storyOrder[0] || homeId;
     const sceneLoc = locationById(sceneId);
     if (!sceneLoc) {
       await withFade(() => goTo("map"));
@@ -792,30 +840,36 @@ async function startStoryMode() {
     }
 
     const continueExplore =
-      getFlag("storyContinueExplore") || getFlag("postTutorialStoryStart");
+      resumeExplore ||
+      getFlag("storyContinueExplore") ||
+      getFlag("postTutorialStoryStart");
     setFlag("storyContinueExplore", false);
     setFlag("postTutorialStoryStart", false);
-
-    if (continueExplore) {
-      clearStage();
-      await withFade(async () => {
-        await goTo("map");
-        noteVisit(sceneId);
-        setCurrentMarkHighlight(sceneId);
-      });
-      await maybeStoryTravelAndEnterAfterLeave();
-      return;
-    }
 
     await withFade(async () => {
       clearStage();
       await goTo("map");
-      noteVisit(sceneId);
-      setCurrentMarkHighlight(sceneId);
+      setState({ currentLocation: homeId });
+      if (!getState().visitedLocations.includes(sceneId)) {
+        noteVisit(sceneId);
+      }
+      setCurrentMarkHighlight(homeId);
       await waitFrames(1);
       await ensureMapViewportReady();
-      await enterLocation(sceneLoc, { skipActionCharge: true });
     });
+
+    if (continueExplore) {
+      await maybeStoryTravelAndEnterAfterLeave();
+      return;
+    }
+
+    const focus = getStoryFocusLocationId(getState(), locationsData);
+    if (focus && focus !== getState().currentLocation) {
+      await maybeStoryTravelAndEnterAfterLeave();
+      return;
+    }
+
+    await withFade(() => enterLocation(sceneLoc, { skipActionCharge: true }));
   } catch (err) {
     console.error("[story] startStoryMode failed", err);
     document.getElementById("veil")?.classList.remove("is-on");
@@ -826,6 +880,7 @@ async function startStoryMode() {
 function openMenu() {
   const o = document.getElementById("overlay");
   o.hidden = false;
+  syncAudioMenu();
   requestAnimationFrame(() => o.classList.add("is-on"));
 }
 

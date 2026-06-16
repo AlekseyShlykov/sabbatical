@@ -4,6 +4,13 @@ import { readFileSync, writeFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
+const DAY_PASSAGE_RE = /^Day\s*(\d+)\b/i;
+
+function passageDayNumber(name) {
+  const m = String(name || "").match(DAY_PASSAGE_RE);
+  return m ? Number(m[1]) : null;
+}
+
 const __dir = dirname(fileURLToPath(import.meta.url));
 const src = join(__dir, "twine-export-ru.json");
 const out = join(__dir, "../assets/twine/ru.json");
@@ -101,9 +108,47 @@ if (!hasReturn) {
 }
 
 postProcessPassages(passages);
+validateDayPassages(passages);
 
 writeFileSync(out, JSON.stringify({ passages }, null, 2) + "\n");
 console.log(`Wrote ${passages.length} passages → ${out}`);
+
+function validateDayPassages(list) {
+  const locPath = join(__dir, "../data/locations.json");
+  let locations = [];
+  try {
+    locations = JSON.parse(readFileSync(locPath, "utf8")).locations || [];
+  } catch {
+    console.warn("[build-ru] locations.json not read — skip Day N validation");
+    return;
+  }
+  const names = new Set(list.map((p) => p.name));
+
+  for (const p of list) {
+    const day = passageDayNumber(p.name);
+    if (day !== null && day < 2) {
+      console.warn(`[build-ru] passage "${p.name}": Day N usually starts from N≥2`);
+    }
+  }
+
+  for (const loc of locations) {
+    const byDay = loc.twinePassageByDay;
+    if (!byDay) continue;
+    for (const [dayKey, passageName] of Object.entries(byDay)) {
+      if (!names.has(passageName)) {
+        console.warn(
+          `[build-ru] ${loc.id}: twinePassageByDay[${dayKey}] → missing passage "${passageName}"`
+        );
+      }
+      const passageDay = passageDayNumber(passageName);
+      if (passageDay !== null && String(passageDay) !== String(dayKey)) {
+        console.warn(
+          `[build-ru] ${loc.id}: twinePassageByDay[${dayKey}] points to "${passageName}" (Day ${passageDay})`
+        );
+      }
+    }
+  }
+}
 
 function postProcessPassages(list) {
   const byName = Object.fromEntries(list.map((p) => [p.name, p]));
