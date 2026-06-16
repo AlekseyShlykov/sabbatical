@@ -139,6 +139,7 @@ async function bootstrap() {
   hydrateLanguageButtons();
   toggleContinueButton();
   updateLeaveButton();
+  updateDevRestartButton(getState().screen || "splash");
 
   // Initial screen.
   // The "location" screen depends on transient state (current passage, stage
@@ -183,6 +184,7 @@ onLanguageChange(async (lang) => {
 async function goTo(screenId) {
   setState({ screen: screenId });
   showScreen(screenId);
+  updateDevRestartButton(screenId);
 
   if (screenId === "map") {
     clearAmbient();
@@ -761,17 +763,30 @@ async function handleAction(action, btn) {
       return;
     case "menu-new-game":
       if (!confirm(t("menu.confirmNew"))) return;
-      clearSave();
-      closeMenu();
-      resetState({
-        language: getLanguage(),
-        unlockedLocations: [...locationsData.initiallyUnlocked],
-      });
-      resetAudioSession();
-      await withFade(() => goTo("splash"));
-      toggleContinueButton();
+      await restartToSplash();
+      return;
+    case "restart-from-beginning":
+      await restartToSplash();
       return;
   }
+}
+
+async function restartToSplash() {
+  clearSave();
+  closeMenu();
+  clearStage();
+  resetState({
+    language: getLanguage(),
+    unlockedLocations: [...locationsData.initiallyUnlocked],
+  });
+  resetAudioSession();
+  toggleContinueButton();
+  await withFade(() => goTo("splash"));
+}
+
+function updateDevRestartButton(screenId) {
+  const btn = document.getElementById("dev-restart-btn");
+  if (btn) btn.hidden = screenId === "splash";
 }
 
 async function chooseMode(mode) {

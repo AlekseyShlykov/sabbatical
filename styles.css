@@ -940,6 +940,31 @@ body.has-game-hud .map {
 }
 .overlay__actions .btn--ghost:hover { background: rgba(0,0,0,0.04); }
 
+/* TEMP: dev reset to splash */
+.dev-restart-btn {
+  position: fixed;
+  left: 50%;
+  bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 7500;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(12, 10, 8, 0.72);
+  color: rgba(255, 255, 255, 0.88);
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.dev-restart-btn:hover {
+  opacity: 1;
+  background: rgba(12, 10, 8, 0.88);
+}
+.dev-restart-btn[hidden] { display: none !important; }
+
 /* =========================================================
    DAY END / NEW DAY TITLE
    ========================================================= */

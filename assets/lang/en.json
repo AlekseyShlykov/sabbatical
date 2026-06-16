@@ -51,6 +51,9 @@
   "dayTransition": {
     "tapToContinue": "Tap to continue"
   },
+  "dev": {
+    "restartFromStart": "Start over"
+  },
   "menu": {
     "title": "Menu",
     "resume": "Resume",
