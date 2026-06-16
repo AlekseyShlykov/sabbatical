@@ -11,11 +11,21 @@ const STORY_CALENDAR_YEAR = 2024;
 const STORY_CALENDAR_MONTH = 8; // сентябрь (0-based)
 const STORY_CALENDAR_DAY = 1;
 
+let dayTransitionActive = false;
+
 const WRITING_PASSAGES = new Set([
   "Сесть и писать книгу",
   "Научная книга",
   "Роман",
 ]);
+
+export function setDayTransitionActive(on) {
+  dayTransitionActive = Boolean(on);
+}
+
+export function isDayTransitionActive() {
+  return dayTransitionActive;
+}
 
 const FREE_CHOICE_TARGETS = new Set([
   "Отдохнуть немного",
@@ -84,6 +94,7 @@ export function actionsRemaining() {
 }
 
 export function spendAction() {
+  if (dayTransitionActive) return false;
   if (!isDayCycleActive()) return true;
   if (!canSpendAction()) return false;
   update((s) => {
@@ -146,6 +157,7 @@ export function canWriteBook(kind) {
 
 /** +1% к книге, −1 действие; не больше 3% за день на каждую книгу. */
 export function tryAddBookProgress(kind) {
+  if (dayTransitionActive) return { ok: false, reason: "dayTransition" };
   if (!isDayCycleActive()) {
     addBookProgressOnly(kind);
     if (!getFlag("bookUi")) enableGameHud();

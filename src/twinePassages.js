@@ -25,10 +25,9 @@ export function pickTwinePassageForLocation(loc, {
   activeStoryDay,
   storyOrder = [],
   isLocDoneOnStoryDay = () => false,
+  freeExplore = false,
 } = {}) {
   const fallback = loc.twinePassage;
-  if (!activeStoryDay || activeStoryDay !== calendarDay) return fallback;
-
   const dayPassage = loc.twinePassageByDay?.[String(calendarDay)];
   if (!dayPassage) return fallback;
   if (!isPassageAvailableOnDay(dayPassage, calendarDay)) {
@@ -37,6 +36,10 @@ export function pickTwinePassageForLocation(loc, {
     );
     return fallback;
   }
+
+  if (freeExplore) return dayPassage;
+
+  if (!activeStoryDay || activeStoryDay !== calendarDay) return fallback;
 
   const idx = storyOrder.indexOf(loc.id);
   if (idx < 0) return fallback;

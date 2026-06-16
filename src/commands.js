@@ -15,7 +15,8 @@ import {
   clearStage,
 } from "./scene.js";
 import { setFlag } from "./state.js";
-import { tryAddBookProgress, advanceDay, enableGameHud } from "./dayCycle.js";
+import { tryAddBookProgress, enableGameHud } from "./dayCycle.js";
+import { requestEndCalendarDay } from "./dayTransition.js";
 import { showHudToast } from "./hud.js";
 import { t } from "./localization.js";
 
@@ -198,7 +199,7 @@ export async function runCommand(rawBody) {
     return;
   }
   if (/новый\s+день|new\s+day/iu.test(body)) {
-    advanceDay();
+    await requestEndCalendarDay();
     return;
   }
   if (/появляется\s+графа|writing\s+progress\s+bar/iu.test(body)) {

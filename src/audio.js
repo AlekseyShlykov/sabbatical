@@ -80,6 +80,11 @@ function applyAmbientVolume() {
   ambientAudio.volume = prefs.soundsEnabled ? prefs.soundsVolume : 0;
 }
 
+function applyVolumes() {
+  applyMusicVolume();
+  applyAmbientVolume();
+}
+
 function isHouseOrLighthouse(locId) {
   return locId === "lighthouse" || locId.endsWith("house");
 }
@@ -147,6 +152,9 @@ export function getAudioPrefs() {
 }
 
 export function setAudioPrefs(patch) {
+  const wasMusicEnabled = prefs.musicEnabled;
+  const wasSoundsEnabled = prefs.soundsEnabled;
+
   prefs = {
     ...prefs,
     ...patch,
@@ -154,19 +162,19 @@ export function setAudioPrefs(patch) {
     soundsVolume: patch.soundsVolume != null ? clamp01(patch.soundsVolume) : prefs.soundsVolume,
   };
   savePrefs();
-  applyMusicVolume();
-  applyAmbientVolume();
+  applyVolumes();
 
-  if (!prefs.musicEnabled && musicAudio) {
-    musicAudio.pause();
-  } else {
-    resumeMusicIfNeeded();
+  const musicToggled = patch.musicEnabled !== undefined && patch.musicEnabled !== wasMusicEnabled;
+  const soundsToggled = patch.soundsEnabled !== undefined && patch.soundsEnabled !== wasSoundsEnabled;
+
+  if (musicToggled) {
+    if (!prefs.musicEnabled) musicAudio?.pause();
+    else resumeMusicIfNeeded();
   }
 
-  if (!prefs.soundsEnabled) {
-    stopAmbientPlayback();
-  } else {
-    resumeAmbientIfNeeded();
+  if (soundsToggled) {
+    if (!prefs.soundsEnabled) stopAmbientPlayback();
+    else resumeAmbientIfNeeded();
   }
 }
 
@@ -227,6 +235,7 @@ export function initAudioMenu() {
   const soundsToggle = document.getElementById("audio-sounds-enabled");
   const musicVolume = document.getElementById("audio-music-volume");
   const soundsVolume = document.getElementById("audio-sounds-volume");
+  const menuAudio = document.getElementById("menu-audio");
   if (!musicToggle || !soundsToggle || !musicVolume || !soundsVolume) return;
 
   const sync = () => {
@@ -239,6 +248,13 @@ export function initAudioMenu() {
     soundsVolume.disabled = !p.soundsEnabled;
   };
 
+  const onMusicVolume = () => {
+    setAudioPrefs({ musicVolume: Number(musicVolume.value) / 100 });
+  };
+  const onSoundsVolume = () => {
+    setAudioPrefs({ soundsVolume: Number(soundsVolume.value) / 100 });
+  };
+
   musicToggle.addEventListener("change", () => {
     setAudioPrefs({ musicEnabled: musicToggle.checked });
     sync();
@@ -247,18 +263,13 @@ export function initAudioMenu() {
     setAudioPrefs({ soundsEnabled: soundsToggle.checked });
     sync();
   });
-  musicVolume.addEventListener("input", () => {
-    setAudioPrefs({ musicVolume: Number(musicVolume.value) / 100 });
-  });
-  soundsVolume.addEventListener("input", () => {
-    setAudioPrefs({ soundsVolume: Number(soundsVolume.value) / 100 });
-  });
+  musicVolume.addEventListener("input", onMusicVolume);
+  musicVolume.addEventListener("change", onMusicVolume);
+  soundsVolume.addEventListener("input", onSoundsVolume);
+  soundsVolume.addEventListener("change", onSoundsVolume);
 
-  document.getElementById("overlay")?.addEventListener("transitionend", (e) => {
-    if (e.target?.id === "overlay" && e.propertyName === "opacity") {
-      sync();
-    }
-  });
+  menuAudio?.addEventListener("pointerdown", (e) => e.stopPropagation());
+  menuAudio?.addEventListener("click", (e) => e.stopPropagation());
 
   sync();
 }

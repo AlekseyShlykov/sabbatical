@@ -11,6 +11,7 @@ import {
   onStoryLocationVisited,
 } from "./storyMode.js";
 import { localizedTitle, t } from "./localization.js";
+import { isDayTransitionActive } from "./dayCycle.js";
 import { resolveRasterUrl } from "./scene.js";
 import { PATH_SVG_URL, PATH4_MARKS_URL } from "./pathsConfig.js";
 import {
@@ -455,6 +456,8 @@ function canTravelTo(locId, state) {
 }
 
 function handleMarkClick(locId) {
+  if (isDayTransitionActive()) return;
+
   const state = getState();
   const here = state.currentLocation || locationsData.startLocation;
   // Clicking the mark you're standing on enters that location's scene

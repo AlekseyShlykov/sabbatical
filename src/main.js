@@ -41,7 +41,11 @@ import {
   initialBackgroundFromPassage,
 } from "./commands.js";
 import { initHud, showHudToast, renderHud } from "./hud.js";
-import { showDayEndNotice, showDayTitleCard } from "./dayTransition.js";
+import {
+  showDayEndNotice,
+  showDayTitleCard,
+  setEndCalendarDayHandler,
+} from "./dayTransition.js";
 import {
   isDayCycleActive,
   enableGameHud,
@@ -51,6 +55,8 @@ import {
   advanceDay,
   getDayCycle,
   MAX_ACTIONS_PER_DAY,
+  setDayTransitionActive,
+  isDayTransitionActive,
 } from "./dayCycle.js";
 import {
   getStoryOrder,
@@ -119,6 +125,7 @@ async function bootstrap() {
   initHud();
   gameplayPreloadPromise = preloadGameplayAssets();
   setAfterPassageHook(maybeReturnHomeAfterVisit);
+  setEndCalendarDayHandler(endPlayerDay);
   setEndCallback(handleDialogueEnd);
   setReturnToMapCallback(handleReturnToMap);
   setOpenIslandMapCallback(openIslandFromHome);
@@ -261,17 +268,16 @@ async function performMapTravel(fromId, toId) {
 }
 
 async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = false } = {}) {
+  if (isDayTransitionActive()) return;
+
   const state = getState();
   const fromId = state.currentLocation || locationsData.startLocation;
   const toLoc  = locationById(toId);
   if (!toLoc) return;
 
   if (isStoryMode(state)) {
-    if (!getFlag("storyDay1Ended")) {
-      const here = state.currentLocation || locationsData.startLocation;
-      const focus = getStoryFocusLocationId(state, locationsData);
-      if (toId !== here && toId !== focus) return;
-    } else if (getActiveStoryDayNumber(state, locationsData)) {
+    const activeDay = getActiveStoryDayNumber(state, locationsData);
+    if (activeDay || !getFlag("storyDay1Ended")) {
       const here = state.currentLocation || locationsData.startLocation;
       const focus = getStoryFocusLocationId(state, locationsData);
       if (toId !== here && toId !== focus) return;
@@ -369,10 +375,10 @@ function preloadLocationAssets(loc) {
   return p;
 }
 
-/** После 10-го действия: сообщение, прогулка домой, титр нового дня. */
-async function sendPlayerHome() {
+/** Конец календарного дня: сообщение, прогулка домой, титр нового дня. */
+async function endPlayerDay() {
   if (sendingPlayerHome) return;
-  if (!isDayCycleActive() || !isDayExhausted()) return;
+  if (!isDayCycleActive()) return;
 
   const home = locationById(locationsData.startLocation);
   if (!home) return;
@@ -385,32 +391,43 @@ async function sendPlayerHome() {
   }
 }
 
+/** После 10-го действия: сообщение, прогулка домой, титр нового дня. */
+async function sendPlayerHome() {
+  if (!isDayCycleActive() || !isDayExhausted()) return;
+  await endPlayerDay();
+}
+
 /** Сообщение → путь домой → смена дня → титр «День N». */
 async function finishDayAtHome({ fromId } = {}) {
   const homeId = locationsData.startLocation;
   const from = fromId ?? getState().currentLocation ?? homeId;
   const nextDay = getDayCycle().day + 1;
 
-  if (getState().screen === "location") {
-    clearStage();
-    clearAmbient();
-    goTo("map");
+  setDayTransitionActive(true);
+  try {
+    if (getState().screen === "location") {
+      clearStage();
+      clearAmbient();
+      goTo("map");
+    }
+    await ensureMapViewportReady();
+
+    await showDayEndNotice();
+
+    if (from !== homeId) {
+      await performMapTravel(from, homeId);
+    } else {
+      setState({ currentLocation: homeId, mapPlayerCoord: null });
+      setCurrentMarkHighlight(homeId);
+    }
+
+    advanceDay();
+    renderHud(getState());
+    await showDayTitleCard(nextDay);
+    void renderMap();
+  } finally {
+    setDayTransitionActive(false);
   }
-  await ensureMapViewportReady();
-
-  await showDayEndNotice();
-
-  if (from !== homeId) {
-    await performMapTravel(from, homeId);
-  } else {
-    setState({ currentLocation: homeId, mapPlayerCoord: null });
-    setCurrentMarkHighlight(homeId);
-  }
-
-  advanceDay();
-  renderHud(getState());
-  await showDayTitleCard(nextDay);
-  void renderMap();
 }
 
 /** Выход на карту — только после выбора режима (конец онбординга). */
@@ -472,9 +489,6 @@ async function enterLocation(loc, { skipActionCharge = false } = {}) {
 
 async function maybeReturnHomeAfterVisit() {
   if (!isDayExhausted()) return;
-  const homeId = locationsData.startLocation;
-  const state = getState();
-  if (state.screen === "location" && state.currentLocation === homeId) return;
   await sendPlayerHome();
 }
 
@@ -510,10 +524,13 @@ function resolveTwinePassage(loc) {
     return "orange house";
   }
 
+  const state = getState();
   const calendarDay = getDayCycle().day;
-  const activeStoryDay = getActiveStoryDayNumber(getState(), locationsData);
-  const storyOrder =
-    activeStoryDay && activeStoryDay > 1
+  const activeStoryDay = getActiveStoryDayNumber(state, locationsData);
+  const freeExplore = state.mode === "free";
+  const storyOrder = freeExplore
+    ? []
+    : activeStoryDay
       ? getStoryOrderForDay(activeStoryDay, locationsData)
       : [];
 
@@ -521,6 +538,7 @@ function resolveTwinePassage(loc) {
     calendarDay,
     activeStoryDay,
     storyOrder,
+    freeExplore,
     isLocDoneOnStoryDay: (id) =>
       isStoryDayLocationDone(activeStoryDay || 1, id),
   });

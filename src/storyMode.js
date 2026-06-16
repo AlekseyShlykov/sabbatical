@@ -117,7 +117,7 @@ export function isStoryDay2Location(locId, locationsData) {
 /** Первая ещё не завершённая точка текущего сюжетного маршрута. */
 export function getStoryFocusLocationId(state, locationsData) {
   const activeDay = getActiveStoryDayNumber(state, locationsData);
-  if (activeDay && activeDay > 1) {
+  if (activeDay) {
     const order = getStoryOrderForDay(activeDay, locationsData);
     for (const id of order) {
       if (!isStoryDayLocationDone(activeDay, id)) return id;
@@ -133,21 +133,19 @@ export function getStoryFocusLocationId(state, locationsData) {
   return null;
 }
 
+function isStoryLinearFocusMark(locId, state, locationsData) {
+  const here = state.currentLocation || locationsData.startLocation;
+  const focus = getStoryFocusLocationId(state, locationsData);
+  return locId === here || (focus != null && locId === focus);
+}
+
 /** Метка видна на карте в режиме «Сюжет» (только цель и текущая позиция). */
 export function isStoryMarkVisible(loc, state, locationsData) {
   if (!isStoryMode(state)) return true;
 
   const activeDay = getActiveStoryDayNumber(state, locationsData);
-  if (activeDay && activeDay > 1) {
-    if (!isStoryDayRouteLocation(loc.id, activeDay, locationsData)) {
-      return (
-        state.unlockedLocations.includes(loc.id) ||
-        state.visitedLocations.includes(loc.id)
-      );
-    }
-    const here = state.currentLocation || locationsData.startLocation;
-    const focus = getStoryFocusLocationId(state, locationsData);
-    return loc.id === here || loc.id === focus;
+  if (activeDay) {
+    return isStoryLinearFocusMark(loc.id, state, locationsData);
   }
 
   if (isStoryDayOneEnded()) {
@@ -157,9 +155,7 @@ export function isStoryMarkVisible(loc, state, locationsData) {
     );
   }
   if (!isStoryLocation(loc.id, locationsData)) return false;
-  const here = state.currentLocation || locationsData.startLocation;
-  const focus = getStoryFocusLocationId(state, locationsData);
-  return loc.id === here || loc.id === focus;
+  return isStoryLinearFocusMark(loc.id, state, locationsData);
 }
 
 /** Можно идти в локацию (без проверки соседства по графу). */
@@ -169,15 +165,9 @@ export function canTravelToStoryLocation(locId, state, locationsData) {
   if (locId === here) return true;
 
   const activeDay = getActiveStoryDayNumber(state, locationsData);
-  if (activeDay && activeDay > 1) {
-    if (!isStoryDayRouteLocation(locId, activeDay, locationsData)) {
-      return (
-        state.unlockedLocations.includes(locId) ||
-        state.visitedLocations.includes(locId)
-      );
-    }
+  if (activeDay) {
     const focus = getStoryFocusLocationId(state, locationsData);
-    return locId === focus;
+    return focus != null && locId === focus;
   }
 
   if (isStoryDayOneEnded()) {
@@ -189,7 +179,7 @@ export function canTravelToStoryLocation(locId, state, locationsData) {
 
   if (!isStoryLocation(locId, locationsData)) return false;
   const focus = getStoryFocusLocationId(state, locationsData);
-  return locId === focus;
+  return focus != null && locId === focus;
 }
 
 /**

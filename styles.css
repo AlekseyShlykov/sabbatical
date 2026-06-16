@@ -944,7 +944,7 @@ body.has-game-hud .map {
 .dev-restart-btn {
   position: fixed;
   left: 50%;
-  bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  top: max(10px, env(safe-area-inset-top, 0px));
   transform: translateX(-50%);
   z-index: 7500;
   padding: 6px 14px;

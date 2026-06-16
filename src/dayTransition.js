@@ -3,6 +3,18 @@
 import { t, tFmt } from "./localization.js";
 import { wait } from "./transitions.js";
 
+let endCalendarDayHandler = null;
+
+/** Регистрирует сценарий конца дня (прогулка домой + титр). */
+export function setEndCalendarDayHandler(fn) {
+  endCalendarDayHandler = fn;
+}
+
+/** Вызов из `//новый день` и похожих команд сценария. */
+export async function requestEndCalendarDay() {
+  if (endCalendarDayHandler) await endCalendarDayHandler();
+}
+
 function waitForDismiss(el, ms = 2800) {
   return new Promise((resolve) => {
     let done = false;
