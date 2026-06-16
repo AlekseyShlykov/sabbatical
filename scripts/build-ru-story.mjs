@@ -47,7 +47,31 @@ const TYPO_FIXES = [
   [/заговоривать/g, "заговорить"],
   [/приключенческий рома/g, "приключенческий роман"],
   [/Кажется пора/g, "Кажется, пора"],
+  [/Погда/g, "Погода"],
+  [/mrbule:/g, "mrblue:"],
+  [/ндеюсь/g, "надеюсь"],
+  [/пренадлежит/g, "принадлежит"],
+  [/живем/g, "живём"],
+  [/настояла что/g, "настояла, что"],
+  [/подозреваю что/g, "подозреваю, что"],
+  [/не стесняясь/g, "не стесняясь"],
 ];
+
+function normalizeLink(l) {
+  const orig = l.original || "";
+  const alias = orig.match(/\[\[([^\]|]+)(?:\||->)([^\]]+)\]\]/);
+  if (alias) {
+    return { name: alias[1].trim(), link: alias[2].trim() };
+  }
+  let name = l.linkText || "";
+  let target = l.passageName || "";
+  if (target.includes("|")) {
+    const [label, ...rest] = target.split("|");
+    name = label.trim();
+    target = rest.join("|").trim();
+  }
+  return { name, link: target };
+}
 
 function fixText(s) {
   let t = s;
@@ -62,10 +86,7 @@ function stripLinksFromText(text) {
 const raw = JSON.parse(readFileSync(src, "utf8"));
 const passages = raw.passages.map((p) => {
   const text = fixText(p.cleanText || stripLinksFromText(p.text || ""));
-  const links = (p.links || []).map((l) => ({
-    name: l.linkText,
-    link: l.passageName,
-  }));
+  const links = (p.links || []).map(normalizeLink);
   return { name: p.name, text: text ? text + "\n" : "", links };
 });
 
@@ -118,9 +139,42 @@ function postProcessPassages(list) {
   }
   if (byName["Отдохнуть немного"] && !byName["Отдохнуть немного"].text.includes("//новый день")) {
     byName["Отдохнуть немного"].text = byName["Отдохнуть немного"].text.replace(
-      "//снова показывает вид на дом",
-      "//снова показывает вид на дом\n//новый день"
+      /\/\/снова показывает вид на дом[^\n]*/i,
+      "//снова показывает вид на дом с текстом\n//новый день"
     );
+  }
+  if (byName["Day2. Blue."]) {
+    let t = byName["Day2. Blue."].text;
+    if (!t.includes("//показать mrblue")) {
+      t = t.replace(
+        /^\/\/задний фон - дом\./i,
+        "//фон houseblueout\n//показать mrblue"
+      );
+      byName["Day2. Blue."].text = t;
+    }
+  }
+  if (byName["Да, с радостью"] && !byName["Да, с радостью"].text.includes("//фон houseblueinside")) {
+    byName["Да, с радостью"].text = byName["Да, с радостью"].text.replace(
+      /^\/\/фон меняется на синий дом внутри/i,
+      "//фон houseblueinside"
+    );
+  }
+  if (byName["Day 2. Green"]) {
+    let t = byName["Day 2. Green"].text;
+    if (!t.includes("//показать msgreen")) {
+      t = t.replace(
+        /^\/\/фон - дом Зеленой\./i,
+        "//фон housegreeninside\n//показать msgreen"
+      );
+      byName["Day 2. Green"].text = t;
+    }
+  }
+  if (byName["Спасибо, но я хочу прогуляться"] && !byName["Спасибо, но я хочу прогуляться"].text.includes("//вернуться на карту")) {
+    byName["Спасибо, но я хочу прогуляться"].text =
+      byName["Спасибо, но я хочу прогуляться"].text.trimEnd() + "\n//вернуться на карту\n";
+  }
+  if (byName["Спасибо, я лучше пойду погуляю"] && !byName["Спасибо, я лучше пойду погуляю"].text) {
+    byName["Спасибо, я лучше пойду погуляю"].text = "//вернуться на карту\n";
   }
   return list.map((p) => byName[p.name] || p);
 }

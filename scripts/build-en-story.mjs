@@ -61,6 +61,26 @@ const LINK_EN = {
   "Пойду исследовать остров": "I'll explore the island",
   "Научная книга": "Scholarly book",
   "Роман": "Novel",
+  "Спасибо, но я хочу прогуляться": "Thanks — I'd rather take a walk",
+  "Да, с радостью": "Yes, gladly",
+  "Да, ты прав": "Yes, you're right",
+  "Ну формально я был еще в баре": "Well, technically I was at the bar too",
+  "Спасибо, буду иметь в виду!": "Thanks — I'll keep that in mind!",
+  "Как ты тут оказался?": "How did you end up here?",
+  "Расскажи мне об острове": "Tell me about the island",
+  "Мистер Красный всем тут владеет?": "Does Mister Red own everything here?",
+  "Оранжевый? Тот кто раньше жил в моем доме?":
+    "Mister Orange? The one who lived in my house before?",
+  "Но как тогда здесь оказался я? Ведь я не на пенсии.":
+    "But how did I end up here? I'm not retired.",
+  "А не знаешь почему?": "Do you know why?",
+  "Да, это странно": "Yes, that's odd",
+  "Я только начал": "I've only just started",
+  "Спасибо, хорошо": "Thanks, it's going well",
+  "Расскажите больше о себе": "Tell me more about yourself",
+  "Как вам этот остров?": "How do you like this island?",
+  "Как вы здесь оказались?": "How did you end up here?",
+  "Спасибо, я лучше пойду погуляю": "Thanks — I'd rather go for a walk",
 };
 
 const TEXT_EN = {
@@ -188,6 +208,36 @@ const TEXT_EN = {
     "mswhite: Oh — forgive me, you should go. I wanted to be alone, and since I've lived here longer than you, I'd be grateful if you left.\n",
   "Вернуться на карту": "//return to world map\n",
   story_return_map: "//return to map\n",
+  "Day2. Blue.":
+    "//background houseblueout\n//show mrblue\nmrblue: Hello, Mister Orange! How are you? Off for a walk? Care to come in?\n",
+  "Спасибо, но я хочу прогуляться":
+    "mrblue: The weather really is perfect for a walk! Enjoy your stroll!\n\n//return to map\n",
+  "Да, с радостью":
+    "//background houseblueinside\nmrblue: I'll bet this is the first house you've been inside — apart from your own, of course.\n",
+  "Да, ты прав":
+    "mrblue: Yes — we don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
+  "Ну формально я был еще в баре":
+    "mrblue: Yes — the bar is always open. We don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
+  question:
+    "mrblue: Maybe you have some questions? I can answer some of them.\n",
+  question2: "mrblue: Maybe you'd like to know something else?\n",
+  "Как ты тут оказался?":
+    "mrblue: As I said, I sailed here ten years ago. Red, Purple, Orange, and Green were already living here.\n\nmrblue: Circumstances meant I needed a quiet place. I had enough money, and someone introduced me to Red. He was just thinking of creating this little community for people who want a peaceful retirement.\n\nmrblue: Literally a week later I was on this island. And here we are, ten years on.\n\nmrblue: (thoughtfully) Yes — time flies here. Before you know it, a year or two will have passed.\n",
+  "Расскажи мне об острове":
+    "mrblue: Well, it's a retirees' dream island. If you have enough money, you can live out your days here in comfort and joy. And none of the residents are simple folk — everyone has their quirks, their skeletons in the closet.\n\nmrblue: (laughs) Though who doesn't, by retirement age?\n",
+  "Мистер Красный всем тут владеет?":
+    "mrblue: Something like that. I'm not entirely sure how everything works here. But yes — this island belongs to him. And he built all the houses we live in. Well, not him personally — his companies.\n\nmrblue: Except for Miss White's house — she insisted on a design of her own. And strangely, Red agreed.\n",
+  "А не знаешь почему?":
+    "mrblue: Even someone as talkative as me knows where the line is — and which questions not to ask.\n",
+  "Оранжевый? Тот кто раньше жил в моем доме?":
+    "mrblue: We were neighbours, so we became friends. He was the oldest among us and kept his beard ginger to the end. The nickname Mister Orange suited him perfectly.\n\nmrblue: He loved to tell stories — but only about the distant past. Gradually his mind grew weaker, until he died this year. I miss him.\n\nmrblue: But forgive me — I got carried away with memories. Would you like to know anything else?\n",
+  "Но как тогда здесь оказался я? Ведь я не на пенсии.":
+    "mrblue: You know, I ask myself the same question. Mister Red doesn't invite random people here. I think it's best to ask him — though I suspect he won't answer.\n",
+  "Day 2. Green":
+    "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello — how's the book coming along?\n",
+  questions2green:
+    "msgreen: I still hope I'll get to read it.\n\nmsgreen: I'm sure you're curious about many things. We already know each other, and straight answers are a luxury on this island. But I can afford them. So ask away — don't be shy.\n",
+  "Спасибо, я лучше пойду погуляю": "//return to map\n",
 };
 
 function translateLine(line) {

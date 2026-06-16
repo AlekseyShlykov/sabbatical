@@ -28,6 +28,10 @@
     "lighthouse",
     "beach"
   ],
+  "storyOrderDay2": [
+    "bluehouse",
+    "greenhouse"
+  ],
   "debugShowPaths": false,
   "locations": [
     {

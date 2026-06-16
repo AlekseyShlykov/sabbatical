@@ -55,6 +55,9 @@ import {
   shouldCompleteStoryDayOne,
   markStoryDayOneEnded,
   getStoryNextUnvisitedLocation,
+  isStoryDay2Active,
+  isStoryDay2LocationDone,
+  completeStoryDay2Location,
   getStoryFocusLocationId,
   isStoryMode,
 } from "./storyMode.js";
@@ -241,10 +244,16 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
   const toLoc  = locationById(toId);
   if (!toLoc) return;
 
-  if (isStoryMode(state) && !getFlag("storyDay1Ended")) {
-    const here = state.currentLocation || locationsData.startLocation;
-    const focus = getStoryFocusLocationId(state, locationsData);
-    if (toId !== here && toId !== focus) return;
+  if (isStoryMode(state)) {
+    if (!getFlag("storyDay1Ended")) {
+      const here = state.currentLocation || locationsData.startLocation;
+      const focus = getStoryFocusLocationId(state, locationsData);
+      if (toId !== here && toId !== focus) return;
+    } else if (isStoryDay2Active(state)) {
+      const here = state.currentLocation || locationsData.startLocation;
+      const focus = getStoryFocusLocationId(state, locationsData);
+      if (toId !== here && toId !== focus) return;
+    }
   }
 
   const traveling = !skipTravel && fromId !== toId;
@@ -314,6 +323,12 @@ function preloadLocationAssets(loc) {
   for (const id of ids) specs.push(["assets/characters/", String(id).toLowerCase()]);
   if (loc.id === "orangehouse" || passageName === "orange house inside") {
     specs.push(["assets/characters/", "mrred"]);
+  }
+  if (passageName === "Day2. Blue." || (loc.id === "bluehouse" && passageName === "Blue house")) {
+    specs.push(["assets/characters/", "mrblue"]);
+  }
+  if (passageName === "Day 2. Green" || (loc.id === "greenhouse" && passageName === "Green house")) {
+    specs.push(["assets/characters/", "msgreen"]);
   }
 
   const p = preloadRasters(specs).catch((err) => {
@@ -385,6 +400,10 @@ async function handleReturnToMap() {
     await sendPlayerHome();
     return;
   }
+  const locId = getState().currentLocation;
+  if (locId && isStoryDay2Active()) {
+    completeStoryDay2Location(locId, locationsData);
+  }
   await leaveLocation();
 }
 
@@ -455,6 +474,18 @@ function resolveTwinePassage(loc) {
   }
   if (loc.id === "orangehouse") {
     return "orange house";
+  }
+  if (isStoryDay2Active()) {
+    if (loc.id === "bluehouse" && !isStoryDay2LocationDone("bluehouse")) {
+      return "Day2. Blue.";
+    }
+    if (
+      loc.id === "greenhouse" &&
+      isStoryDay2LocationDone("bluehouse") &&
+      !isStoryDay2LocationDone("greenhouse")
+    ) {
+      return "Day 2. Green";
+    }
   }
   return loc.twinePassage;
 }
@@ -720,6 +751,9 @@ async function chooseMode(mode) {
       prologue: false,
       storyDay1PendingEnd: false,
       storyDay1Ended: false,
+      storyDay2Ended: false,
+      storyDay2_bluehouse: false,
+      storyDay2_greenhouse: false,
       storyContinueExplore: false,
       postTutorialStoryStart: false,
     },

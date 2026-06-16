@@ -827,6 +827,270 @@
       ]
     },
     {
+      "name": "Day2. Blue.",
+      "text": "//background houseblueout\n//show mrblue\nmrblue: Hello, Mister Orange! How are you? Off for a walk? Care to come in?\n",
+      "links": [
+        {
+          "name": "Thanks — I'd rather take a walk",
+          "link": "Спасибо, но я хочу прогуляться"
+        },
+        {
+          "name": "Yes, gladly",
+          "link": "Да, с радостью"
+        }
+      ]
+    },
+    {
+      "name": "Спасибо, но я хочу прогуляться",
+      "text": "mrblue: The weather really is perfect for a walk! Enjoy your stroll!\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Да, с радостью",
+      "text": "//background houseblueinside\nmrblue: I'll bet this is the first house you've been inside — apart from your own, of course.\n",
+      "links": [
+        {
+          "name": "Yes, you're right",
+          "link": "Да, ты прав"
+        },
+        {
+          "name": "Well, technically I was at the bar too",
+          "link": "Ну формально я был еще в баре"
+        }
+      ]
+    },
+    {
+      "name": "Да, ты прав",
+      "text": "mrblue: Yes — we don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
+      "links": [
+        {
+          "name": "Thanks — I'll keep that in mind!",
+          "link": "question"
+        }
+      ]
+    },
+    {
+      "name": "Ну формально я был еще в баре",
+      "text": "mrblue: Yes — the bar is always open. We don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
+      "links": [
+        {
+          "name": "Thanks — I'll keep that in mind!",
+          "link": "question"
+        }
+      ]
+    },
+    {
+      "name": "Как ты тут оказался?",
+      "text": "mrblue: As I said, I sailed here ten years ago. Red, Purple, Orange, and Green were already living here.\n\nmrblue: Circumstances meant I needed a quiet place. I had enough money, and someone introduced me to Red. He was just thinking of creating this little community for people who want a peaceful retirement.\n\nmrblue: Literally a week later I was on this island. And here we are, ten years on.\n\nmrblue: (thoughtfully) Yes — time flies here. Before you know it, a year or two will have passed.\n",
+      "links": [
+        {
+          "name": "Mister Orange? The one who lived in my house before?",
+          "link": "Оранжевый? Тот кто раньше жил в моем доме?"
+        },
+        {
+          "name": "Tell me about the island",
+          "link": "Расскажи мне об острове"
+        }
+      ]
+    },
+    {
+      "name": "Расскажи мне об острове",
+      "text": "mrblue: Well, it's a retirees' dream island. If you have enough money, you can live out your days here in comfort and joy. And none of the residents are simple folk — everyone has their quirks, their skeletons in the closet.\n\nmrblue: (laughs) Though who doesn't, by retirement age?\n",
+      "links": [
+        {
+          "name": "But how did I end up here? I'm not retired.",
+          "link": "Но как тогда здесь оказался я? Ведь я не на пенсии."
+        },
+        {
+          "name": "Thanks — I'd rather take a walk",
+          "link": "Спасибо, но я хочу прогуляться"
+        }
+      ]
+    },
+    {
+      "name": "Мистер Красный всем тут владеет?",
+      "text": "mrblue: Something like that. I'm not entirely sure how everything works here. But yes — this island belongs to him. And he built all the houses we live in. Well, not him personally — his companies.\n\nmrblue: Except for Miss White's house — she insisted on a design of her own. And strangely, Red agreed.\n",
+      "links": [
+        {
+          "name": "Do you know why?",
+          "link": "А не знаешь почему?"
+        },
+        {
+          "name": "Yes, that's odd",
+          "link": "question2"
+        }
+      ]
+    },
+    {
+      "name": "А не знаешь почему?",
+      "text": "mrblue: Even someone as talkative as me knows where the line is — and which questions not to ask.\n",
+      "links": [
+        {
+          "name": "I see",
+          "link": "question2"
+        }
+      ]
+    },
+    {
+      "name": "question",
+      "text": "mrblue: Maybe you have some questions? I can answer some of them.\n",
+      "links": [
+        {
+          "name": "How did you end up here?",
+          "link": "Как ты тут оказался?"
+        },
+        {
+          "name": "Tell me about the island",
+          "link": "Расскажи мне об острове"
+        },
+        {
+          "name": "Does Mister Red own everything here?",
+          "link": "Мистер Красный всем тут владеет?"
+        },
+        {
+          "name": "Thanks — I'd rather take a walk",
+          "link": "Спасибо, но я хочу прогуляться"
+        }
+      ]
+    },
+    {
+      "name": "question2",
+      "text": "mrblue: Maybe you'd like to know something else?\n",
+      "links": [
+        {
+          "name": "How did you end up here?",
+          "link": "Как ты тут оказался?"
+        },
+        {
+          "name": "Tell me about the island",
+          "link": "Расскажи мне об острове"
+        },
+        {
+          "name": "Does Mister Red own everything here?",
+          "link": "Мистер Красный всем тут владеет?"
+        },
+        {
+          "name": "Thanks — I'd rather take a walk",
+          "link": "Спасибо, но я хочу прогуляться"
+        }
+      ]
+    },
+    {
+      "name": "Оранжевый? Тот кто раньше жил в моем доме?",
+      "text": "mrblue: We were neighbours, so we became friends. He was the oldest among us and kept his beard ginger to the end. The nickname Mister Orange suited him perfectly.\n\nmrblue: He loved to tell stories — but only about the distant past. Gradually his mind grew weaker, until he died this year. I miss him.\n\nmrblue: But forgive me — I got carried away with memories. Would you like to know anything else?\n",
+      "links": [
+        {
+          "name": "How did you end up here?",
+          "link": "Как ты тут оказался?"
+        },
+        {
+          "name": "Tell me about the island",
+          "link": "Расскажи мне об острове"
+        },
+        {
+          "name": "Does Mister Red own everything here?",
+          "link": "Мистер Красный всем тут владеет?"
+        },
+        {
+          "name": "Thanks — I'd rather take a walk",
+          "link": "Спасибо, но я хочу прогуляться"
+        }
+      ]
+    },
+    {
+      "name": "Но как тогда здесь оказался я? Ведь я не на пенсии.",
+      "text": "mrblue: You know, I ask myself the same question. Mister Red doesn't invite random people here. I think it's best to ask him — though I suspect he won't answer.\n",
+      "links": [
+        {
+          "name": "How did you end up here?",
+          "link": "Как ты тут оказался?"
+        },
+        {
+          "name": "Tell me about the island",
+          "link": "Расскажи мне об острове"
+        },
+        {
+          "name": "Does Mister Red own everything here?",
+          "link": "Мистер Красный всем тут владеет?"
+        },
+        {
+          "name": "Thanks — I'd rather take a walk",
+          "link": "Спасибо, но я хочу прогуляться"
+        }
+      ]
+    },
+    {
+      "name": "Day 2. Green",
+      "text": "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello — how's the book coming along?\n",
+      "links": [
+        {
+          "name": "I've only just started",
+          "link": "questions2green"
+        },
+        {
+          "name": "Thanks, it's going well",
+          "link": "questions2green"
+        }
+      ]
+    },
+    {
+      "name": "questions2green",
+      "text": "msgreen: I still hope I'll get to read it.\n\nmsgreen: I'm sure you're curious about many things. We already know each other, and straight answers are a luxury on this island. But I can afford them. So ask away — don't be shy.\n",
+      "links": [
+        {
+          "name": "Tell me more about yourself",
+          "link": "Расскажите больше о себе"
+        },
+        {
+          "name": "How do you like this island?",
+          "link": "Как вам этот остров?"
+        },
+        {
+          "name": "How did you end up here?",
+          "link": "Как вы здесь оказались?"
+        },
+        {
+          "name": "Thanks — I'd rather go for a walk",
+          "link": "Спасибо, я лучше пойду погуляю"
+        }
+      ]
+    },
+    {
+      "name": "Как вам этот остров?",
+      "text": "",
+      "links": [
+        {
+          "name": "Thanks — I'd rather go for a walk",
+          "link": "Спасибо, я лучше пойду погуляю"
+        }
+      ]
+    },
+    {
+      "name": "Как вы здесь оказались?",
+      "text": "",
+      "links": [
+        {
+          "name": "Thanks — I'd rather go for a walk",
+          "link": "Спасибо, я лучше пойду погуляю"
+        }
+      ]
+    },
+    {
+      "name": "Расскажите больше о себе",
+      "text": "",
+      "links": [
+        {
+          "name": "Thanks — I'd rather go for a walk",
+          "link": "Спасибо, я лучше пойду погуляю"
+        }
+      ]
+    },
+    {
+      "name": "Спасибо, я лучше пойду погуляю",
+      "text": "//return to map\n",
+      "links": []
+    },
+    {
       "name": "story_return_map",
       "text": "//return to map\n",
       "links": []
