@@ -14,6 +14,10 @@
     <link rel="preload" as="image" href="assets/map/map.png" />
   </head>
   <body>
+    <!-- TEMP: быстрый сброс на splash -->
+    <button type="button" class="dev-restart-btn" id="dev-restart-btn"
+            data-action="restart-from-beginning" data-i18n="dev.restartFromStart" hidden></button>
+
     <!-- =======================================================
          SPLASH / LANGUAGE SELECT
          ======================================================= -->
@@ -213,9 +217,7 @@
       <p class="day-title-card__hint" data-i18n="dayTransition.tapToContinue"></p>
     </div>
 
-    <!-- TEMP: быстрый сброс на splash -->
-    <button type="button" class="dev-restart-btn" id="dev-restart-btn"
-            data-action="restart-from-beginning" data-i18n="dev.restartFromStart" hidden></button>
+    <!-- TEMP: быстрый сброс на splash (кнопка в начале body) -->
 
     <script type="module" src="src/main.js"></script>
   </body>

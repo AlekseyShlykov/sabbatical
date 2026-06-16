@@ -943,10 +943,12 @@ body.has-game-hud .map {
 /* TEMP: dev reset to splash */
 .dev-restart-btn {
   position: fixed;
-  left: 50%;
   top: max(10px, env(safe-area-inset-top, 0px));
+  bottom: auto !important;
+  left: 50%;
+  right: auto;
   transform: translateX(-50%);
-  z-index: 7500;
+  z-index: 9100;
   padding: 6px 14px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -957,7 +959,11 @@ body.has-game-hud .map {
   letter-spacing: 0.02em;
   cursor: pointer;
   opacity: 0.8;
+  pointer-events: auto;
   transition: opacity var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+body.has-game-hud .dev-restart-btn {
+  top: calc(var(--hud-stack-h, 72px) + max(6px, env(safe-area-inset-top, 0px)));
 }
 .dev-restart-btn:hover {
   opacity: 1;
