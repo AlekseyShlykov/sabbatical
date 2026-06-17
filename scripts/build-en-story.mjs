@@ -3,6 +3,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import { LINK_EN_EXTRA, TEXT_EN_EXTRA } from "./en-story-extra.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ru = JSON.parse(readFileSync(join(root, "assets/twine/ru.json"), "utf8"));
@@ -81,6 +82,7 @@ const LINK_EN = {
   "Как вам этот остров?": "How do you like this island?",
   "Как вы здесь оказались?": "How did you end up here?",
   "Спасибо, я лучше пойду погуляю": "Thanks — I'd rather go for a walk",
+  ...LINK_EN_EXTRA,
 };
 
 const TEXT_EN = {
@@ -208,7 +210,7 @@ const TEXT_EN = {
     "mswhite: Oh — forgive me, you should go. I wanted to be alone, and since I've lived here longer than you, I'd be grateful if you left.\n",
   "Вернуться на карту": "//return to world map\n",
   story_return_map: "//return to map\n",
-  "Day2. Blue.":
+  "Day2.1. Blue.":
     "//background houseblueout\n//show mrblue\nmrblue: Hello, Mister Orange! How are you? Off for a walk? Care to come in?\n",
   "Спасибо, но я хочу прогуляться":
     "mrblue: The weather really is perfect for a walk! Enjoy your stroll!\n\n//return to map\n",
@@ -222,7 +224,7 @@ const TEXT_EN = {
     "mrblue: Maybe you have some questions? I can answer some of them.\n",
   question2: "mrblue: Maybe you'd like to know something else?\n",
   "Как ты тут оказался?":
-    "mrblue: As I said, I sailed here ten years ago. Red, Purple, Orange, and Green were already living here.\n\nmrblue: Circumstances meant I needed a quiet place. I had enough money, and someone introduced me to Red. He was just thinking of creating this little community for people who want a peaceful retirement.\n\nmrblue: Literally a week later I was on this island. And here we are, ten years on.\n\nmrblue: (thoughtfully) Yes — time flies here. Before you know it, a year or two will have passed.\n",
+    "mrblue: As I said, I sailed here ten years ago. Red, Purple, and Orange were already living here.\n\nmrblue: Circumstances meant I needed a quiet place. I had enough money, and someone introduced me to Red. He was just thinking of creating this little community for people who want a peaceful retirement.\n\nmrblue: Literally a week later I was on this island. And here we are, ten years on.\n\nmrblue: (thoughtfully) Yes — time flies here. Before you know it, a year or two will have passed.\n",
   "Расскажи мне об острове":
     "mrblue: Well, it's a retirees' dream island. If you have enough money, you can live out your days here in comfort and joy. And none of the residents are simple folk — everyone has their quirks, their skeletons in the closet.\n\nmrblue: (laughs) Though who doesn't, by retirement age?\n",
   "Мистер Красный всем тут владеет?":
@@ -238,6 +240,7 @@ const TEXT_EN = {
   questions2green:
     "msgreen: I still hope I'll get to read it.\n\nmsgreen: I'm sure you're curious about many things. We already know each other, and straight answers are a luxury on this island. But I can afford them. So ask away — don't be shy.\n",
   "Спасибо, я лучше пойду погуляю": "//return to map\n",
+  ...TEXT_EN_EXTRA,
 };
 
 function translateLine(line) {

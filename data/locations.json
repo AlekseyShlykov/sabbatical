@@ -50,6 +50,9 @@
       "availableInStoryMode": true,
       "characters": [],
       "twinePassage": "Forrest",
+      "twinePassageByDay": {
+        "2": "Day 2.4 Forrest"
+      },
       "markAnchor": {
         "x": 252,
         "y": 227
@@ -189,7 +192,7 @@
       ],
       "twinePassage": "Blue house",
       "twinePassageByDay": {
-        "2": "Day2. Blue."
+        "2": "Day2.1. Blue."
       },
       "markAnchor": {
         "x": 285,
@@ -212,6 +215,9 @@
       "availableInStoryMode": true,
       "characters": [],
       "twinePassage": "White house",
+      "twinePassageByDay": {
+        "3": "Day 3.1. White"
+      },
       "markAnchor": {
         "x": 1129,
         "y": 672
@@ -233,6 +239,9 @@
       "availableInStoryMode": true,
       "characters": [],
       "twinePassage": "Yellow house",
+      "twinePassageByDay": {
+        "2": "Day 2.5 Yellow"
+      },
       "markAnchor": {
         "x": 1005,
         "y": 847
@@ -280,6 +289,9 @@
         "mrpurple"
       ],
       "twinePassage": "Bar",
+      "twinePassageByDay": {
+        "2": "Day 2.3. Red"
+      },
       "markAnchor": {
         "x": 589,
         "y": 896
@@ -353,6 +365,9 @@
       "availableInStoryMode": true,
       "characters": [],
       "twinePassage": "purple house",
+      "twinePassageByDay": {
+        "2": "Day 2.6 Purple"
+      },
       "path4Pin": {
         "x": 905,
         "y": 470

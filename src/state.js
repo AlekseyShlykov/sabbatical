@@ -15,6 +15,8 @@ const DEFAULT_STATE = {
   unlockedLocations: [],
   flags: {},
   storyProgress: 0,
+  /** Свободный режим: сколько сцен локации уже сыграно (locId → счётчик). */
+  locationSceneProgress: {},
   bookProgress: { science: 0, novel: 0 },
   dayCycle: { day: 1, actionsUsed: 0, bookToday: { science: 0, novel: 0 } },
 };
@@ -103,6 +105,9 @@ export function applySave(snapshot) {
     state.dayCycle = { day: 1, actionsUsed: 0, bookToday: { science: 0, novel: 0 } };
   }
   if (!state.bookProgress) state.bookProgress = { science: 0, novel: 0 };
+  if (!state.locationSceneProgress || typeof state.locationSceneProgress !== "object") {
+    state.locationSceneProgress = {};
+  }
   emit();
 }
 
@@ -128,5 +133,20 @@ export function setFlag(key, value = true) {
 
 export function getFlag(key) {
   return state.flags[key];
+}
+
+/** Свободный режим: текущий индекс сцены локации (0 = первая сцена очереди). */
+export function getLocationSceneIndex(locationId) {
+  return (state.locationSceneProgress && state.locationSceneProgress[locationId]) || 0;
+}
+
+/** Сдвинуть прогресс сцен локации на одну (с ограничением `cap`). */
+export function advanceLocationScene(locationId, cap = Infinity) {
+  update(s => {
+    if (!s.locationSceneProgress) s.locationSceneProgress = {};
+    const next = (s.locationSceneProgress[locationId] || 0) + 1;
+    s.locationSceneProgress[locationId] = Math.min(next, cap);
+    return s;
+  });
 }
 

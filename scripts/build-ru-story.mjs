@@ -52,6 +52,35 @@ const TYPO_FIXES = [
   [/Я - мистер/g, "Я — мистер"],
   [/интересуйтся/g, "интересуйся"],
   [/заговоривать/g, "заговорить"],
+  [/зарежатся/g, "задержатся"],
+  [/лишишь вернуться/g, "успеешь вернуться"],
+  [/mswhiite:/g, "mswhite:"],
+  [/солдиная/g, "солидная"],
+  [/закомы/g, "знакомы"],
+  [/хороишие/g, "хорошие"],
+  [/единсвтенная/g, "единственная"],
+  [/потрсяающий/g, "потрясающий"],
+  [/потому ей всего/g, "потому что ей всего"],
+  [/человек который/g, "человек, который"],
+  [/единственная кто/g, "единственная, кто"],
+  [/одергивала когда/g, "одергивала, когда"],
+  [/Спасибо Зеленой все/g, "Спасибо Зеленой, всё"],
+  [/своими  убеждениями/g, "своими убеждениями"],
+  [/сочтет/g, "сочтёт"],
+  [/рассказал что/g, "рассказал, что"],
+  [/всего неделя чтобы/g, "всего неделя, чтобы"],
+  [/момента когда/g, "момента, когда"],
+  [/Все еще /g, "Всё ещё "],
+  [/все еще /g, "всё ещё "],
+  [/все никак/g, "всё никак"],
+  [/все равно/g, "всё равно"],
+  [/еще не/g, "ещё не"],
+  [/еще в баре/g, "ещё в баре"],
+  [/еще один/g, "ещё один"],
+  [/еще не разобрался/g, "ещё не разобрался"],
+  [/еще не познакомились/g, "ещё не познакомились"],
+  [/еще на Великой/g, "ещё на Великой"],
+  [/еще не бывал/g, "ещё не бывал"],
   [/приключенческий рома/g, "приключенческий роман"],
   [/Кажется пора/g, "Кажется, пора"],
   [/Погда/g, "Погода"],
@@ -188,14 +217,14 @@ function postProcessPassages(list) {
       "//снова показывает вид на дом с текстом\n//новый день"
     );
   }
-  if (byName["Day2. Blue."]) {
-    let t = byName["Day2. Blue."].text;
+  if (byName["Day2.1. Blue."]) {
+    let t = byName["Day2.1. Blue."].text;
     if (!t.includes("//показать mrblue")) {
       t = t.replace(
         /^\/\/задний фон - дом\./i,
         "//фон houseblueout\n//показать mrblue"
       );
-      byName["Day2. Blue."].text = t;
+      byName["Day2.1. Blue."].text = t;
     }
   }
   if (byName["Да, с радостью"] && !byName["Да, с радостью"].text.includes("//фон houseblueinside")) {
@@ -220,6 +249,41 @@ function postProcessPassages(list) {
   }
   if (byName["Спасибо, я лучше пойду погуляю"] && !byName["Спасибо, я лучше пойду погуляю"].text) {
     byName["Спасибо, я лучше пойду погуляю"].text = "//вернуться на карту\n";
+  }
+  if (byName["Day 2.3. Red"] && !byName["Day 2.3. Red"].text.includes("//показать mrred")) {
+    byName["Day 2.3. Red"].text = byName["Day 2.3. Red"].text.replace(
+      /^\/\/фон - бар/i,
+      "//фон bar\n//показать mrred"
+    );
+  }
+  if (byName["Day 2.4 Forrest"] && !byName["Day 2.4 Forrest"].text.includes("//показать mrblack")) {
+    byName["Day 2.4 Forrest"].text = byName["Day 2.4 Forrest"].text.replace(
+      /^\/\/фон - лес/i,
+      "//фон forrest\n//показать mrblack"
+    );
+  }
+  if (byName["Day 2.5 Yellow"] && !byName["Day 2.5 Yellow"].text.includes("//показать msyellow")) {
+    byName["Day 2.5 Yellow"].text = byName["Day 2.5 Yellow"].text.replace(
+      /^\/\/фон - желтый дом/i,
+      "//фон houseyellowout\n//показать msyellow"
+    );
+  }
+  if (byName["Day 2.6 Purple"] && !byName["Day 2.6 Purple"].text.includes("//показать mrpurple")) {
+    byName["Day 2.6 Purple"].text = byName["Day 2.6 Purple"].text.replace(
+      /^\/\/фон - дом пурпурного/i,
+      "//фон housepurpleout\n//показать mrpurple"
+    );
+  }
+  if (byName["Day 3.1. White"] && !byName["Day 3.1. White"].text.includes("//показать mswhite")) {
+    byName["Day 3.1. White"].text = byName["Day 3.1. White"].text.replace(
+      /^\/\/фон - дом Оранжевый/i,
+      "//фон orange house inside\n//показать mswhite"
+    );
+  }
+  for (const name of ["Пожалуй, я прогуляюсь", "Пойду погуляю по острову"]) {
+    if (byName[name] && !byName[name].text.includes("//вернуться на карту")) {
+      byName[name].text = byName[name].text.trimEnd() + "\n//вернуться на карту\n";
+    }
   }
   return list.map((p) => byName[p.name] || p);
 }

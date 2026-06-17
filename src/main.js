@@ -6,6 +6,7 @@ import {
   getState, setState, subscribe,
   loadSave, applySave, hasSave, clearSave, resetState,
   markVisited, unlock, setFlag, getFlag, update,
+  getLocationSceneIndex, advanceLocationScene,
 } from "./state.js";
 import {
   setLanguage, loadStory, t, applyDomI18n,
@@ -74,6 +75,8 @@ import {
 import {
   pickTwinePassageForLocation,
   isPassageAvailableOnDay,
+  getLocationSceneSequence,
+  pickLocationSceneByIndex,
 } from "./twinePassages.js";
 import {
   resetIntro,
@@ -352,14 +355,26 @@ function preloadLocationAssets(loc) {
   if (loc.id === "orangehouse" || passageName === "orange house inside") {
     specs.push(["assets/characters/", "mrred"]);
   }
-  if (passageName === "Day2. Blue." || (loc.id === "bluehouse" && passageName === "Blue house")) {
+  if (passageName === "Day2.1. Blue." || (loc.id === "bluehouse" && passageName === "Blue house")) {
     specs.push(["assets/characters/", "mrblue"]);
   }
-  if (
-    passageName === "Day 2. Green" ||
-    (loc.id === "greenhouse" && passageName === "Green house")
-  ) {
+  if (passageName === "Day 2. Green" || (loc.id === "greenhouse" && passageName === "Green house")) {
     specs.push(["assets/characters/", "msgreen"]);
+  }
+  if (passageName === "Day 2.3. Red" || (loc.id === "bar" && passageName === "Bar")) {
+    specs.push(["assets/characters/", "mrred"]);
+  }
+  if (passageName === "Day 2.4 Forrest" || (loc.id === "forest" && passageName === "Forrest")) {
+    specs.push(["assets/characters/", "mrblack"]);
+  }
+  if (passageName === "Day 2.5 Yellow" || (loc.id === "yellowhouse" && passageName === "Yellow house")) {
+    specs.push(["assets/characters/", "msyellow"]);
+  }
+  if (passageName === "Day 2.6 Purple" || (loc.id === "purplehouse" && passageName === "purple house")) {
+    specs.push(["assets/characters/", "mrpurple"]);
+  }
+  if (passageName === "Day 3.1. White" || (loc.id === "whitehouse" && passageName === "White house")) {
+    specs.push(["assets/characters/", "mswhite"]);
   }
 
   const p = preloadRasters(specs).catch((err) => {
@@ -477,6 +492,11 @@ async function enterLocation(loc, { skipActionCharge = false } = {}) {
   actionsEl.innerHTML = "";
 
   if (passageName) {
+    // Свободный режим: визит сдвигает очередь сцен локации на одну.
+    // Делаем это ПОСЛЕ resolveTwinePassage (он прочитал текущий индекс).
+    if (getState().mode === "free" && loc.id !== "orangehouse" && !getFlag("tutorialMap")) {
+      advanceLocationScene(loc.id, getLocationSceneSequence(loc).length);
+    }
     await renderPassage(passageName);
     return;
   }
@@ -525,20 +545,25 @@ function resolveTwinePassage(loc) {
   }
 
   const state = getState();
+
+  // Свободный режим: своя очередь сцен на локацию, по числу визитов.
+  // Пропуск сцены в «свой» день её не сжигает — порядок определяет прогресс
+  // локации, а не календарный день.
+  if (state.mode === "free") {
+    return pickLocationSceneByIndex(loc, getLocationSceneIndex(loc.id));
+  }
+
+  // Режим «История»: привязка к календарному дню и маршруту.
   const calendarDay = getDayCycle().day;
   const activeStoryDay = getActiveStoryDayNumber(state, locationsData);
-  const freeExplore = state.mode === "free";
-  const storyOrder = freeExplore
-    ? []
-    : activeStoryDay
-      ? getStoryOrderForDay(activeStoryDay, locationsData)
-      : [];
+  const storyOrder = activeStoryDay
+    ? getStoryOrderForDay(activeStoryDay, locationsData)
+    : [];
 
   const passage = pickTwinePassageForLocation(loc, {
     calendarDay,
     activeStoryDay,
     storyOrder,
-    freeExplore,
     isLocDoneOnStoryDay: (id) =>
       isStoryDayLocationDone(activeStoryDay || 1, id),
   });
@@ -829,6 +854,7 @@ async function chooseMode(mode) {
     unlockedLocations: unlocked,
     visitedLocations: [],
     storyProgress: 0,
+    locationSceneProgress: {},
     mapPlayerCoord: null,
     flags: clearStoryDayFlags({
       ...getState().flags,

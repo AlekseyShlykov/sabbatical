@@ -17,6 +17,41 @@ export function isPassageAvailableOnDay(passageName, calendarDay) {
 }
 
 /**
+ * Упорядоченная очередь сцен локации:
+ *   [twinePassage, ...twinePassageByDay по возрастанию дня].
+ * Значение `twinePassageByDay[N]` может быть строкой или массивом строк
+ * (несколько сцен в один день). Дубликаты отбрасываются.
+ */
+export function getLocationSceneSequence(loc) {
+  const seq = [];
+  const push = (p) => {
+    if (p && !seq.includes(p)) seq.push(p);
+  };
+  push(loc?.twinePassage);
+
+  const byDay = loc?.twinePassageByDay;
+  if (byDay && typeof byDay === "object") {
+    Object.keys(byDay)
+      .map((k) => ({ day: Number(k), value: byDay[k] }))
+      .filter((e) => Number.isFinite(e.day) && e.value != null)
+      .sort((a, b) => a.day - b.day)
+      .forEach((e) => {
+        const vals = Array.isArray(e.value) ? e.value : [e.value];
+        vals.forEach(push);
+      });
+  }
+  return seq;
+}
+
+/** Сцена локации по индексу прогресса (с ограничением до последней). */
+export function pickLocationSceneByIndex(loc, index) {
+  const seq = getLocationSceneSequence(loc);
+  if (seq.length === 0) return loc?.twinePassage || null;
+  const i = Math.max(0, Math.min(Number(index) || 0, seq.length - 1));
+  return seq[i];
+}
+
+/**
  * Какой пассаж запустить в локации: `twinePassageByDay[N]` в свой день,
  * иначе `twinePassage`.
  */
