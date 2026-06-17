@@ -68,6 +68,7 @@ import {
   getStoryNextUnvisitedLocation,
   isStoryDayLocationDone,
   completeStoryDayLocation,
+  ensureStoryDayRouteUnlocked,
   getStoryFocusLocationId,
   isStoryMode,
   clearStoryDayFlags,
@@ -443,6 +444,14 @@ async function finishDayAtHome({ fromId } = {}) {
   } finally {
     setDayTransitionActive(false);
   }
+
+  if (isStoryMode()) {
+    const activeDay = getActiveStoryDayNumber(getState(), locationsData);
+    if (activeDay) {
+      ensureStoryDayRouteUnlocked(activeDay, locationsData);
+      await maybeStoryTravelAndEnterAfterLeave();
+    }
+  }
 }
 
 /** Выход на карту — только после выбора режима (конец онбординга). */
@@ -463,11 +472,6 @@ async function handleReturnToMap() {
   if (isDayCycleActive() && isDayExhausted()) {
     await sendPlayerHome();
     return;
-  }
-  const locId = getState().currentLocation;
-  const activeStoryDay = getActiveStoryDayNumber(getState(), locationsData);
-  if (locId && activeStoryDay && activeStoryDay > 1) {
-    completeStoryDayLocation(activeStoryDay, locId, locationsData);
   }
   await leaveLocation();
 }
@@ -619,6 +623,11 @@ async function leaveLocation() {
 
   const homeId = locationsData.startLocation;
   const pendingStoryHome = shouldCompleteStoryDayOne();
+  const locId = getState().currentLocation;
+  const activeStoryDay = getActiveStoryDayNumber(getState(), locationsData);
+  if (locId && activeStoryDay && activeStoryDay > 1) {
+    completeStoryDayLocation(activeStoryDay, locId, locationsData);
+  }
 
   if (isDayCycleActive() && isDayExhausted() && !pendingStoryHome) {
     await sendPlayerHome();

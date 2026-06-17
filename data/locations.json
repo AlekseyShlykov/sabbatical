@@ -30,7 +30,11 @@
   ],
   "storyOrderDay2": [
     "bluehouse",
-    "greenhouse"
+    "greenhouse",
+    "bar",
+    "forest",
+    "yellowhouse",
+    "purplehouse"
   ],
   "debugShowPaths": false,
   "locations": [

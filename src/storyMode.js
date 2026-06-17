@@ -13,7 +13,14 @@ const DEFAULT_STORY_DAY_ONE = [
   "beach",
 ];
 
-const DEFAULT_STORY_DAY_TWO = ["bluehouse", "greenhouse"];
+const DEFAULT_STORY_DAY_TWO = [
+  "bluehouse",
+  "greenhouse",
+  "bar",
+  "forest",
+  "yellowhouse",
+  "purplehouse",
+];
 
 export function getStoryOrder(locationsData) {
   const order = locationsData?.storyOrder;
@@ -112,6 +119,13 @@ export function isStoryDayRouteLocation(locId, dayNum, locationsData) {
 
 export function isStoryDay2Location(locId, locationsData) {
   return isStoryDayRouteLocation(locId, 2, locationsData);
+}
+
+/** Первая точка маршрута дня N доступна на карте. */
+export function ensureStoryDayRouteUnlocked(dayNum, locationsData) {
+  const order = getStoryOrderForDay(dayNum, locationsData);
+  const first = order[0];
+  if (first) unlock(first);
 }
 
 /** Первая ещё не завершённая точка текущего сюжетного маршрута. */
@@ -252,7 +266,11 @@ export function getStoryNextUnvisitedLocation(state, locationsData) {
     const order = getStoryOrderForDay(activeDay, locationsData);
     const here = state.currentLocation || locationsData.startLocation;
     const hereIdx = order.indexOf(here);
-    if (hereIdx < 0) return null;
+    // Дом (оранжевый) не в маршруте дня — ведём к первой незавершённой точке.
+    if (hereIdx < 0) {
+      const focus = getStoryFocusLocationId(state, locationsData);
+      return focus && focus !== here ? focus : null;
+    }
 
     for (let i = hereIdx + 1; i < order.length; i++) {
       const next = order[i];
