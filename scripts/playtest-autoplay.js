@@ -9,7 +9,7 @@ window.__playtest = async function runPlaytest({
   const STORY_ORDERS = {
     1: ["orangehouse", "bluehouse", "forest", "bar", "whitehouse", "lighthouse", "beach"],
     2: ["bluehouse", "greenhouse", "bar", "forest", "yellowhouse", "purplehouse"],
-    3: ["orangehouse", "whitehouse", "bar"],
+    3: ["orangehouse", "bar"],
     4: ["forest", "bluehouse", "purplehouse", "greenhouse", "bar"],
   };
   const REST_RE = /rest a little|отдохнуть/i;

@@ -337,6 +337,10 @@ export function getStoryNextUnvisitedLocation(state, locationsData) {
       return focus && focus !== here ? focus : null;
     }
 
+    if (!isStoryDayLocationDone(activeDay, order[hereIdx])) {
+      return order[hereIdx];
+    }
+
     for (let i = hereIdx + 1; i < order.length; i++) {
       const next = order[i];
       if (isStoryDayLocationDone(activeDay, next)) continue;

@@ -687,31 +687,23 @@ async function beginDayFive() {
 
 async function continueAfterDay3Morning() {
   const homeId = locationsData.startLocation;
+  if (getFlag("dayScene_3_orangehouse")) return;
   setFlag("dayScene_3_orangehouse", true);
 
   if (isStoryMode()) {
-    completeStoryDayLocation(3, "orangehouse", locationsData);
+    const home = locationById(homeId);
+    if (!home) return;
     await withFade(async () => {
-      clearStage();
-      clearAmbient();
-      goTo("map");
-      await maybeStoryTravelAndEnterAfterLeave();
+      await enterLocation(home, { forcePassage: "Day 3.2. White", skipActionCharge: true });
     });
     return;
   }
 
   if (getState().mode === "free") {
-    const whitehouse = locationById("whitehouse");
-    if (!whitehouse) return;
+    const home = locationById(homeId);
+    if (!home) return;
     await withFade(async () => {
-      clearStage();
-      clearAmbient();
-      goTo("map");
-      const fromId = getState().currentLocation || homeId;
-      if (fromId !== "whitehouse") {
-        await performMapTravel(fromId, "whitehouse");
-      }
-      await enterLocation(whitehouse, { forcePassage: "Day 3.2. White", skipActionCharge: true });
+      await enterLocation(home, { forcePassage: "Day 3.2. White", skipActionCharge: true });
     });
   }
 }
@@ -735,6 +727,16 @@ function resolveTwinePassage(loc) {
 
   // Оранжевый дом: дневные сцены (Day 3.1. Red и т.д.) + обычный «orange house».
   if (loc.id === "orangehouse" && !getFlag("tutorialMap")) {
+    if (state.mode === "story") {
+      if (
+        calendarDay === 3 &&
+        getFlag("dayScene_3_orangehouse") &&
+        activeStoryDay === 3 &&
+        !isStoryDayLocationDone(3, "orangehouse")
+      ) {
+        return "Day 3.2. White";
+      }
+    }
     if (state.mode === "free") {
       const dayPassage = loc.twinePassageByDay?.[String(calendarDay)];
       if (dayPassage && isPassageAvailableOnDay(dayPassage, calendarDay)) {
@@ -903,12 +905,20 @@ async function maybeStoryTravelAndEnterAfterLeave() {
 
   const fromId = state.currentLocation || locationsData.startLocation;
   const toLoc = locationById(nextId);
-  if (!toLoc || fromId === nextId) return;
+  if (!toLoc) return;
 
   const needsVisitCharge = isDayCycleActive() && !isStoryMode(state);
   if (needsVisitCharge && !canSpendAction()) {
     showHudToast(t("hud.noActions"));
     await sendPlayerHome();
+    return;
+  }
+
+  if (fromId === nextId) {
+    await withFade(async () => {
+      noteVisit(nextId);
+      await enterLocation(toLoc, { skipActionCharge: true });
+    });
     return;
   }
 
