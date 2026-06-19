@@ -110,6 +110,9 @@ import {
   initSplashLoader,
   setSplashLoadProgress,
   finishSplashLoader,
+  showSplashActionsReady,
+  areAssetsReady,
+  syncSplashContinueButton,
 } from "./assetPreload.js";
 
 const LOCATIONS_URL = "data/locations.json";
@@ -189,17 +192,9 @@ async function bootstrap() {
   updateLeaveButton();
   updateDevRestartButton(getState().screen || "splash");
 
-  // Initial screen.
-  // The "location" screen depends on transient state (current passage, stage
-  // composition) that we don't persist, so on a fresh load we drop the player
-  // back to the map — same as if they had pressed Leave.
-  let initialScreen = getState().screen || "splash";
-  if (initialScreen === "location") initialScreen = "map";
-  if (initialScreen !== "splash") {
-    await goTo(initialScreen);
-  } else {
-    setState({ screen: "splash" });
-  }
+  // Stay on splash until the player presses Start or Continue.
+  setState({ screen: "splash" });
+  showScreen("splash");
 }
 
 /* =========================================================
@@ -960,15 +955,20 @@ function wireGlobalUI() {
 async function handleAction(action, btn) {
   switch (action) {
     case "start": {
-      const state = getState();
-      if (!state.mode && state.screen === "splash") {
-        void ensureGameplayPreload();
-        startBackgroundMusic();
-        await withFade(() => goTo("intro"));
-      }
+      if (!areAssetsReady() || getState().screen !== "splash") return;
+      clearSave();
+      resetState({
+        language: getLanguage(),
+        unlockedLocations: [...locationsData.initiallyUnlocked],
+      });
+      toggleContinueButton();
+      void ensureGameplayPreload();
+      startBackgroundMusic();
+      await withFade(() => goTo("intro"));
       return;
     }
     case "continue": {
+      if (!areAssetsReady()) return;
       const save = loadSave();
       if (!save) return;
       applySave(save);
@@ -1028,6 +1028,7 @@ async function restartToSplash() {
   });
   resetAudioSession();
   toggleContinueButton();
+  showSplashActionsReady();
   await withFade(() => goTo("splash"));
 }
 
@@ -1162,7 +1163,9 @@ function hydrateLanguageButtons() {
 
 function toggleContinueButton() {
   const btn = document.querySelector("[data-action='continue']");
-  if (btn) btn.hidden = !hasSave();
+  if (!btn) return;
+  btn.hidden = !hasSave();
+  syncSplashContinueButton();
 }
 
 function renderLocationTitle() {

@@ -111,7 +111,40 @@ const ui = {
   label: null,
   actions: null,
   track: null,
+  startBtn: null,
+  continueBtn: null,
 };
+
+let assetsReady = false;
+
+export function areAssetsReady() {
+  return assetsReady;
+}
+
+function setSplashButtonsEnabled(enabled) {
+  if (ui.startBtn) ui.startBtn.disabled = !enabled;
+  if (ui.continueBtn && !ui.continueBtn.hidden) {
+    ui.continueBtn.disabled = !enabled;
+  }
+}
+
+/** Обновить disabled у «Продолжить» после смены видимости (например, hasSave). */
+export function syncSplashContinueButton() {
+  if (ui.continueBtn && !ui.continueBtn.hidden) {
+    ui.continueBtn.disabled = !assetsReady;
+  }
+}
+
+/** Показать кнопки заставки и включить их (после загрузки или при возврате на splash). */
+export function showSplashActionsReady() {
+  assetsReady = true;
+  if (ui.root) {
+    ui.root.classList.add("is-done");
+    ui.root.hidden = true;
+  }
+  if (ui.actions) ui.actions.hidden = false;
+  setSplashButtonsEnabled(true);
+}
 
 export function initSplashLoader() {
   ui.root = document.getElementById("splash-loader");
@@ -120,9 +153,16 @@ export function initSplashLoader() {
   ui.label = document.getElementById("splash-loader-label");
   ui.actions = document.getElementById("splash-actions");
   ui.track = document.getElementById("splash-loader-track");
+  ui.startBtn = document.querySelector('[data-action="start"]');
+  ui.continueBtn = document.querySelector('[data-action="continue"]');
 
-  if (ui.root) ui.root.hidden = false;
-  if (ui.actions) ui.actions.hidden = true;
+  assetsReady = false;
+  if (ui.root) {
+    ui.root.hidden = false;
+    ui.root.classList.remove("is-done");
+  }
+  if (ui.actions) ui.actions.hidden = false;
+  setSplashButtonsEnabled(false);
   setSplashLoadProgress({ pct: 0 });
 }
 
@@ -139,11 +179,6 @@ export function setSplashLoadProgress({ pct = 0 }) {
 
 export function finishSplashLoader() {
   setSplashLoadProgress({ pct: 100 });
-  if (ui.root) {
-    ui.root.classList.add("is-done");
-    window.setTimeout(() => {
-      ui.root.hidden = true;
-    }, 280);
-  }
-  if (ui.actions) ui.actions.hidden = false;
+  if (ui.root) ui.root.classList.add("is-done");
+  window.setTimeout(showSplashActionsReady, 280);
 }
