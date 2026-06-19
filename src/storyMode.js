@@ -124,8 +124,54 @@ export function isStoryDay2Location(locId, locationsData) {
 /** Первая точка маршрута дня N доступна на карте. */
 export function ensureStoryDayRouteUnlocked(dayNum, locationsData) {
   const order = getStoryOrderForDay(dayNum, locationsData);
-  const first = order[0];
-  if (first) unlock(first);
+  if (!order.length) return;
+
+  const state = getState();
+  if (!isStoryMode(state)) {
+    if (order[0]) unlock(order[0]);
+    return;
+  }
+
+  const here = state.currentLocation || locationsData.startLocation;
+  const unlocked = new Set([here]);
+
+  for (let i = 0; i < order.length; i++) {
+    const id = order[i];
+    if (!isStoryDayLocationDone(dayNum, id)) {
+      unlocked.add(id);
+      break;
+    }
+    unlocked.add(id);
+    if (order[i + 1]) unlocked.add(order[i + 1]);
+  }
+
+  update((s) => {
+    s.unlockedLocations = [...unlocked];
+    return s;
+  });
+}
+
+/**
+ * После смены календаря в режиме «Сюжет»: закрыть прошлые маршруты
+ * и открыть линейный маршрут текущего дня.
+ */
+export function reconcileStoryDayWithCalendar(locationsData) {
+  if (!isStoryMode()) return;
+
+  const calendarDay = getDayCycle().day;
+
+  for (let d = 1; d < calendarDay; d++) {
+    if (d === 1) {
+      if (!isStoryDayOneEnded()) markStoryDayOneEnded(locationsData);
+      continue;
+    }
+    if (!isStoryDayRouteEnded(d)) {
+      setFlag(storyDayEndedFlag(d), true);
+    }
+  }
+
+  const todayOrder = getStoryOrderForDay(calendarDay, locationsData);
+  if (todayOrder.length) ensureStoryDayRouteUnlocked(calendarDay, locationsData);
 }
 
 /** Первая ещё не завершённая точка текущего сюжетного маршрута. */

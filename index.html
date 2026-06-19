@@ -31,7 +31,23 @@
         <h1 class="splash__title" data-i18n="gameTitle">Сабботикал</h1>
         <p class="splash__subtitle" data-i18n="splash.subtitle"></p>
 
-        <div class="splash__actions">
+        <div class="splash__loader" id="splash-loader" aria-live="polite">
+          <div class="splash__loader-spinner" aria-hidden="true"></div>
+          <div
+            class="splash__loader-track"
+            id="splash-loader-track"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div class="splash__loader-fill" id="splash-loader-fill"></div>
+          </div>
+          <p class="splash__loader-label" id="splash-loader-label" data-i18n="splash.loading"></p>
+          <p class="splash__loader-pct" id="splash-loader-pct">0%</p>
+        </div>
+
+        <div class="splash__actions" id="splash-actions" hidden>
           <button class="btn btn--primary" data-action="start" data-i18n="splash.start"></button>
           <button class="btn btn--ghost" data-action="continue" data-i18n="splash.continue" hidden></button>
         </div>

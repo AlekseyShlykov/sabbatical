@@ -32,22 +32,26 @@ import {
 } from "./scene.js";
 import { backgroundForLocation } from "./locationAssets.js";
 import {
-  initDialogue, setGraph, renderPassage,
+  initDialogue, setGraph, renderPassage, getCurrentPassage,
   setEndCallback, rerenderCurrent, setAfterPassageHook,
 } from "./dialogue.js";
 import { buildGraph } from "./twineLoader.js";
 import {
   setReturnToMapCallback,
   setOpenIslandMapCallback,
+  setContinueSceneCallback,
+  setAfterNewDayCallback,
   initialBackgroundFromPassage,
 } from "./commands.js";
 import { initHud, showHudToast, renderHud } from "./hud.js";
 import {
   showDayEndNotice,
   showDayTitleCard,
+  showPartyCallNotice,
   setEndCalendarDayHandler,
 } from "./dayTransition.js";
 import {
+  setOnActionSpent,
   isDayCycleActive,
   enableGameHud,
   canSpendAction,
@@ -59,6 +63,11 @@ import {
   setDayTransitionActive,
   isDayTransitionActive,
 } from "./dayCycle.js";
+import {
+  setDay4PartyHandler,
+  tryForceDay4Party,
+  isDay4PartyRunning,
+} from "./scheduledEvents.js";
 import {
   getStoryOrder,
   getStoryOrderForDay,
@@ -72,6 +81,7 @@ import {
   getStoryFocusLocationId,
   isStoryMode,
   clearStoryDayFlags,
+  reconcileStoryDayWithCalendar,
 } from "./storyMode.js";
 import {
   pickTwinePassageForLocation,
@@ -83,7 +93,6 @@ import {
   resetIntro,
   renderIntroSlide,
   advanceIntro,
-  introAssetNames,
 } from "./intro.js";
 import {
   startBackgroundMusic,
@@ -94,6 +103,12 @@ import {
   initAudioMenu,
   syncAudioMenu,
 } from "./audio.js";
+import {
+  ensureAllAssetsPreloaded,
+  initSplashLoader,
+  setSplashLoadProgress,
+  finishSplashLoader,
+} from "./assetPreload.js";
 
 const LOCATIONS_URL = "data/locations.json";
 
@@ -108,10 +123,15 @@ bootstrap().catch((err) => {
 });
 
 async function bootstrap() {
+  showScreen("splash");
+  initSplashLoader();
+
   // Initial language: saved > browser > 'ru'
   const save = loadSave();
   const startLang = save?.language || pickInitialLang();
   await setLanguage(startLang);
+  applyDomI18n(document);
+  setSplashLoadProgress({ pct: 0 });
 
   // Load data + asset manifest in parallel.
   const [locRes] = await Promise.all([
@@ -127,13 +147,26 @@ async function bootstrap() {
   initMap(locationsData);
   initDialogue();
   initHud();
-  gameplayPreloadPromise = preloadGameplayAssets();
   setAfterPassageHook(maybeReturnHomeAfterVisit);
   setEndCalendarDayHandler(endPlayerDay);
   setEndCallback(handleDialogueEnd);
   setReturnToMapCallback(handleReturnToMap);
   setOpenIslandMapCallback(openIslandFromHome);
+  setAfterNewDayCallback(ensureDialogueScreenAfterNewDay);
+  setContinueSceneCallback((body) => {
+    if (/day\s*3\.2\s*white/i.test(body)) void continueAfterDay3Morning();
+  });
   onSelectLocation(handleMapSelect);
+  setOnActionSpent(() => {
+    void tryForceDay4Party();
+  });
+  setDay4PartyHandler(forceDay4Party);
+
+  gameplayPreloadPromise = ensureAllAssetsPreloaded({
+    onProgress: setSplashLoadProgress,
+  });
+  await gameplayPreloadPromise;
+  finishSplashLoader();
 
   if (save) {
     applySave(save);
@@ -158,7 +191,11 @@ async function bootstrap() {
   // back to the map — same as if they had pressed Leave.
   let initialScreen = getState().screen || "splash";
   if (initialScreen === "location") initialScreen = "map";
-  await goTo(initialScreen);
+  if (initialScreen !== "splash") {
+    await goTo(initialScreen);
+  } else {
+    setState({ screen: "splash" });
+  }
 }
 
 /* =========================================================
@@ -212,23 +249,11 @@ async function goTo(screenId) {
 
 function ensureGameplayPreload() {
   if (!gameplayPreloadPromise) {
-    gameplayPreloadPromise = preloadGameplayAssets();
+    gameplayPreloadPromise = ensureAllAssetsPreloaded({
+      onProgress: setSplashLoadProgress,
+    });
   }
   return gameplayPreloadPromise;
-}
-
-/** Подгрузка частых ассетов (WebP при наличии) с декодированием в кэш. */
-async function preloadGameplayAssets() {
-  await preloadRasters([
-    ["assets/map/", "map"],
-    ["assets/map/", "player"],
-    ["assets/map/", "mark"],
-    ...introAssetNames().map((name) => ["assets/intro/", name]),
-    ["assets/backgrounds/", "barout2"],
-    ["assets/backgrounds/", "houseorangeinside"],
-    ["assets/backgrounds/", "houseorangeout"],
-    ["assets/characters/", "mrred"],
-  ]);
 }
 
 /* =========================================================
@@ -272,7 +297,8 @@ async function performMapTravel(fromId, toId) {
 }
 
 async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = false } = {}) {
-  if (isDayTransitionActive()) return;
+  if (isDayTransitionActive() || isDay4PartyRunning()) return;
+  if (await tryForceDay4Party()) return;
 
   const state = getState();
   const fromId = state.currentLocation || locationsData.startLocation;
@@ -289,7 +315,7 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
   }
 
   const traveling = !skipTravel && fromId !== toId;
-  const needsVisitCharge = !skipActionCharge && isDayCycleActive();
+  const needsVisitCharge = !skipActionCharge && isDayCycleActive() && !isStoryMode(state);
 
   if (needsVisitCharge && !canSpendAction()) {
     showHudToast(t("hud.noActions"));
@@ -308,6 +334,7 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
       await sendPlayerHome();
       return;
     }
+    if (await tryForceDay4Party()) return;
     await withFade(async () => {
       setState({ currentLocation: toId, mapPlayerCoord: null });
       noteVisit(toId);
@@ -325,6 +352,7 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
       await sendPlayerHome();
       return;
     }
+    if (await tryForceDay4Party()) return;
     noteVisit(toId);
     await enterLocation(toLoc, { skipActionCharge: true });
   });
@@ -359,7 +387,7 @@ function preloadLocationAssets(loc) {
   if (passageName === "Day2.1. Blue." || (loc.id === "bluehouse" && passageName === "Blue house")) {
     specs.push(["assets/characters/", "mrblue"]);
   }
-  if (passageName === "Day 2. Green" || (loc.id === "greenhouse" && passageName === "Green house")) {
+  if (passageName === "Day 2.2. Green" || passageName === "Day 2. Green" || (loc.id === "greenhouse" && passageName === "Green house")) {
     specs.push(["assets/characters/", "msgreen"]);
   }
   if (passageName === "Day 2.3. Red" || (loc.id === "bar" && passageName === "Bar")) {
@@ -374,8 +402,19 @@ function preloadLocationAssets(loc) {
   if (passageName === "Day 2.6 Purple" || (loc.id === "purplehouse" && passageName === "purple house")) {
     specs.push(["assets/characters/", "mrpurple"]);
   }
-  if (passageName === "Day 3.1. White" || (loc.id === "whitehouse" && passageName === "White house")) {
+  if (passageName === "Day 3.1. Red" || (loc.id === "orangehouse" && passageName === "orange house")) {
+    specs.push(["assets/characters/", "mrred"]);
+  }
+  if (passageName === "Day 3.2. White" || passageName === "Day 3.1. White" || (loc.id === "whitehouse" && passageName === "White house")) {
     specs.push(["assets/characters/", "mswhite"]);
+  }
+  if (passageName === "Day 3.3. Bar." || passageName === "Day 4.5. Bar") {
+    for (const id of ["mrred", "msyellow", "msgreen", "mrpurple", "mrblack", "mswhite", "mrblue"]) {
+      specs.push(["assets/characters/", id]);
+    }
+  }
+  if (passageName === "Day 4.1. Forrest." || (loc.id === "forest" && passageName === "Forrest")) {
+    // ambient forest — no character preload required
   }
 
   const p = preloadRasters(specs).catch((err) => {
@@ -392,7 +431,7 @@ function preloadLocationAssets(loc) {
 }
 
 /** Конец календарного дня: сообщение, прогулка домой, титр нового дня. */
-async function endPlayerDay() {
+async function endPlayerDay({ inlineDuringPassage = false } = {}) {
   if (sendingPlayerHome) return;
   if (!isDayCycleActive()) return;
 
@@ -401,7 +440,7 @@ async function endPlayerDay() {
 
   sendingPlayerHome = true;
   try {
-    await finishDayAtHome();
+    await finishDayAtHome({ inlineDuringPassage });
   } finally {
     sendingPlayerHome = false;
   }
@@ -414,33 +453,41 @@ async function sendPlayerHome() {
 }
 
 /** Сообщение → путь домой → смена дня → титр «День N». */
-async function finishDayAtHome({ fromId } = {}) {
+async function finishDayAtHome({ fromId, inlineDuringPassage = false } = {}) {
   const homeId = locationsData.startLocation;
   const from = fromId ?? getState().currentLocation ?? homeId;
   const nextDay = getDayCycle().day + 1;
+  const stayingHome = from === homeId;
 
   setDayTransitionActive(true);
   try {
     if (getState().screen === "location") {
-      clearStage();
-      clearAmbient();
-      goTo("map");
+      if (stayingHome) {
+        clearAmbient();
+      } else {
+        clearStage();
+        clearAmbient();
+        goTo("map");
+      }
     }
-    await ensureMapViewportReady();
+    if (!stayingHome) {
+      await ensureMapViewportReady();
+    }
 
     await showDayEndNotice();
 
-    if (from !== homeId) {
+    if (!stayingHome) {
       await performMapTravel(from, homeId);
     } else {
       setState({ currentLocation: homeId, mapPlayerCoord: null });
-      setCurrentMarkHighlight(homeId);
+      if (getState().screen === "map") setCurrentMarkHighlight(homeId);
     }
 
     advanceDay();
+    if (isStoryMode()) reconcileStoryDayWithCalendar(locationsData);
     renderHud(getState());
     await showDayTitleCard(nextDay);
-    void renderMap();
+    if (!stayingHome) void renderMap();
   } finally {
     setDayTransitionActive(false);
   }
@@ -449,9 +496,23 @@ async function finishDayAtHome({ fromId } = {}) {
     const activeDay = getActiveStoryDayNumber(getState(), locationsData);
     if (activeDay) {
       ensureStoryDayRouteUnlocked(activeDay, locationsData);
-      await maybeStoryTravelAndEnterAfterLeave();
+      if (!inlineDuringPassage) {
+        await maybeStoryTravelAndEnterAfterLeave();
+      }
+    }
+  } else if (nextDay === 3 && getState().mode === "free" && !inlineDuringPassage) {
+    const home = locationById(homeId);
+    if (home) {
+      await enterLocation(home, { forcePassage: "Day 3.1. Red", skipActionCharge: true });
     }
   }
+}
+
+/** После `//новый день` диалог продолжается — экран локации должен остаться видимым. */
+async function ensureDialogueScreenAfterNewDay() {
+  if (!getCurrentPassage()) return;
+  if (getState().screen === "location") return;
+  await goTo("location");
 }
 
 /** Выход на карту — только после выбора режима (конец онбординга). */
@@ -476,9 +537,9 @@ async function handleReturnToMap() {
   await leaveLocation();
 }
 
-async function enterLocation(loc, { skipActionCharge = false } = {}) {
+async function enterLocation(loc, { skipActionCharge = false, forcePassage = null } = {}) {
   clearStage();
-  const passageName = resolveTwinePassage(loc);
+  const passageName = forcePassage || resolveTwinePassage(loc);
   let bg = backgroundForLocation(loc);
   if (passageName && storyGraph?.[passageName]) {
     const fromPassage = initialBackgroundFromPassage(storyGraph[passageName]);
@@ -527,6 +588,10 @@ function handleDialogueEnd({ passage }) {
     void withFade(() => goTo("modeSelect"));
     return;
   }
+  if (passage === "До завтра") {
+    void continueAfterDay3Morning();
+    return;
+  }
   if (passage === "Пойду исследовать остров") {
     const { mode } = getState();
     if (mode === "story") {
@@ -540,30 +605,114 @@ function handleDialogueEnd({ passage }) {
   // Branch ended (no choices, no more lines). Player keeps the Leave button.
 }
 
+/** Принудительная вечеринка в баре — день 4, свободный режим, 15:00. */
+async function forceDay4Party() {
+  const bar = locationById("bar");
+  if (!bar) return;
+
+  setFlag("freeDay4PartyDone", true);
+  await showPartyCallNotice();
+
+  const fromId = getState().currentLocation || locationsData.startLocation;
+  const seqLen = getLocationSceneSequence(bar).length;
+  advanceLocationScene("bar", seqLen);
+
+  preloadLocationAssets(bar);
+
+  if (getState().screen === "location") {
+    clearStage();
+    clearAmbient();
+    await goTo("map");
+  }
+
+  if (fromId !== "bar") {
+    await performMapTravel(fromId, "bar");
+  } else {
+    setState({ currentLocation: "bar", mapPlayerCoord: null });
+    setCurrentMarkHighlight("bar");
+  }
+
+  await withFade(async () => {
+    noteVisit("bar");
+    await enterLocation(bar, { forcePassage: "Day 4.5. Bar", skipActionCharge: true });
+  });
+}
+
+async function continueAfterDay3Morning() {
+  const homeId = locationsData.startLocation;
+  setFlag("dayScene_3_orangehouse", true);
+
+  if (isStoryMode()) {
+    completeStoryDayLocation(3, "orangehouse", locationsData);
+    await withFade(async () => {
+      clearStage();
+      clearAmbient();
+      goTo("map");
+      await maybeStoryTravelAndEnterAfterLeave();
+    });
+    return;
+  }
+
+  if (getState().mode === "free") {
+    const whitehouse = locationById("whitehouse");
+    if (!whitehouse) return;
+    await withFade(async () => {
+      clearStage();
+      clearAmbient();
+      goTo("map");
+      const fromId = getState().currentLocation || homeId;
+      if (fromId !== "whitehouse") {
+        await performMapTravel(fromId, "whitehouse");
+      }
+      await enterLocation(whitehouse, { forcePassage: "Day 3.2. White", skipActionCharge: true });
+    });
+  }
+}
+
 function resolveTwinePassage(loc) {
   if (getFlag("tutorialMap") && loc.id === "orangehouse") {
     return "orange house inside";
   }
-  if (loc.id === "orangehouse") {
-    return "orange house";
-  }
 
   const state = getState();
-
-  // Свободный режим: своя очередь сцен на локацию, по числу визитов.
-  // Пропуск сцены в «свой» день её не сжигает — порядок определяет прогресс
-  // локации, а не календарный день.
-  if (state.mode === "free") {
-    return pickLocationSceneByIndex(loc, getLocationSceneIndex(loc.id));
-  }
-
-  // Режим «История»: привязка к календарному дню и маршруту.
   const calendarDay = getDayCycle().day;
   const activeStoryDay = getActiveStoryDayNumber(state, locationsData);
   const storyOrder = activeStoryDay
     ? getStoryOrderForDay(activeStoryDay, locationsData)
     : [];
 
+  // Свободный режим: своя очередь сцен на локацию, по числу визитов.
+  if (state.mode === "free" && loc.id !== "orangehouse") {
+    return pickLocationSceneByIndex(loc, getLocationSceneIndex(loc.id));
+  }
+
+  // Оранжевый дом: дневные сцены (Day 3.1. Red и т.д.) + обычный «orange house».
+  if (loc.id === "orangehouse" && !getFlag("tutorialMap")) {
+    if (state.mode === "free") {
+      const dayPassage = loc.twinePassageByDay?.[String(calendarDay)];
+      if (dayPassage && isPassageAvailableOnDay(dayPassage, calendarDay)) {
+        const scene = pickLocationSceneByIndex(loc, getLocationSceneIndex(loc.id));
+        if (scene && scene !== loc.twinePassage) return scene;
+        if (!getFlag(`dayScene_${calendarDay}_orangehouse`)) return dayPassage;
+      }
+      return loc.twinePassage;
+    }
+    const passage = pickTwinePassageForLocation(loc, {
+      calendarDay,
+      activeStoryDay,
+      storyOrder,
+      isLocDoneOnStoryDay: (id) =>
+        isStoryDayLocationDone(activeStoryDay || 1, id),
+    });
+    return passage || loc.twinePassage;
+  }
+
+  // Свободный режим (остальные локации обработаны выше).
+  if (state.mode === "free") {
+    return pickLocationSceneByIndex(loc, getLocationSceneIndex(loc.id));
+  }
+
+  // Режим «История»: привязка к календарному дню и маршруту.
   const passage = pickTwinePassageForLocation(loc, {
     calendarDay,
     activeStoryDay,
@@ -640,6 +789,8 @@ async function leaveLocation() {
     await goTo("map");
   });
 
+  if (await tryForceDay4Party()) return;
+
   if (pendingStoryHome) {
     if (getState().currentLocation === homeId) {
       await completeStoryDayOneIfNeeded();
@@ -689,7 +840,7 @@ async function maybeStoryTravelAndEnterAfterLeave() {
   const toLoc = locationById(nextId);
   if (!toLoc || fromId === nextId) return;
 
-  const needsVisitCharge = isDayCycleActive();
+  const needsVisitCharge = isDayCycleActive() && !isStoryMode(state);
   if (needsVisitCharge && !canSpendAction()) {
     showHudToast(t("hud.noActions"));
     await sendPlayerHome();

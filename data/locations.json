@@ -36,6 +36,18 @@
     "yellowhouse",
     "purplehouse"
   ],
+  "storyOrderDay3": [
+    "orangehouse",
+    "whitehouse",
+    "bar"
+  ],
+  "storyOrderDay4": [
+    "forest",
+    "bluehouse",
+    "purplehouse",
+    "greenhouse",
+    "bar"
+  ],
   "debugShowPaths": false,
   "locations": [
     {
@@ -55,7 +67,8 @@
       "characters": [],
       "twinePassage": "Forrest",
       "twinePassageByDay": {
-        "2": "Day 2.4 Forrest"
+        "2": "Day 2.4 Forrest",
+        "4": "Day 4.1. Forrest."
       },
       "markAnchor": {
         "x": 252,
@@ -102,7 +115,8 @@
       "characters": [],
       "twinePassage": "Green house",
       "twinePassageByDay": {
-        "2": "Day 2. Green"
+        "2": "Day 2.2. Green",
+        "4": "Day 4.4. Green House"
       },
       "markAnchor": {
         "x": 589,
@@ -149,6 +163,9 @@
       "availableInStoryMode": true,
       "characters": [],
       "twinePassage": "orange house",
+      "twinePassageByDay": {
+        "3": "Day 3.1. Red"
+      },
       "markAnchor": {
         "x": 345,
         "y": 777
@@ -196,7 +213,8 @@
       ],
       "twinePassage": "Blue house",
       "twinePassageByDay": {
-        "2": "Day2.1. Blue."
+        "2": "Day2.1. Blue.",
+        "4": "Day 4.2. Blue house"
       },
       "markAnchor": {
         "x": 285,
@@ -220,7 +238,7 @@
       "characters": [],
       "twinePassage": "White house",
       "twinePassageByDay": {
-        "3": "Day 3.1. White"
+        "3": "Day 3.2. White"
       },
       "markAnchor": {
         "x": 1129,
@@ -294,7 +312,9 @@
       ],
       "twinePassage": "Bar",
       "twinePassageByDay": {
-        "2": "Day 2.3. Red"
+        "2": "Day 2.3. Red",
+        "3": "Day 3.3. Bar.",
+        "4": "Day 4.5. Bar"
       },
       "markAnchor": {
         "x": 589,
@@ -370,7 +390,8 @@
       "characters": [],
       "twinePassage": "purple house",
       "twinePassageByDay": {
-        "2": "Day 2.6 Purple"
+        "2": "Day 2.6 Purple",
+        "4": "Day 4.3. Purple house"
       },
       "path4Pin": {
         "x": 905,

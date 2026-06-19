@@ -19,6 +19,7 @@ import {
   canWriteBook,
 } from "./dayCycle.js";
 import { showHudToast } from "./hud.js";
+import { tryForceDay4Party } from "./scheduledEvents.js";
 
 const TYPE_DELAY = {
   default: 22,
@@ -158,12 +159,15 @@ function decideAfterLine(forceEnd = false) {
     currentPassage.choices.forEach((c, i) => {
       const costsAction = choiceCostsAction(c.target);
       const btn = makeButton(c.label, () => {
-        if (costsAction && !spendAction()) {
-          showHudToast(t("hud.noActions"));
-          return;
-        }
-        if (onChoiceCb) onChoiceCb(c);
-        void renderPassage(c.target);
+        void (async () => {
+          if (costsAction && !spendAction()) {
+            showHudToast(t("hud.noActions"));
+            return;
+          }
+          if (costsAction && (await tryForceDay4Party())) return;
+          if (onChoiceCb) onChoiceCb(c);
+          void renderPassage(c.target);
+        })();
       });
       btn.classList.add("choice-btn");
       if (costsAction && !canSpendAction()) {

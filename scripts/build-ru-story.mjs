@@ -91,6 +91,13 @@ const TYPO_FIXES = [
   [/настояла что/g, "настояла, что"],
   [/подозреваю что/g, "подозреваю, что"],
   [/не стесняясь/g, "не стесняясь"],
+  [/уврен/g, "уверен"],
+  [/больое/g, "большое"],
+  [/универститет/g, "университет"],
+  [/актерское/g, "актёрское"],
+  [/определенно/g, "определённо"],
+  [/возвращение нк карту/g, "возвращение на карту"],
+  [/прогулались/g, "прогулялись"],
 ];
 
 function normalizeLink(l) {
@@ -180,6 +187,10 @@ function validateDayPassages(list) {
 }
 
 function postProcessPassages(list) {
+  for (const p of list) {
+    const trimmed = p.name.trim();
+    if (trimmed !== p.name) p.name = trimmed;
+  }
   const byName = Object.fromEntries(list.map((p) => [p.name, p]));
   if (byName.start && !byName.start.text.includes("//показать mrred")) {
     byName.start.text = byName.start.text.replace(
@@ -233,6 +244,16 @@ function postProcessPassages(list) {
       "//фон houseblueinside"
     );
   }
+  if (byName["Day 2.2. Green"]) {
+    let t = byName["Day 2.2. Green"].text;
+    if (!t.includes("//показать msgreen")) {
+      t = t.replace(
+        /^\/\/фон - дом Зеленой\./i,
+        "//фон housegreeninside\n//показать msgreen"
+      );
+      byName["Day 2.2. Green"].text = t;
+    }
+  }
   if (byName["Day 2. Green"]) {
     let t = byName["Day 2. Green"].text;
     if (!t.includes("//показать msgreen")) {
@@ -274,13 +295,79 @@ function postProcessPassages(list) {
       "//фон housepurpleout\n//показать mrpurple"
     );
   }
+  if (byName["Day 3.1. Red"] && !byName["Day 3.1. Red"].text.includes("//показать mrred")) {
+    byName["Day 3.1. Red"].text = byName["Day 3.1. Red"].text.replace(
+      /^\/\/фон - дом оранжевого/i,
+      "//фон orange house inside\n//показать mrred"
+    );
+  }
+  if (byName["Day 3.2. White"] && !byName["Day 3.2. White"].text.includes("//показать mswhite")) {
+    byName["Day 3.2. White"].text = byName["Day 3.2. White"].text.replace(
+      /^\/\/фон - дом Оранжевый/i,
+      "//фон orange house inside\n//показать mswhite"
+    );
+  }
   if (byName["Day 3.1. White"] && !byName["Day 3.1. White"].text.includes("//показать mswhite")) {
     byName["Day 3.1. White"].text = byName["Day 3.1. White"].text.replace(
       /^\/\/фон - дом Оранжевый/i,
       "//фон orange house inside\n//показать mswhite"
     );
   }
-  for (const name of ["Пожалуй, я прогуляюсь", "Пойду погуляю по острову"]) {
+  if (byName["Day 3.3. Bar."] && !byName["Day 3.3. Bar."].text.includes("//показать mrred")) {
+    byName["Day 3.3. Bar."].text = byName["Day 3.3. Bar."].text.replace(
+      /^\/\/фон - бар/i,
+      "//фон bar\n//показать mrred\n//показать msyellow"
+    );
+  }
+  if (byName["Day 4.1. Forrest."] && !byName["Day 4.1. Forrest."].text.includes("//фон forrest")) {
+    byName["Day 4.1. Forrest."].text = byName["Day 4.1. Forrest."].text.replace(
+      /^\/\/фон - лес/i,
+      "//фон forrest"
+    );
+  }
+  if (byName["Day 4.2. Blue house"] && !byName["Day 4.2. Blue house"].text.includes("//фон houseblueout")) {
+    byName["Day 4.2. Blue house"].text = byName["Day 4.2. Blue house"].text.replace(
+      /^\/\/фон - дом Синего снаружи/i,
+      "//фон houseblueout"
+    );
+  }
+  if (byName["Day 4.3. Purple house"] && !byName["Day 4.3. Purple house"].text.includes("//фон housepurpleout")) {
+    byName["Day 4.3. Purple house"].text = byName["Day 4.3. Purple house"].text.replace(
+      /^\/\/фон - дом пурпурного снаружи/i,
+      "//фон housepurpleout"
+    );
+  }
+  if (byName["Day 4.4. Green House"] && !byName["Day 4.4. Green House"].text.includes("//фон housegreenout")) {
+    byName["Day 4.4. Green House"].text = byName["Day 4.4. Green House"].text.replace(
+      /^\/\/Фон - дом зеленой снаружи/i,
+      "//фон housegreenout"
+    );
+  }
+  if (byName["Day 4.5. Bar"] && !byName["Day 4.5. Bar"].text.includes("//в баре")) {
+    byName["Day 4.5. Bar"].text = byName["Day 4.5. Bar"].text
+      .replace(/^\/\/Если в свободном режиме[^\n]+\n/i, "")
+      .replace(
+        /^\/\/фон - Бар внутри[^\n]*/i,
+        "//фон bar\n//в баре msgreen, mrpurple, msyellow, mrblack, mswhite, mrred, mrblue"
+      );
+  }
+  if (byName["Зайти в дом"] && byName["Зайти в дом"].text.trim() === "") {
+    byName["Зайти в дом"].text =
+      "//фон housepurpleinside\n\nmrpurple: Расскажи, о чем твоя книга?\n";
+  }
+  if (byName["Зайти в дом"] && byName["Зайти в дом"].text.includes("mrpurple: Расскажи") && !byName["Зайти в дом"].text.includes("//фон housepurpleinside")) {
+    byName["Зайти в дом"].text = byName["Зайти в дом"].text.replace(
+      /^\/\/новый фон - дом пурпурного внутри/i,
+      "//фон housepurpleinside"
+    );
+  }
+  if (byName["Давай прогуляемся"] && !byName["Давай прогуляемся"].text.includes("//фон beach")) {
+    byName["Давай прогуляемся"].text = byName["Давай прогуляемся"].text.replace(
+      /^\/\/анимация перемещения[^\n]*\n\/\/новый фон - пляж/i,
+      "//анимация перемещения на карте - от дома пурпурного до локации - пляж\n//фон beach"
+    );
+  }
+  for (const name of ["Пожалуй, я прогуляюсь", "Пойду погуляю по острову", "Спасибо, я лучше пойду погуляю"]) {
     if (byName[name] && !byName[name].text.includes("//вернуться на карту")) {
       byName[name].text = byName[name].text.trimEnd() + "\n//вернуться на карту\n";
     }

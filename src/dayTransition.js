@@ -11,8 +11,8 @@ export function setEndCalendarDayHandler(fn) {
 }
 
 /** Вызов из `//новый день` и похожих команд сценария. */
-export async function requestEndCalendarDay() {
-  if (endCalendarDayHandler) await endCalendarDayHandler();
+export async function requestEndCalendarDay({ inlineDuringPassage = false } = {}) {
+  if (endCalendarDayHandler) await endCalendarDayHandler({ inlineDuringPassage });
 }
 
 function waitForDismiss(el, ms = 2800) {
@@ -54,6 +54,20 @@ export async function showDayEndNotice() {
   el.hidden = false;
   requestAnimationFrame(() => el.classList.add("is-on"));
   await waitForDismiss(el);
+}
+
+/** «15:00, пора в Бар…» — перед принудительным переходом на вечеринку. */
+export async function showPartyCallNotice() {
+  const el = document.getElementById("day-end-notice");
+  const msg = document.getElementById("day-end-message");
+  if (!el || !msg) {
+    await wait(1200);
+    return;
+  }
+  msg.textContent = t("hud.day4PartyCall");
+  el.hidden = false;
+  requestAnimationFrame(() => el.classList.add("is-on"));
+  await waitForDismiss(el, 2400);
 }
 
 /** Полноэкранный титр «День N» после смены дня. */

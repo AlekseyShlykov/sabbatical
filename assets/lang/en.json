@@ -5,7 +5,9 @@
     "subtitle": "a quiet story you can take your time with",
     "start": "Start Adventure",
     "continue": "Continue",
-    "languageLabel": "Language"
+    "languageLabel": "Language",
+    "loading": "Loading…",
+    "loadingPct": "{n}%"
   },
   "intro": {
     "continue": "Continue",
@@ -46,6 +48,7 @@
     "noActions": "No actions left today. Rest to start a new day.",
     "dailyBookCap": "You can only add 3% to this book per day.",
     "dayEndReturnHome": "Today's day is over — time to return home.",
+    "day4PartyCall": "3 p.m. — time for the Bar. I'd better not be late!",
     "dayTitle": "Day {n}"
   },
   "dayTransition": {

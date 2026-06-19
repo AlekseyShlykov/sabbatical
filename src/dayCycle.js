@@ -2,9 +2,19 @@
 
 import { getState, update, getFlag, setFlag } from "./state.js";
 
+let onActionSpentCallback = null;
+
+/** Вызывается после каждой траты действия (ход, письмо). */
+export function setOnActionSpent(fn) {
+  onActionSpentCallback = fn;
+}
+
 export const MAX_ACTIONS_PER_DAY = 10;
 export const MAX_BOOK_PERCENT_PER_DAY = 3;
 export const DAY_START_HOUR = 8;
+/** Календарный час вечеринки в баре (день 4, свободный режим). */
+export const PARTY_CLOCK_HOUR = 15;
+export const PARTY_CLOCK_ACTIONS = PARTY_CLOCK_HOUR - DAY_START_HOUR;
 
 /** Календарный старт сюжета: день 1 = 1 сентября (UTC, без года в подписи). */
 const STORY_CALENDAR_YEAR = 2024;
@@ -180,6 +190,7 @@ export function tryAddBookProgress(kind) {
     return s;
   });
   if (!getFlag("bookUi")) enableGameHud();
+  if (onActionSpentCallback) onActionSpentCallback();
   return { ok: true };
 }
 

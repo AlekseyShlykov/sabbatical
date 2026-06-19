@@ -28,6 +28,34 @@ export const LINK_EN_EXTRA = {
   "В другой раз": "Another time",
   "Прогуляемся в лес": "Let's walk in the forest",
   "Прогуляемся к маяку": "Let's walk to the lighthouse",
+  "Спасибо за приглашение": "Thanks for the invitation",
+  "Но я не хочу идти": "But I don't want to go",
+  "До завтра": "See you tomorrow",
+  "Я пишу книгу": "I'm writing a book",
+  "Уже и сам не знаю": "I'm not sure myself anymore",
+  "Это книга - результат моих исследований": "It's a book based on my research",
+  "Я пишу роман": "I'm writing a novel",
+  "Расскажи мне больше об этом": "Tell me more about that",
+  "Иногда правила можно и нарушить": "Sometimes rules can be broken",
+  "Да, ты права, не стоит": "You're right — better not",
+  "Расскажи мне больше о тебе": "Tell me more about yourself",
+  "Спасибо что поделилась": "Thank you for sharing",
+  "Вино": "Wine",
+  "Виски": "Whisky",
+  "Пиво": "Beer",
+  "Я не пью": "I don't drink",
+  "Спасибо": "Thanks",
+  "Прогуляться по лесу": "Walk in the forest",
+  "Уйти": "Leave",
+  'Покричать "Синий, ты дома?"': 'Shout "Blue, are you home?"',
+  "Постучаться в дверь": "Knock on the door",
+  'Покричать "Есть кто дома?"': 'Shout "Anyone home?"',
+  "Постучаться в дверь Пурпурного": "Knock on Purple's door",
+  'Покричать "Можно заглянуть в гости?"': 'Shout "May I visit?"',
+  "Постучаться в дверь Зеленой": "Knock on Green's door",
+  "Подойти к группе Зеленая, Пурпурный, Белая": "Join Green, Purple, and White",
+  "Подойти к Желтой и Черному": "Join Yellow and Black",
+  "Подойти к Красному и Синему": "Join Red and Blue",
 };
 
 export const TEXT_EN_EXTRA = {
@@ -86,11 +114,81 @@ export const TEXT_EN_EXTRA = {
   "А что не так с Желтой?":
     "mrpurple: She's rude. And mean. Loves rules. Hard to talk to. I barely speak to her at all.\n\nmrpurple: Though everyone on the island knows about her love of weapons. I'll bet a bottle of fifty-year-old whisky she used to trade in them and is just hiding here. She talks about it all too professionally.\n\nmrpurple: But those are only my guesses. I dislike her because she's only sixty-one and thinks she's smarter than everyone. That's my personal opinion. I just wanted to warn you to be careful with her.\n",
   "Пойду погуляю по острову": "//return to map\n",
-  "Day 3.1. White":
-    "//background orange house inside\n//show mswhite\nmswhite: Hello! I don't think we've properly introduced ourselves yet.\n\nmswhite: I'm White. I'm a newcomer like you. I only moved here recently and still can't get used to the isolation.\n\nmswhite: Would you mind if we took a walk? Where would you like to go?\n",
   "В другой раз": "//White leaves; player stays at home.\n",
-  "Прогуляемся в лес":
-    "//travel to forest\n//background forrest\n\nmswhite: I love walking here. Black and I used to come often.\n",
   "Прогуляемся к маяку":
-    "//travel to lighthouse\n//background lighthouse\n\nmswhite: I love this view.\n",
+    "//travel to lighthouse\n//background lighthouse\n\nmswhite: I love this view. The endless sea. You look and lose yourself in thought.\n\nmswhite: I'm Barbara. I don't like all these nicknames, though in public of course I follow the rule too.\n\nmswhite: Tell me why you came to the island.\n",
+  "Day 2.2. Green":
+    "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello — how's the book coming along?\n",
+  "Day 3.1. Red":
+    "//background orange house inside\n//show mrred\nmrred: Good morning! I see you like your sleep!\n\nmrred: I have a little tradition — I always throw a party for a new guest. Tomorrow I want to throw one for you. You'll meet anyone you haven't seen yet, if anyone's left.\n\nmrred: Come tomorrow at three — and don't be late!\n",
+  "Спасибо за приглашение":
+    "mrred: It's not just for you — the others need to look you over, get acquainted, understand what you're about. We have a very cosy little world here and we're wary of outsiders.\n\nmrred: That sounded a bit ominous, but it'll be fine — just come to the Bar tomorrow at three o'clock. See you tomorrow!\n",
+  "Но я не хочу идти":
+    "mrred: Sorry, but I insist. It's not just for you — the others need to look you over, get acquainted, understand what you're about. We have a very cosy little world here and we're wary of outsiders.\n\nmrred: That sounded a bit ominous, but it'll be fine — just come to the Bar tomorrow at three o'clock. See you tomorrow!\n",
+  "До завтра": "//continue to Day 3.2 White\n",
+  "Day 3.2. White":
+    "//background orange house inside\n//show mswhite\nmswhite: Hello! I don't think we've properly introduced ourselves yet.\n\nmswhite: I'm White. I'm a newcomer like you. I only moved here recently and still can't get used to the isolation.\n\nmswhite: Would you mind if we took a walk? Where would you like to go?\n",
+  "Я пишу книгу":
+    "mswhite: Yes, how interesting. I remember something like that — you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
+  "Уже и сам не знаю":
+    "mswhite: Yes, how interesting. I remember something like that — you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
+  "Это книга - результат моих исследований":
+    "mswhite: Ah, science. Not really my thing.\n\nmswhite: Though once I studied chemistry. I never finished university. It feels like another life, forty years ago.\n",
+  "Я пишу роман":
+    "mswhite: That definitely interests me — I love books. I even wrote myself.\n\nmswhite: Ten years of life wasted. I wrote two novels. The first was even published. But it was such a deafening flop. I still can't finish the second.\n\nmswhite: And I've made peace with the idea that writing isn't for me.\n",
+  "Расскажи мне больше об этом":
+    "mswhite: (laughs sarcastically) What about the rule about not talking about the past? Or are you a rebel?\n",
+  "Иногда правила можно и нарушить":
+    "mswhite: I was born a long time ago. Life wasn't sweet. Since childhood I found it hard to connect with peers and keep friends.\n\nmswhite: But I finished school, then went to university. I wanted to study chemistry. I liked the idea of becoming the best experimenter in the USA. But study didn't agree with me — I couldn't stand the pressure.\n\nmswhite: Then for several years I recovered; luckily I was never short of money. My mother left me a large inheritance, so I could do whatever I wanted.\n\nmswhite: But figuring out what I wanted turned out to be very hard. Photography, acting, writing — at one point I even studied finance, but that didn't help much.\n\nmswhite: (thoughtfully) Yes — that's how life went. From one problem to the next.\n",
+  "Да, ты права, не стоит":
+    "mswhite: How do you like the island? Have you got used to the isolation yet?\n",
+  "Расскажи мне больше о тебе":
+    "mswhite: (laughs sarcastically) What about the rule about not talking about the past? Or are you a rebel?\n",
+  question32:
+    "mswhite: I understand. I've lived here a year, but I still haven't figured it out for myself. Sometimes I love this place. Sometimes I want to escape. Sometimes I'm glad to be in such a cosy world, sometimes I want to return to the big world.\n\nmswhite: Our talk gave me food for thought. Sorry — I want to be alone and take a walk. Thanks for the conversation. I hope you'll remember this as a proper introduction. And sorry I was rude last time. That happens with me.\n\nmswhite: Have a good day.\n\n//White leaves; map\n",
+  "Спасибо что поделилась":
+    "mswhite: All right — let's not talk about the past. Sometimes it hurts to remember.\n\nmswhite: How do you like the island? Have you got used to the isolation yet?\n",
+  "Day 3.3. Bar.":
+    "//background bar\n//show mrred\n//show msyellow\n\nmrred: (fragment of conversation) I'm not sure that'll help her.\n\nmrred: Oh, hello, Orange! Haven't seen you this morning.\n\nmsyellow: Hello.\n\nmrred: I forgot to ask — what do you prefer to drink at the party?\n",
+  "Я не пью":
+    "mrred: Well I'll be!\n\nmrred: (turning to Yellow) I told you you have more in common than you think.\n\nmrred: Fine — I'll order something non-alcoholic for you.\n",
+  question33: "mrred: Noted. Everything arrives on the boat tomorrow morning, and by three I'll have it ready.\n",
+  "Спасибо":
+    "mrred: All right — see you tomorrow, and don't be late!\n\nmsyellow: Bye.\n\n//return to map\n",
+  "Day 4.1. Forrest.":
+    "//background forrest\n\nA pleasant breeze blows from the sea today.\n",
+  "Прогуляться по лесу":
+    "You walked through the forest — beautiful and peaceful. Many herbs and shrubs grow around that you know nothing about.\n\nYou didn't meet a soul the whole walk.\n\n//return to map\n",
+  "Уйти": "//return to map\n",
+  "Day 4.2. Blue house":
+    "//background houseblueout\n\nYou approach Blue's house. The curtains are drawn, as if no one's home.\n",
+  'Покричать "Синий, ты дома?"':
+    "No answer. It seems no one's home.\n\n//return to map\n",
+  "Постучаться в дверь":
+    "Silence. It seems no one's home.\n\n//return to map\n",
+  "Day 4.3. Purple house":
+    "//background housepurpleout\n\nYou approach Purple's house. The door is closed, but someone might be home.\n",
+  'Покричать "Есть кто дома?"':
+    "No answer. It seems no one's home.\n\n//return to map\n",
+  "Постучаться в дверь Пурпурного":
+    "Silence. It seems no one's home.\n\n//return to map\n",
+  "Day 4.4. Green House":
+    "//background housegreenout\n\nYou approach Green's house. The door is closed; no one visible in the windows.\n",
+  'Покричать "Можно заглянуть в гости?"':
+    "No answer. It seems no one's home.\n\n//return to map\n",
+  "Постучаться в дверь Зеленой":
+    "Silence. No one's home.\n\n//return to map\n",
+  "Day 4.5. Bar":
+    "//background bar\n//at bar msgreen, mrpurple, msyellow, mrblack, mswhite, mrred, mrblue\n\nFrom afar you hear music. As if there weren't seven people here but seventy — a hum, everyone talking, waiting for you.\n\nmrred: At last! Welcome, Orange, to this party in your honour! We're glad you're on the island. Relax, drink what you like, talk to whoever you want — we're free here.\n",
+  "Подойти к Красному и Синему":
+    "//background bar\n\nmrred: I didn't know what you like, so I ordered a bit of everything. Everyone helped prepare this morning! It's tradition.\n",
+  "Подойти к группе Зеленая, Пурпурный, Белая":
+    "//background barout2\n\nmswhite: Hello! Glad to see you. It felt so strange organising a party for someone else. I think my welcome party was only a couple of weeks ago.\n",
+  "Подойти к Желтой и Черному": "//background bar\n",
+  lighthouse2:
+    "mswhite: Good. And you should go — I wanted to be alone for a bit, and since I've lived here longer than you, I'd be grateful if you'd leave.\n",
+  "Зайти в дом":
+    "//background housepurpleinside\n\nmrpurple: Tell me — what's your book about?\n",
+  "Прогуляемся в лес":
+    "//travel to forest\n//background forrest\n\nmswhite: I love walking here. Black and I used to come often.\n\nmswhite: I'm Barbara. I don't like all these nicknames, though in public of course I follow the rule too. But I'd be pleased if you called me Barbara when we're alone.\n\nmswhite: Tell me why you came to the island.\n",
 };

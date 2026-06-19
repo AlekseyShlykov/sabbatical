@@ -479,7 +479,7 @@
     },
     {
       "name": "lighthouse2",
-      "text": "mswhite: Oh — forgive me, you should go. I wanted to be alone, and since I've lived here longer than you, I'd be grateful if you left.\n",
+      "text": "mswhite: Good. And you should go — I wanted to be alone for a bit, and since I've lived here longer than you, I'd be grateful if you'd leave.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -1020,7 +1020,7 @@
       ]
     },
     {
-      "name": "Day 2. Green",
+      "name": "Day 2.2. Green",
       "text": "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello — how's the book coming along?\n",
       "links": [
         {
@@ -1298,8 +1298,17 @@
     },
     {
       "name": "Зайти в дом",
-      "text": "//background inside purple house\n",
-      "links": []
+      "text": "//background housepurpleinside\n\nmrpurple: Tell me — what's your book about?\n",
+      "links": [
+        {
+          "name": "It's a scholarly book",
+          "link": "Это научная книга"
+        },
+        {
+          "name": "It will be a work of fiction",
+          "link": "Это будет художественный роман"
+        }
+      ]
     },
     {
       "name": "Это научная книга",
@@ -1463,7 +1472,7 @@
       "links": []
     },
     {
-      "name": "Day 3.1. White",
+      "name": "Day 3.2. White",
       "text": "//background orange house inside\n//show mswhite\nmswhite: Hello! I don't think we've properly introduced ourselves yet.\n\nmswhite: I'm White. I'm a newcomer like you. I only moved here recently and still can't get used to the isolation.\n\nmswhite: Would you mind if we took a walk? Where would you like to go?\n",
       "links": [
         {
@@ -1487,12 +1496,364 @@
     },
     {
       "name": "Прогуляемся в лес",
-      "text": "//travel to forest\n//background forrest\n\nmswhite: I love walking here. Black and I used to come often.\n",
-      "links": []
+      "text": "//travel to forest\n//background forrest\n\nmswhite: I love walking here. Black and I used to come often.\n\nmswhite: I'm Barbara. I don't like all these nicknames, though in public of course I follow the rule too. But I'd be pleased if you called me Barbara when we're alone.\n\nmswhite: Tell me why you came to the island.\n",
+      "links": [
+        {
+          "name": "I'm writing a book",
+          "link": "Я пишу книгу"
+        },
+        {
+          "name": "I'm not sure myself anymore",
+          "link": "Уже и сам не знаю"
+        }
+      ]
     },
     {
       "name": "Прогуляемся к маяку",
-      "text": "//travel to lighthouse\n//background lighthouse\n\nmswhite: I love this view.\n",
+      "text": "//travel to lighthouse\n//background lighthouse\n\nmswhite: I love this view. The endless sea. You look and lose yourself in thought.\n\nmswhite: I'm Barbara. I don't like all these nicknames, though in public of course I follow the rule too.\n\nmswhite: Tell me why you came to the island.\n",
+      "links": [
+        {
+          "name": "I'm writing a book",
+          "link": "Я пишу книгу"
+        },
+        {
+          "name": "I'm not sure myself anymore",
+          "link": "Уже и сам не знаю"
+        }
+      ]
+    },
+    {
+      "name": "Day 3.1. Red",
+      "text": "//background orange house inside\n//show mrred\nmrred: Good morning! I see you like your sleep!\n\nmrred: I have a little tradition — I always throw a party for a new guest. Tomorrow I want to throw one for you. You'll meet anyone you haven't seen yet, if anyone's left.\n\nmrred: Come tomorrow at three — and don't be late!\n",
+      "links": [
+        {
+          "name": "Thanks for the invitation",
+          "link": "Спасибо за приглашение"
+        },
+        {
+          "name": "But I don't want to go",
+          "link": "Но я не хочу идти"
+        }
+      ]
+    },
+    {
+      "name": "Спасибо за приглашение",
+      "text": "mrred: It's not just for you — the others need to look you over, get acquainted, understand what you're about. We have a very cosy little world here and we're wary of outsiders.\n\nmrred: That sounded a bit ominous, but it'll be fine — just come to the Bar tomorrow at three o'clock. See you tomorrow!\n",
+      "links": [
+        {
+          "name": "See you tomorrow",
+          "link": "До завтра"
+        }
+      ]
+    },
+    {
+      "name": "Но я не хочу идти",
+      "text": "mrred: Sorry, but I insist. It's not just for you — the others need to look you over, get acquainted, understand what you're about. We have a very cosy little world here and we're wary of outsiders.\n\nmrred: That sounded a bit ominous, but it'll be fine — just come to the Bar tomorrow at three o'clock. See you tomorrow!\n",
+      "links": [
+        {
+          "name": "See you tomorrow",
+          "link": "До завтра"
+        }
+      ]
+    },
+    {
+      "name": "До завтра",
+      "text": "//continue to Day 3.2 White\n",
+      "links": []
+    },
+    {
+      "name": "Я пишу книгу",
+      "text": "mswhite: Yes, how interesting. I remember something like that — you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
+      "links": [
+        {
+          "name": "It's a book based on my research",
+          "link": "Это книга - результат моих исследований"
+        },
+        {
+          "name": "I'm writing a novel",
+          "link": "Я пишу роман"
+        }
+      ]
+    },
+    {
+      "name": "Уже и сам не знаю",
+      "text": "mswhite: Yes, how interesting. I remember something like that — you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
+      "links": [
+        {
+          "name": "It's a book based on my research",
+          "link": "Это книга - результат моих исследований"
+        },
+        {
+          "name": "I'm writing a novel",
+          "link": "Я пишу роман"
+        }
+      ]
+    },
+    {
+      "name": "Это книга - результат моих исследований",
+      "text": "mswhite: Ah, science. Not really my thing.\n\nmswhite: Though once I studied chemistry. I never finished university. It feels like another life, forty years ago.\n",
+      "links": [
+        {
+          "name": "Tell me more about that",
+          "link": "Расскажи мне больше об этом"
+        }
+      ]
+    },
+    {
+      "name": "Я пишу роман",
+      "text": "mswhite: That definitely interests me — I love books. I even wrote myself.\n\nmswhite: Ten years of life wasted. I wrote two novels. The first was even published. But it was such a deafening flop. I still can't finish the second.\n\nmswhite: And I've made peace with the idea that writing isn't for me.\n",
+      "links": [
+        {
+          "name": "Tell me more about yourself",
+          "link": "Расскажи мне больше о тебе"
+        }
+      ]
+    },
+    {
+      "name": "Расскажи мне больше об этом",
+      "text": "mswhite: (laughs sarcastically) What about the rule about not talking about the past? Or are you a rebel?\n",
+      "links": [
+        {
+          "name": "Sometimes rules can be broken",
+          "link": "Иногда правила можно и нарушить"
+        },
+        {
+          "name": "You're right — better not",
+          "link": "Да, ты права, не стоит"
+        }
+      ]
+    },
+    {
+      "name": "Иногда правила можно и нарушить",
+      "text": "mswhite: I was born a long time ago. Life wasn't sweet. Since childhood I found it hard to connect with peers and keep friends.\n\nmswhite: But I finished school, then went to university. I wanted to study chemistry. I liked the idea of becoming the best experimenter in the USA. But study didn't agree with me — I couldn't stand the pressure.\n\nmswhite: Then for several years I recovered; luckily I was never short of money. My mother left me a large inheritance, so I could do whatever I wanted.\n\nmswhite: But figuring out what I wanted turned out to be very hard. Photography, acting, writing — at one point I even studied finance, but that didn't help much.\n\nmswhite: (thoughtfully) Yes — that's how life went. From one problem to the next.\n",
+      "links": [
+        {
+          "name": "Thank you for sharing",
+          "link": "Спасибо что поделилась"
+        }
+      ]
+    },
+    {
+      "name": "Да, ты права, не стоит",
+      "text": "mswhite: How do you like the island? Have you got used to the isolation yet?\n",
+      "links": [
+        {
+          "name": "Пока нет",
+          "link": "question32"
+        },
+        {
+          "name": "Мне все нравится",
+          "link": "question32"
+        }
+      ]
+    },
+    {
+      "name": "Расскажи мне больше о тебе",
+      "text": "mswhite: (laughs sarcastically) What about the rule about not talking about the past? Or are you a rebel?\n",
+      "links": [
+        {
+          "name": "Sometimes rules can be broken",
+          "link": "Иногда правила можно и нарушить"
+        },
+        {
+          "name": "You're right — better not",
+          "link": "Да, ты права, не стоит"
+        }
+      ]
+    },
+    {
+      "name": "question32",
+      "text": "mswhite: I understand. I've lived here a year, but I still haven't figured it out for myself. Sometimes I love this place. Sometimes I want to escape. Sometimes I'm glad to be in such a cosy world, sometimes I want to return to the big world.\n\nmswhite: Our talk gave me food for thought. Sorry — I want to be alone and take a walk. Thanks for the conversation. I hope you'll remember this as a proper introduction. And sorry I was rude last time. That happens with me.\n\nmswhite: Have a good day.\n\n//White leaves; map\n",
+      "links": []
+    },
+    {
+      "name": "Спасибо что поделилась",
+      "text": "mswhite: All right — let's not talk about the past. Sometimes it hurts to remember.\n\nmswhite: How do you like the island? Have you got used to the isolation yet?\n",
+      "links": [
+        {
+          "name": "Пока нет",
+          "link": "question32"
+        },
+        {
+          "name": "Мне все нравится",
+          "link": "question32"
+        }
+      ]
+    },
+    {
+      "name": "Day 3.3. Bar.",
+      "text": "//background bar\n//show mrred\n//show msyellow\n\nmrred: (fragment of conversation) I'm not sure that'll help her.\n\nmrred: Oh, hello, Orange! Haven't seen you this morning.\n\nmsyellow: Hello.\n\nmrred: I forgot to ask — what do you prefer to drink at the party?\n",
+      "links": [
+        {
+          "name": "Wine",
+          "link": "question33"
+        },
+        {
+          "name": "Whisky",
+          "link": "question33"
+        },
+        {
+          "name": "Beer",
+          "link": "question33"
+        },
+        {
+          "name": "I don't drink",
+          "link": "Я не пью"
+        }
+      ]
+    },
+    {
+      "name": "Я не пью",
+      "text": "mrred: Well I'll be!\n\nmrred: (turning to Yellow) I told you you have more in common than you think.\n\nmrred: Fine — I'll order something non-alcoholic for you.\n",
+      "links": [
+        {
+          "name": "Thanks",
+          "link": "Спасибо"
+        }
+      ]
+    },
+    {
+      "name": "question33",
+      "text": "mrred: Noted. Everything arrives on the boat tomorrow morning, and by three I'll have it ready.\n",
+      "links": [
+        {
+          "name": "Thanks",
+          "link": "Спасибо"
+        }
+      ]
+    },
+    {
+      "name": "Спасибо",
+      "text": "mrred: All right — see you tomorrow, and don't be late!\n\nmsyellow: Bye.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Day 4.1. Forrest.",
+      "text": "//background forrest\n\nA pleasant breeze blows from the sea today.\n",
+      "links": [
+        {
+          "name": "Walk in the forest",
+          "link": "Прогуляться по лесу"
+        },
+        {
+          "name": "Leave",
+          "link": "Уйти"
+        }
+      ]
+    },
+    {
+      "name": "Прогуляться по лесу",
+      "text": "You walked through the forest — beautiful and peaceful. Many herbs and shrubs grow around that you know nothing about.\n\nYou didn't meet a soul the whole walk.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Уйти",
+      "text": "//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Day 4.2. Blue house",
+      "text": "//background houseblueout\n\nYou approach Blue's house. The curtains are drawn, as if no one's home.\n",
+      "links": [
+        {
+          "name": "Shout \"Blue, are you home?\"",
+          "link": "Покричать \"Синий, ты дома?\""
+        },
+        {
+          "name": "Knock on the door",
+          "link": "Постучаться в дверь"
+        }
+      ]
+    },
+    {
+      "name": "Покричать \"Синий, ты дома?\"",
+      "text": "No answer. It seems no one's home.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Постучаться в дверь",
+      "text": "Silence. It seems no one's home.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Day 4.3. Purple house",
+      "text": "//background housepurpleout\n\nYou approach Purple's house. The door is closed, but someone might be home.\n",
+      "links": [
+        {
+          "name": "Shout \"Anyone home?\"",
+          "link": "Покричать \"Есть кто дома?\""
+        },
+        {
+          "name": "Knock on Purple's door",
+          "link": "Постучаться в дверь Пурпурного"
+        }
+      ]
+    },
+    {
+      "name": "Покричать \"Есть кто дома?\"",
+      "text": "No answer. It seems no one's home.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Постучаться в дверь Пурпурного",
+      "text": "Silence. It seems no one's home.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Day 4.4. Green House",
+      "text": "//background housegreenout\n\nYou approach Green's house. The door is closed; no one visible in the windows.\n",
+      "links": [
+        {
+          "name": "Shout \"May I visit?\"",
+          "link": "Покричать \"Можно заглянуть в гости?\""
+        },
+        {
+          "name": "Knock on Green's door",
+          "link": "Постучаться в дверь Зеленой"
+        }
+      ]
+    },
+    {
+      "name": "Покричать \"Можно заглянуть в гости?\"",
+      "text": "No answer. It seems no one's home.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Постучаться в дверь Зеленой",
+      "text": "Silence. No one's home.\n\n//return to map\n",
+      "links": []
+    },
+    {
+      "name": "Day 4.5. Bar",
+      "text": "//background bar\n//at bar msgreen, mrpurple, msyellow, mrblack, mswhite, mrred, mrblue\n\nFrom afar you hear music. As if there weren't seven people here but seventy — a hum, everyone talking, waiting for you.\n\nmrred: At last! Welcome, Orange, to this party in your honour! We're glad you're on the island. Relax, drink what you like, talk to whoever you want — we're free here.\n",
+      "links": [
+        {
+          "name": "Join Green, Purple, and White",
+          "link": "Подойти к группе Зеленая, Пурпурный, Белая"
+        },
+        {
+          "name": "Join Yellow and Black",
+          "link": "Подойти к Желтой и Черному"
+        },
+        {
+          "name": "Join Red and Blue",
+          "link": "Подойти к Красному и Синему"
+        }
+      ]
+    },
+    {
+      "name": "Подойти к Красному и Синему",
+      "text": "//background bar\n\nmrred: I didn't know what you like, so I ordered a bit of everything. Everyone helped prepare this morning! It's tradition.\n",
+      "links": []
+    },
+    {
+      "name": "Подойти к группе Зеленая, Пурпурный, Белая",
+      "text": "//background barout2\n\nmswhite: Hello! Glad to see you. It felt so strange organising a party for someone else. I think my welcome party was only a couple of weeks ago.\n",
+      "links": []
+    },
+    {
+      "name": "Подойти к Желтой и Черному",
+      "text": "//background bar\n",
       "links": []
     },
     {

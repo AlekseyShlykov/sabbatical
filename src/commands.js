@@ -55,6 +55,10 @@ export function isEngineCommandBody(body) {
   if (/(?:встречаете|встретили|meet)\s+[\p{L}\p{N}_]+/iu.test(trimmed)) return true;
   if (/добавляет?\s+1\s*%?\s+к\s+написанию/iu.test(trimmed)) return true;
   if (/новый\s+день|new\s+day/iu.test(trimmed)) return true;
+  if (/переход на следующую сцену/i.test(trimmed)) return true;
+  if (/^новый\s+фон/i.test(trimmed)) return true;
+  if (/белая уходит|игрок возвращается на карту/i.test(trimmed)) return true;
+  if (/на часах\s*15|15\.00.*бар/i.test(trimmed)) return true;
   if (/^(?:появляется|появить|appears|appear)\s+[a-z][\w-]*$/iu.test(trimmed)) {
     return true;
   }
@@ -68,10 +72,19 @@ const BG_ALIASES = {
   "orange house inside": "houseorangeinside",
   "orange house": "houseorangeinside",
   "houseorangewindow": "houseorangewindow",
+  "дом пурпурного внутри": "housepurpleinside",
+  "housepurpleinside": "housepurpleinside",
+  beach: "beach",
+  пляж: "beach",
+  lighthouse: "lighthouse",
+  маяк: "lighthouse",
+  лес: "forrest",
 };
 
 let onReturnToMap = null;
 let onOpenIslandMap = null;
+let onContinueScene = null;
+let onAfterNewDay = null;
 
 function normalizeBackgroundName(raw) {
   const key = (raw || "").trim().replace(/^[-–—]\s*/, "").toLowerCase();
@@ -115,6 +128,16 @@ export function setOpenIslandMapCallback(fn) {
   onOpenIslandMap = fn;
 }
 
+/** `//переход на следующую сцену …` — цепочка сцен без выхода на карту. */
+export function setContinueSceneCallback(fn) {
+  onContinueScene = fn;
+}
+
+/** После `//новый день` — вернуть экран локации, если диалог ещё идёт. */
+export function setAfterNewDayCallback(fn) {
+  onAfterNewDay = fn;
+}
+
 function wantsMapReturn(body) {
   const b = body.toLowerCase();
   if (MAP_WORDS.has(b.split(/\s+/)[0])) return true;
@@ -152,6 +175,11 @@ export async function runCommand(rawBody) {
     await setBackground(normalizeBackgroundName(arg));
     return;
   }
+  if (/^новый\s+фон/i.test(body)) {
+    const bgArg = body.replace(/^новый\s+фон\s*[-–—]?\s*/iu, "").trim();
+    if (bgArg) await setBackground(normalizeBackgroundName(bgArg));
+    return;
+  }
   if (LOC_WORDS.has(verb)) {
     const bgMatch = body.match(/(?:^|[,\s])фон\s*[-–—]?\s*([^,\n]+)/iu);
     if (bgMatch) await setBackground(normalizeBackgroundName(bgMatch[1]));
@@ -182,6 +210,14 @@ export async function runCommand(rawBody) {
     if (onReturnToMap) void onReturnToMap();
     return;
   }
+  if (/белая уходит|игрок возвращается на карту/i.test(body)) {
+    if (onReturnToMap) void onReturnToMap();
+    return;
+  }
+  if (/переход на следующую сцену/i.test(body)) {
+    if (onContinueScene) void onContinueScene(body);
+    return;
+  }
   if (/открыва(?:ет|ется)\s+карту|opens?\s+(?:the\s+)?island\s+map/iu.test(body)) {
     if (onOpenIslandMap) void onOpenIslandMap();
     return;
@@ -199,7 +235,8 @@ export async function runCommand(rawBody) {
     return;
   }
   if (/новый\s+день|new\s+day/iu.test(body)) {
-    await requestEndCalendarDay();
+    await requestEndCalendarDay({ inlineDuringPassage: true });
+    if (onAfterNewDay) await onAfterNewDay();
     return;
   }
   if (/появляется\s+графа|writing\s+progress\s+bar/iu.test(body)) {

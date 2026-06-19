@@ -237,6 +237,8 @@ const TEXT_EN = {
     "mrblue: You know, I ask myself the same question. Mister Red doesn't invite random people here. I think it's best to ask him — though I suspect he won't answer.\n",
   "Day 2. Green":
     "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello — how's the book coming along?\n",
+  "Day 2.2. Green":
+    "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello — how's the book coming along?\n",
   questions2green:
     "msgreen: I still hope I'll get to read it.\n\nmsgreen: I'm sure you're curious about many things. We already know each other, and straight answers are a luxury on this island. But I can afford them. So ask away — don't be shy.\n",
   "Спасибо, я лучше пойду погуляю": "//return to map\n",
