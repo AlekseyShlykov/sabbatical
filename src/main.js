@@ -81,6 +81,8 @@ import {
   completeStoryDayLocation,
   ensureStoryDayRouteUnlocked,
   getStoryFocusLocationId,
+  isStoryDayRouteEnded,
+  hasNextStoryDayRoute,
   isStoryMode,
   clearStoryDayFlags,
   reconcileStoryDayWithCalendar,
@@ -306,9 +308,15 @@ async function handleMapSelect(toId, { skipTravel = false, skipActionCharge = fa
 
   if (isStoryMode(state)) {
     const activeDay = getActiveStoryDayNumber(state, locationsData);
-    if (activeDay || !getFlag("storyDay1Ended")) {
+    const focus = getStoryFocusLocationId(state, locationsData);
+    const calDay = getDayCycle().day;
+    const calRoute = getStoryOrderForDay(calDay, locationsData);
+    const storyLinear =
+      activeDay !== null ||
+      focus !== null ||
+      (calRoute.length > 0 && !isStoryDayRouteEnded(calDay));
+    if (storyLinear) {
       const here = state.currentLocation || locationsData.startLocation;
-      const focus = getStoryFocusLocationId(state, locationsData);
       if (toId !== here && toId !== focus) return;
     }
   }
@@ -813,8 +821,26 @@ async function leaveLocation() {
   const pendingStoryHome = shouldCompleteStoryDayOne();
   const locId = getState().currentLocation;
   const activeStoryDay = getActiveStoryDayNumber(getState(), locationsData);
+  let storyDayRouteJustEnded = null;
   if (locId && activeStoryDay && activeStoryDay > 1) {
+    const wasEnded = isStoryDayRouteEnded(activeStoryDay);
     completeStoryDayLocation(activeStoryDay, locId, locationsData);
+    if (!wasEnded && isStoryDayRouteEnded(activeStoryDay)) {
+      storyDayRouteJustEnded = activeStoryDay;
+    }
+  }
+
+  if (
+    storyDayRouteJustEnded &&
+    hasNextStoryDayRoute(storyDayRouteJustEnded, locationsData)
+  ) {
+    await withFade(async () => {
+      clearStage();
+      clearAmbient();
+      await goTo("map");
+    });
+    await completeStoryDayRouteEnd(storyDayRouteJustEnded);
+    return;
   }
 
   if (isDayCycleActive() && isDayExhausted() && !pendingStoryHome) {
@@ -916,6 +942,27 @@ async function completeStoryDayOneIfNeeded() {
     const homeId = locationsData.startLocation;
     await finishDayAtHome({ fromId: homeId });
     markStoryDayOneEnded(locationsData);
+  } finally {
+    sendingPlayerHome = false;
+  }
+}
+
+/** Конец сюжетного маршрута дня N (2, 3, …): домой, титр «День N+1», следующая сцена. */
+async function completeStoryDayRouteEnd(dayNum) {
+  if (sendingPlayerHome) return;
+  if (!hasNextStoryDayRoute(dayNum, locationsData)) return;
+
+  sendingPlayerHome = true;
+  try {
+    update((s) => {
+      if (!s.dayCycle) {
+        s.dayCycle = { day: 1, actionsUsed: 0, bookToday: { science: 0, novel: 0 } };
+      }
+      s.dayCycle.actionsUsed = MAX_ACTIONS_PER_DAY;
+      return s;
+    });
+    const fromId = getState().currentLocation || locationsData.startLocation;
+    await finishDayAtHome({ fromId });
   } finally {
     sendingPlayerHome = false;
   }

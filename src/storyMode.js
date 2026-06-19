@@ -199,12 +199,22 @@ function isStoryLinearFocusMark(locId, state, locationsData) {
   return locId === here || (focus != null && locId === focus);
 }
 
+export function hasNextStoryDayRoute(dayNum, locationsData) {
+  return getStoryOrderForDay(dayNum + 1, locationsData).length > 0;
+}
+
 /** Метка видна на карте в режиме «Сюжет» (только цель и текущая позиция). */
 export function isStoryMarkVisible(loc, state, locationsData) {
   if (!isStoryMode(state)) return true;
 
   const activeDay = getActiveStoryDayNumber(state, locationsData);
   if (activeDay) {
+    return isStoryLinearFocusMark(loc.id, state, locationsData);
+  }
+
+  const calDay = getDayCycle().day;
+  const calRoute = getStoryOrderForDay(calDay, locationsData);
+  if (calRoute.length > 0 && !isStoryDayRouteEnded(calDay)) {
     return isStoryLinearFocusMark(loc.id, state, locationsData);
   }
 
@@ -226,6 +236,13 @@ export function canTravelToStoryLocation(locId, state, locationsData) {
 
   const activeDay = getActiveStoryDayNumber(state, locationsData);
   if (activeDay) {
+    const focus = getStoryFocusLocationId(state, locationsData);
+    return focus != null && locId === focus;
+  }
+
+  const calDay = getDayCycle().day;
+  const calRoute = getStoryOrderForDay(calDay, locationsData);
+  if (calRoute.length > 0 && !isStoryDayRouteEnded(calDay)) {
     const focus = getStoryFocusLocationId(state, locationsData);
     return focus != null && locId === focus;
   }
@@ -286,12 +303,14 @@ export function completeStoryDayLocation(dayNum, locId, locationsData) {
 
   if (idx === order.length - 1) {
     setFlag(storyDayEndedFlag(dayNum), true);
-    update((s) => {
-      for (const id of order) {
-        if (!s.unlockedLocations.includes(id)) s.unlockedLocations.push(id);
-      }
-      return s;
-    });
+    if (!isStoryMode()) {
+      update((s) => {
+        for (const id of order) {
+          if (!s.unlockedLocations.includes(id)) s.unlockedLocations.push(id);
+        }
+        return s;
+      });
+    }
   }
 }
 
