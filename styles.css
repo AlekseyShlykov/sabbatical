@@ -1085,6 +1085,82 @@ body.has-game-hud .dev-restart-btn {
   color: rgba(246, 239, 220, 0.72);
 }
 
+/* Letter prop on stage (Day 5 demo) */
+.stage__prop--letter {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 4;
+  width: min(72%, 420px);
+  max-height: 55%;
+  object-fit: contain;
+  transform: translate(-50%, -50%) scale(0.92);
+  opacity: 0;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+  transition: opacity 520ms var(--ease), transform 520ms var(--ease);
+  pointer-events: none;
+}
+.stage__prop--letter.is-on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Demo end email form */
+.dev-end-form {
+  position: fixed;
+  inset: 0;
+  z-index: 8600;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 24px 16px calc(24px + var(--safe-bottom));
+  background: linear-gradient(to top, rgba(12, 10, 8, 0.88), rgba(12, 10, 8, 0.35) 55%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 420ms var(--ease);
+}
+.dev-end-form.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.dev-end-form[hidden] {
+  display: none !important;
+}
+.dev-end-form__sheet {
+  width: min(100%, 26rem);
+  padding: 20px 18px 18px;
+  border-radius: 14px;
+  background: rgba(246, 239, 220, 0.96);
+  color: #2a241c;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+.dev-end-form__lead {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.dev-end-form__label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.dev-end-form__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(42, 36, 28, 0.25);
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+}
+.dev-end-form__thanks {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  text-align: center;
+}
+
 /* =========================================================
    MOBILE / TOUCH
    ========================================================= */

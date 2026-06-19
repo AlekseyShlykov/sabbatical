@@ -57,6 +57,13 @@
   "dev": {
     "restartFromStart": "Start over"
   },
+  "devEnd": {
+    "lead": "The intro ends here. The game is still in development. If you enjoyed it and want the full version — leave your email.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "submit": "Submit",
+    "thanks": "Thank you! We'll let you know when the game is ready."
+  },
   "menu": {
     "title": "Menu",
     "resume": "Resume",

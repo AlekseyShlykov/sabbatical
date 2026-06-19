@@ -56,6 +56,7 @@ export const LINK_EN_EXTRA = {
   "Подойти к группе Зеленая, Пурпурный, Белая": "Join Green, Purple, and White",
   "Подойти к Желтой и Черному": "Join Yellow and Black",
   "Подойти к Красному и Синему": "Join Red and Blue",
+  "Следующий день": "Next day",
 };
 
 export const TEXT_EN_EXTRA = {
@@ -185,6 +186,9 @@ export const TEXT_EN_EXTRA = {
   "Подойти к группе Зеленая, Пурпурный, Белая":
     "//background barout2\n\nmswhite: Hello! Glad to see you. It felt so strange organising a party for someone else. I think my welcome party was only a couple of weeks ago.\n",
   "Подойти к Желтой и Черному": "//background bar\n",
+  "Следующий день": "//starts day 5.\n",
+  "Day 5.1 Begin":
+    "//background houseorangeinside\n\nWell, what a party last night! I didn't expect much, but it was interesting.\n\nTime to get to work!\n\nWhat's this note under the door?\n\n//letter\n\nThe intro ends here. The game is still in development. If you enjoyed it and want to play the full version — leave your email.\n\n//email form\n",
   lighthouse2:
     "mswhite: Good. And you should go — I wanted to be alone for a bit, and since I've lived here longer than you, I'd be grateful if you'd leave.\n",
   "Зайти в дом":

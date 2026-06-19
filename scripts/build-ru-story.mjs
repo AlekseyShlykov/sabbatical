@@ -97,7 +97,8 @@ const TYPO_FIXES = [
   [/актерское/g, "актёрское"],
   [/определенно/g, "определённо"],
   [/возвращение нк карту/g, "возвращение на карту"],
-  [/прогулались/g, "прогулялись"],
+  [/заканчиваеся/g, "заканчивается"],
+  [/низбежна/g, "неизбежна"],
 ];
 
 function normalizeLink(l) {
@@ -222,10 +223,10 @@ function postProcessPassages(list) {
   if (byName["orange house"] && !byName["orange house"].text.startsWith("//фон orange house inside")) {
     byName["orange house"].text = "//фон orange house inside\n" + byName["orange house"].text;
   }
-  if (byName["Отдохнуть немного"] && !byName["Отдохнуть немного"].text.includes("//новый день")) {
+  if (byName["Отдохнуть немного"] && !byName["Отдохнуть немного"].text.includes("//снова показывает")) {
     byName["Отдохнуть немного"].text = byName["Отдохнуть немного"].text.replace(
-      /\/\/снова показывает вид на дом[^\n]*/i,
-      "//снова показывает вид на дом с текстом\n//новый день"
+      /^\/\/[^\n]+\n/,
+      "//снова показывает вид на дом с текстом\n"
     );
   }
   if (byName["Day2.1. Blue."]) {
@@ -371,6 +372,31 @@ function postProcessPassages(list) {
     if (byName[name] && !byName[name].text.includes("//вернуться на карту")) {
       byName[name].text = byName[name].text.trimEnd() + "\n//вернуться на карту\n";
     }
+  }
+  if (byName["Подойти к Красному и Синему"]) {
+    byName["Подойти к Красному и Синему"].text =
+      "//фон bar\n//в баре msyellow, mrblack, mrblue, mrred\n\n" +
+      byName["Подойти к Красному и Синему"].text.replace(/^\/\/[^\n]+\n+/i, "");
+  }
+  if (byName["Подойти к группе Зеленая, Пурпурный, Белая"]) {
+    byName["Подойти к группе Зеленая, Пурпурный, Белая"].text =
+      "//фон barout2\n//в баре msgreen, mrpurple, mswhite\n\n" +
+      byName["Подойти к группе Зеленая, Пурпурный, Белая"].text.replace(/^\/\/[^\n]+\n+/i, "");
+  }
+  if (byName["Подойти к Желтой и Черному"]) {
+    byName["Подойти к Желтой и Черному"].text =
+      "//фон bar\n//в баре msyellow, mrblack, mrblue, mrred\n";
+  }
+  if (byName["Day 5.1 Begin"]) {
+    let t = byName["Day 5.1 Begin"].text
+      .replace(/^\/\/Это начало 5-го дня[^\n]*\n/i, "")
+      .replace(/^\/\/Фон - дом оранжевого внутри/i, "//фон houseorangeinside");
+    t = t.replace(
+      /\/\/анимация[^\n]*\nУтром умер второй\.[^\n]+\n\n\/\/Дальше идет текст:\n/iu,
+      "//письмо\n"
+    );
+    t = t.replace(/\/\/форма чтобы оставить email адрес\s*$/iu, "//форма email\n");
+    byName["Day 5.1 Begin"].text = t;
   }
   return list.map((p) => byName[p.name] || p);
 }

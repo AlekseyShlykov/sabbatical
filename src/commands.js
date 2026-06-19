@@ -19,6 +19,7 @@ import { tryAddBookProgress, enableGameHud } from "./dayCycle.js";
 import { requestEndCalendarDay } from "./dayTransition.js";
 import { showHudToast } from "./hud.js";
 import { t } from "./localization.js";
+import { showLetterProp, showDevEndEmailForm } from "./devEnd.js";
 
 const BG_WORDS    = new Set(["фон", "background", "bg"]);
 const SHOW_WORDS  = new Set(["показать", "show", "вход", "enter"]);
@@ -55,6 +56,9 @@ export function isEngineCommandBody(body) {
   if (/(?:встречаете|встретили|meet)\s+[\p{L}\p{N}_]+/iu.test(trimmed)) return true;
   if (/добавляет?\s+1\s*%?\s+к\s+написанию/iu.test(trimmed)) return true;
   if (/новый\s+день|new\s+day/iu.test(trimmed)) return true;
+  if (/начинает\s+день\s*5|starts?\s+day\s*5/iu.test(trimmed)) return true;
+  if (/письмо|letter\.png/iu.test(trimmed)) return true;
+  if (/форма\s+email|email\s+form/iu.test(trimmed)) return true;
   if (/переход на следующую сцену/i.test(trimmed)) return true;
   if (/^новый\s+фон/i.test(trimmed)) return true;
   if (/белая уходит|игрок возвращается на карту/i.test(trimmed)) return true;
@@ -85,6 +89,7 @@ let onReturnToMap = null;
 let onOpenIslandMap = null;
 let onContinueScene = null;
 let onAfterNewDay = null;
+let onBeginDayFive = null;
 
 function normalizeBackgroundName(raw) {
   const key = (raw || "").trim().replace(/^[-–—]\s*/, "").toLowerCase();
@@ -136,6 +141,10 @@ export function setContinueSceneCallback(fn) {
 /** После `//новый день` — вернуть экран локации, если диалог ещё идёт. */
 export function setAfterNewDayCallback(fn) {
   onAfterNewDay = fn;
+}
+
+export function setBeginDayFiveCallback(fn) {
+  onBeginDayFive = fn;
 }
 
 function wantsMapReturn(body) {
@@ -237,6 +246,18 @@ export async function runCommand(rawBody) {
   if (/новый\s+день|new\s+day/iu.test(body)) {
     await requestEndCalendarDay({ inlineDuringPassage: true });
     if (onAfterNewDay) await onAfterNewDay();
+    return;
+  }
+  if (/начинает\s+день\s*5|starts?\s+day\s*5/iu.test(body)) {
+    if (onBeginDayFive) await onBeginDayFive();
+    return;
+  }
+  if (/письмо|letter\.png/iu.test(body)) {
+    await showLetterProp();
+    return;
+  }
+  if (/форма\s+email|email\s+form/iu.test(body)) {
+    showDevEndEmailForm();
     return;
   }
   if (/появляется\s+графа|writing\s+progress\s+bar/iu.test(body)) {

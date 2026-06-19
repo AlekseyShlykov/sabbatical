@@ -41,8 +41,10 @@ import {
   setOpenIslandMapCallback,
   setContinueSceneCallback,
   setAfterNewDayCallback,
+  setBeginDayFiveCallback,
   initialBackgroundFromPassage,
 } from "./commands.js";
+import { initDevEnd, hideLetterProp, hideDevEndEmailForm } from "./devEnd.js";
 import { initHud, showHudToast, renderHud } from "./hud.js";
 import {
   showDayEndNotice,
@@ -147,12 +149,14 @@ async function bootstrap() {
   initMap(locationsData);
   initDialogue();
   initHud();
+  initDevEnd();
   setAfterPassageHook(maybeReturnHomeAfterVisit);
   setEndCalendarDayHandler(endPlayerDay);
   setEndCallback(handleDialogueEnd);
   setReturnToMapCallback(handleReturnToMap);
   setOpenIslandMapCallback(openIslandFromHome);
   setAfterNewDayCallback(ensureDialogueScreenAfterNewDay);
+  setBeginDayFiveCallback(beginDayFive);
   setContinueSceneCallback((body) => {
     if (/day\s*3\.2\s*white/i.test(body)) void continueAfterDay3Morning();
   });
@@ -413,8 +417,8 @@ function preloadLocationAssets(loc) {
       specs.push(["assets/characters/", id]);
     }
   }
-  if (passageName === "Day 4.1. Forrest." || (loc.id === "forest" && passageName === "Forrest")) {
-    // ambient forest — no character preload required
+  if (passageName === "Day 5.1 Begin") {
+    specs.push(["assets/stuff/", "letter"]);
   }
 
   const p = preloadRasters(specs).catch((err) => {
@@ -539,6 +543,8 @@ async function handleReturnToMap() {
 
 async function enterLocation(loc, { skipActionCharge = false, forcePassage = null } = {}) {
   clearStage();
+  hideLetterProp();
+  hideDevEndEmailForm();
   const passageName = forcePassage || resolveTwinePassage(loc);
   let bg = backgroundForLocation(loc);
   if (passageName && storyGraph?.[passageName]) {
@@ -636,6 +642,44 @@ async function forceDay4Party() {
     noteVisit("bar");
     await enterLocation(bar, { forcePassage: "Day 4.5. Bar", skipActionCharge: true });
   });
+}
+
+/** После вечеринки: день 5 и сцена «Day 5.1 Begin». */
+async function beginDayFive() {
+  if (sendingPlayerHome) return;
+  sendingPlayerHome = true;
+  try {
+    const homeId = locationsData.startLocation;
+    const activeDay = getActiveStoryDayNumber(getState(), locationsData);
+    if (activeDay === 4) {
+      completeStoryDayLocation(4, "bar", locationsData);
+    }
+    setFlag("freeDay4PartyDone", true);
+
+    const currentDay = getDayCycle().day;
+    if (currentDay < 5) {
+      advanceDay();
+      if (isStoryMode()) reconcileStoryDayWithCalendar(locationsData);
+      renderHud(getState());
+      await showDayTitleCard(5);
+    }
+
+    const home = locationById(homeId);
+    if (!home) return;
+
+    if (getState().screen === "location") {
+      clearStage();
+      clearAmbient();
+      await goTo("map");
+    }
+
+    setState({ currentLocation: homeId, mapPlayerCoord: null });
+    await withFade(async () => {
+      await enterLocation(home, { forcePassage: "Day 5.1 Begin", skipActionCharge: true });
+    });
+  } finally {
+    sendingPlayerHome = false;
+  }
 }
 
 async function continueAfterDay3Morning() {

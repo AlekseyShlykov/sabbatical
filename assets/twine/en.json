@@ -1844,16 +1844,41 @@
     {
       "name": "Подойти к Красному и Синему",
       "text": "//background bar\n\nmrred: I didn't know what you like, so I ordered a bit of everything. Everyone helped prepare this morning! It's tradition.\n",
-      "links": []
+      "links": [
+        {
+          "name": "Next day",
+          "link": "Следующий день"
+        }
+      ]
     },
     {
       "name": "Подойти к группе Зеленая, Пурпурный, Белая",
       "text": "//background barout2\n\nmswhite: Hello! Glad to see you. It felt so strange organising a party for someone else. I think my welcome party was only a couple of weeks ago.\n",
-      "links": []
+      "links": [
+        {
+          "name": "Next day",
+          "link": "Следующий день"
+        }
+      ]
     },
     {
       "name": "Подойти к Желтой и Черному",
       "text": "//background bar\n",
+      "links": [
+        {
+          "name": "Next day",
+          "link": "Следующий день"
+        }
+      ]
+    },
+    {
+      "name": "Day 5.1 Begin",
+      "text": "//background houseorangeinside\n\nWell, what a party last night! I didn't expect much, but it was interesting.\n\nTime to get to work!\n\nWhat's this note under the door?\n\n//letter\n\nThe intro ends here. The game is still in development. If you enjoyed it and want to play the full version — leave your email.\n\n//email form\n",
+      "links": []
+    },
+    {
+      "name": "Следующий день",
+      "text": "//starts day 5.\n",
       "links": []
     },
     {

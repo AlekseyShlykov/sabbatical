@@ -126,6 +126,7 @@
     <section class="screen screen--location" data-screen="location" hidden>
       <div class="stage" id="stage">
         <img class="stage__bg" id="stage-bg" alt="" />
+        <img class="stage__prop stage__prop--letter" id="stage-letter" alt="" hidden />
         <div class="stage__slots" id="stage-slots"></div>
       </div>
 
@@ -234,6 +235,21 @@
     <div class="day-title-card" id="day-title-card" hidden>
       <h2 class="day-title-card__text" id="day-title-text"></h2>
       <p class="day-title-card__hint" data-i18n="dayTransition.tapToContinue"></p>
+    </div>
+
+    <!-- Demo end: waitlist email -->
+    <div class="dev-end-form" id="dev-end-form" hidden>
+      <div class="dev-end-form__sheet">
+        <form class="dev-end-form__form" novalidate>
+          <label class="dev-end-form__label">
+            <span data-i18n="devEnd.emailLabel"></span>
+            <input class="dev-end-form__input" id="dev-end-email" type="email" name="email" required
+                   autocomplete="email" data-i18n-attr="placeholder:devEnd.emailPlaceholder" />
+          </label>
+          <button class="btn btn--primary" type="submit" data-i18n="devEnd.submit"></button>
+        </form>
+        <p class="dev-end-form__thanks" hidden></p>
+      </div>
     </div>
 
     <!-- TEMP: быстрый сброс на splash (кнопка в начале body) -->
