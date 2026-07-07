@@ -353,3 +353,99 @@ await setLanguage('en');
 
 Дальше расширяется без переписывания: добавляешь локации в
 `locations.json`, пути в `path2.svg`, пассажи в `twine/{lang}.json`.
+
+---
+
+## Сбор email (форма вейтлиста в конце демо)
+
+Форма в конце демо отправляет введённый email на **endpoint**, который ты
+укажешь в одной константе:
+
+```js
+// src/devEnd.js
+const WAITLIST_ENDPOINT = "";  // ← вставь сюда URL своего сервиса
+```
+
+Пока строка пустая — email только сохраняется локально в браузере игрока
+(`localStorage`, ключ `sabbatical_waitlist_email`) и никуда не уходит. Как
+только вставишь URL, письма начнут приходить в выбранный сервис. Сайт
+статический (GitHub Pages), поэтому backend не нужен — используем готовый
+сервис форм или бесплатный Google-скрипт. Формат отправки:
+
+```
+POST <endpoint>
+Content-Type: application/json
+{ "email": "...", "source": "sabbatical-demo", "ts": "2026-01-01T..." }
+```
+
+Выбери **один** из вариантов ниже.
+
+### Вариант A — Formspree (проще всего, 5 минут)
+
+1. Зарегистрируйся на <https://formspree.io> (бесплатный тариф — до 50
+   писем/мес).
+2. Создай новую форму (**New form**) → скопируй её endpoint вида
+   `https://formspree.io/f/abcdwxyz`.
+3. Вставь его в `src/devEnd.js`:
+   ```js
+   const WAITLIST_ENDPOINT = "https://formspree.io/f/abcdwxyz";
+   ```
+4. Задеплой сайт (обычный `git push` на GitHub Pages). Отправь тестовый
+   email — он появится в разделе **Submissions** в панели Formspree и
+   продублируется тебе на почту.
+
+Аналогично работают **Getform**, **Basin**, **Formcarry**, **Formspark** —
+просто вставь их endpoint в ту же константу (все принимают JSON выше).
+
+### Вариант B — Google Apps Script + Google Таблица (бесплатно, данные у тебя)
+
+Так письма складываются в твою Google-таблицу без сторонних сервисов.
+
+1. Создай Google-таблицу. В первой строке колонки: `timestamp`, `email`,
+   `source`.
+2. В таблице: **Расширения → Apps Script**. Вставь код и сохрани:
+
+   ```js
+   function doPost(e) {
+     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+     var data = {};
+     try { data = JSON.parse(e.postData.contents); } catch (err) {}
+     sheet.appendRow([new Date(), data.email || "", data.source || ""]);
+     return ContentService
+       .createTextOutput(JSON.stringify({ ok: true }))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+   ```
+
+3. **Развернуть → Новое развёртывание → тип «Веб-приложение»**.
+   - «Выполнять от имени»: *Я*.
+   - «У кого есть доступ»: *Все* (`Anyone`).
+   - Скопируй URL вида
+     `https://script.google.com/macros/s/AKfy.../exec`.
+4. Вставь URL в `src/devEnd.js`:
+   ```js
+   const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfy.../exec";
+   ```
+
+> ⚠️ Из-за CORS браузер не сможет прочитать ответ Apps Script, но запись в
+> таблицу всё равно произойдёт. Если в консоли видишь ошибку CORS, а строки
+> в таблице **добавляются** — всё в порядке. Хочешь убрать ошибку в консоли —
+> замени в `submitWaitlistEmail` (`src/devEnd.js`) вызов `fetch` на
+> «fire-and-forget»:
+> ```js
+> await fetch(WAITLIST_ENDPOINT, {
+>   method: "POST",
+>   mode: "no-cors",
+>   headers: { "Content-Type": "text/plain;charset=utf-8" },
+>   body: JSON.stringify({ email, source: "sabbatical-demo", ts: new Date().toISOString() }),
+> });
+> return true; // ответ прочитать нельзя, считаем успехом
+> ```
+
+### Проверка
+
+Открой демо, дойди до формы (или временно вызови её), введи email, нажми
+«Отправить». Успех — показывается «Спасибо…», письмо появляется в
+сервисе/таблице. Ошибка сети — показывается «Не удалось отправить…», форма
+остаётся для повтора (строки `devEnd.thanks` / `devEnd.error` в
+`assets/lang/{ru,en}.json`).

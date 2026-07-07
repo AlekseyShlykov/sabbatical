@@ -666,6 +666,53 @@ body.has-game-hud .map {
 }
 .slot[hidden] { display: none; }
 
+/* Много персонажей на сцене (например вечеринка в баре): равномерно по ширине,
+   а не стопкой в одной точке. Работает на всех ширинах (5–7 бывает только тут). */
+.stage__slots:not([data-layout="left-third"])[data-count="5"],
+.stage__slots:not([data-layout="left-third"])[data-count="6"],
+.stage__slots:not([data-layout="left-third"])[data-count="7"] {
+  display: block;
+}
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot,
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot,
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot.is-speaking,
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot.is-speaking,
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot.is-speaking {
+  z-index: 3;
+}
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(1) { left: 10%; }
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(2) { left: 30%; }
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(3) { left: 50%; }
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(4) { left: 70%; }
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(5) { left: 90%; }
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(1) { left: 8%; }
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(2) { left: 25%; }
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(3) { left: 42%; }
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(4) { left: 58%; }
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(5) { left: 75%; }
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(6) { left: 92%; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(1) { left: 7%; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(2) { left: 21%; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(3) { left: 36%; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(4) { left: 50%; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(5) { left: 64%; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(6) { left: 79%; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(7) { left: 93%; }
+.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot img { height: 62%; max-width: 20vw; }
+.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot img { height: 56%; max-width: 17vw; }
+.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot img { height: 50%; max-width: 15vw; }
+
 .panel {
   position: absolute;
   left: 0; right: 0; bottom: 0;
@@ -1117,6 +1164,31 @@ body.has-game-hud .dev-restart-btn {
   pointer-events: none;
 }
 .stage__prop--letter.is-on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Текст записки поверх картинки листка (появляется вместе с ним). */
+.stage__prop-note {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 5;
+  width: min(52%, 300px);
+  transform: translate(-50%, -50%) scale(0.92);
+  opacity: 0;
+  transition: opacity 520ms var(--ease), transform 520ms var(--ease);
+  pointer-events: none;
+  text-align: center;
+  color: #3a2b18;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-style: italic;
+  font-size: clamp(15px, 3.6vw, 22px);
+  line-height: 1.45;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 250, 235, 0.5);
+}
+.stage__prop-note.is-on {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }

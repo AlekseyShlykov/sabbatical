@@ -8,8 +8,12 @@
 //   * tap on stage or dialogue text finishes the typewriter early
 //   * language switch re-renders current passage by name
 
-import { setSpeaker } from "./scene.js";
-import { runCommand } from "./commands.js";
+import { setSpeaker, showCharacters, setBackground } from "./scene.js";
+import {
+  runCommand,
+  collectPassageParticipants,
+  initialBackgroundFromPassage,
+} from "./commands.js";
 import { t, getLanguage } from "./localization.js";
 import {
   isDayCycleActive,
@@ -120,6 +124,13 @@ export async function renderPassage(name) {
   els.line.textContent = "";
   els.line.dataset.speaker = "";
 
+  // Показать всех действующих персонажей сразу при входе в диалог, а не по
+  // одному, когда заговорят. Фон задаём заранее (без мигания), затем состав.
+  const initialBg = initialBackgroundFromPassage(p);
+  if (initialBg) await setBackground(initialBg);
+  const participants = collectPassageParticipants(p);
+  if (participants.length) await showCharacters(participants);
+
   await advance();
 }
 
@@ -161,9 +172,11 @@ function decideAfterLine(forceEnd = false) {
     return;
   }
 
-  const choices = filterBarPartyChoices(currentPassage.choices);
+  // Отметить завершение ветки вечеринки ДО фильтрации, чтобы «Пойти домой»
+  // появлялось сразу в конце 3-й ветки (см. barParty.js).
+  onBarPartyChoicesShown(currentPassageName);
+  const choices = filterBarPartyChoices(currentPassage.choices, currentPassageName);
   if (choices.length > 0) {
-    onBarPartyChoicesShown(currentPassageName);
     choices.forEach((c, i) => {
       const costsAction = choiceCostsAction(c.target);
       const btn = makeButton(c.label, () => {

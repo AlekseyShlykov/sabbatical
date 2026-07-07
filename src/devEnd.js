@@ -4,40 +4,104 @@ import { t } from "./localization.js";
 
 const LETTER_URL = "assets/stuff/letter.png";
 
+// ─────────────────────────────────────────────────────────────────────────
+// Куда собирать email из формы вейтлиста.
+// Вставь сюда endpoint своего сервиса и всё заработает. Примеры:
+//   Formspree:  "https://formspree.io/f/xxxxxxxx"
+//   Getform:    "https://getform.io/f/xxxxxxxx"
+//   Google Apps Script Web App: "https://script.google.com/macros/s/AKfy.../exec"
+// Пусто ("") — ничего не отправляем, только локальная копия в браузере.
+// Подробная инструкция — в README (раздел «Сбор email»).
+const WAITLIST_ENDPOINT = "https://formspree.io/f/mykqazev";
+
+/**
+ * Отправить email на настроенный endpoint. Локальную копию сохраняем всегда.
+ * Возвращает true, если отправка удалась (или endpoint не задан).
+ */
+async function submitWaitlistEmail(email) {
+  try {
+    localStorage.setItem("sabbatical_waitlist_email", email);
+  } catch {
+    /* ignore */
+  }
+  if (!WAITLIST_ENDPOINT) return true;
+  try {
+    const res = await fetch(WAITLIST_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        email,
+        source: "sabbatical-demo",
+        ts: new Date().toISOString(),
+      }),
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn("[devEnd] waitlist submit failed", err);
+    return false;
+  }
+}
+
 let letterEl = null;
+let letterNoteEl = null;
 let formEl = null;
 let emailInput = null;
 
 export function initDevEnd() {
   letterEl = document.getElementById("stage-letter");
+  letterNoteEl = document.getElementById("stage-letter-note");
   formEl = document.getElementById("dev-end-form");
   emailInput = document.getElementById("dev-end-email");
 
   const form = formEl?.querySelector("form");
-  form?.addEventListener("submit", (e) => {
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = (emailInput?.value || "").trim();
     if (!email) return;
-    try {
-      localStorage.setItem("sabbatical_waitlist_email", email);
-    } catch {
-      /* ignore */
-    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+    const ok = await submitWaitlistEmail(email);
+    if (submitBtn) submitBtn.disabled = false;
+
     const msg = formEl.querySelector(".dev-end-form__thanks");
-    if (msg) {
+    if (ok) {
+      if (msg) {
+        msg.hidden = false;
+        msg.textContent = t("devEnd.thanks");
+      }
+      form.hidden = true;
+    } else if (msg) {
+      // Ошибка отправки: оставляем форму, чтобы можно было повторить.
       msg.hidden = false;
-      msg.textContent = t("devEnd.thanks");
+      msg.textContent = t("devEnd.error", "Не удалось отправить. Попробуйте ещё раз.");
     }
-    form.hidden = true;
   });
 }
 
-export async function showLetterProp() {
+export async function showLetterProp(noteText = "") {
   if (!letterEl) letterEl = document.getElementById("stage-letter");
   if (!letterEl) return;
   letterEl.src = LETTER_URL;
   letterEl.hidden = false;
-  requestAnimationFrame(() => letterEl.classList.add("is-on"));
+
+  if (!letterNoteEl) letterNoteEl = document.getElementById("stage-letter-note");
+  const note = (noteText || "").trim();
+  if (letterNoteEl) {
+    if (note) {
+      letterNoteEl.textContent = note;
+      letterNoteEl.hidden = false;
+    } else {
+      letterNoteEl.classList.remove("is-on");
+      letterNoteEl.hidden = true;
+      letterNoteEl.textContent = "";
+    }
+  }
+
+  requestAnimationFrame(() => {
+    letterEl.classList.add("is-on");
+    if (letterNoteEl && !letterNoteEl.hidden) letterNoteEl.classList.add("is-on");
+  });
 }
 
 export function hideLetterProp() {
@@ -45,6 +109,12 @@ export function hideLetterProp() {
   letterEl.classList.remove("is-on");
   letterEl.hidden = true;
   letterEl.removeAttribute("src");
+  if (!letterNoteEl) letterNoteEl = document.getElementById("stage-letter-note");
+  if (letterNoteEl) {
+    letterNoteEl.classList.remove("is-on");
+    letterNoteEl.hidden = true;
+    letterNoteEl.textContent = "";
+  }
 }
 
 export function showDevEndEmailForm() {

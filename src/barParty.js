@@ -1,6 +1,9 @@
 // barParty.js — Day 4.5 party: three conversation branches before "go home".
 
 import { getState, update } from "./state.js";
+import { t } from "./localization.js";
+
+const GO_HOME_TARGET = "Следующий день";
 
 const BRANCH_ROOTS = {
   "Подойти к группе Зеленая, Пурпурный, Белая": "green",
@@ -53,6 +56,11 @@ export function onBarPartyPassageEnter(passageName) {
   if (id) currentBranch = id;
 }
 
+/**
+ * Отметить, что игрок довёл текущую ветку до конца (до места, где можно выбрать
+ * другую ветку). Вызывать ДО фильтрации выборов, чтобы завершение 3-й ветки
+ * открывало «Пойти домой» прямо здесь, без возврата в уже пройденный разговор.
+ */
 export function onBarPartyChoicesShown(passageName) {
   if (!currentBranch || !BRANCH_EXIT_PASSAGES.has(passageName)) return;
   const key = `barParty_${currentBranch}`;
@@ -69,13 +77,23 @@ export function allBarPartyBranchesDone() {
 
 export function isGoHomeChoice(choice) {
   if (!choice) return false;
-  if (choice.target === "Следующий день") return true;
-  return /пойти\s+домой/i.test(choice.label || "");
+  if (choice.target === GO_HOME_TARGET) return true;
+  return /пойти\s+домой|go\s+home/i.test(choice.label || "");
 }
 
-export function filterBarPartyChoices(choices) {
-  if (!choices?.length) return choices;
-  const hasGoHome = choices.some(isGoHomeChoice);
-  if (!hasGoHome || allBarPartyBranchesDone()) return choices;
-  return choices.filter((c) => !isGoHomeChoice(c));
+export function filterBarPartyChoices(choices, passageName) {
+  const list = Array.isArray(choices) ? choices : [];
+  const atExit = BRANCH_EXIT_PASSAGES.has(passageName);
+  const hasGoHome = list.some(isGoHomeChoice);
+
+  if (allBarPartyBranchesDone()) {
+    // Все 3 ветки пройдены: «Пойти домой» должно быть доступно на выходе из
+    // ветки, даже если у самого пассажа такой ссылки нет.
+    if (!hasGoHome && atExit) {
+      return [...list, { label: t("dialogue.goHome"), target: GO_HOME_TARGET }];
+    }
+    return list;
+  }
+  // Ещё не все ветки пройдены — прячем «Пойти домой», если оно есть.
+  return hasGoHome ? list.filter((c) => !isGoHomeChoice(c)) : list;
 }

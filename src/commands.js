@@ -30,6 +30,9 @@ const APPEAR_WORDS = new Set(["появляется", "появить", "appears
 const MAP_WORDS = new Set(["карта", "map", "карту"]);
 const LOC_WORDS = new Set(["локация", "location", "место"]);
 
+const BAR_RE = /^(?:в\s+)?баре?\s+|^at\s+(?:the\s+)?bar\s+/iu;
+const MEET_RE = /(?:вы\s+)?(?:встречаете|встретили|meet)\s+([\p{L}\p{N}_]+)/iu;
+
 const ENGINE_COMMAND_HEAD =
   /^(?:фон|background|bg|показать|show|вход|enter|скрыть|hide|уход|leave|сцена_очистить|clear|clearstage|флаг|flag|set|локация|location|место|карта|map|карту)$/iu;
 
@@ -57,7 +60,7 @@ export function isEngineCommandBody(body) {
   if (/добавляет?\s+1\s*%?\s+к\s+написанию/iu.test(trimmed)) return true;
   if (/новый\s+день|new\s+day/iu.test(trimmed)) return true;
   if (/начинает\s+день\s*5|starts?\s+day\s*5/iu.test(trimmed)) return true;
-  if (/письмо|letter\.png/iu.test(trimmed)) return true;
+  if (/^(?:письмо|letter)(?=\s|$)/iu.test(trimmed) || /letter\.png/iu.test(trimmed)) return true;
   if (/форма\s+email|email\s+form/iu.test(trimmed)) return true;
   if (/переход на следующую сцену/i.test(trimmed)) return true;
   if (/^новый\s+фон/i.test(trimmed)) return true;
@@ -75,6 +78,8 @@ const BG_ALIASES = {
   "orange house out": "houseorangeout",
   "orange house inside": "houseorangeinside",
   "orange house": "houseorangeinside",
+  "дом оранжевого": "houseorangeinside",
+  "оранжевый дом": "houseorangeinside",
   "houseorangewindow": "houseorangewindow",
   "дом пурпурного внутри": "housepurpleinside",
   "housepurpleinside": "housepurpleinside",
@@ -171,6 +176,68 @@ async function showSeveral(ids) {
   await showCharacters(ids);
 }
 
+/**
+ * Все действующие персонажи пассажа в порядке появления — чтобы показать их
+ * сразу при входе в диалог (игрок видит всех участников, а не по одному, когда
+ * заговорят). Собираем и из команд показа (`//показать`, `//в баре …`,
+ * `//встречаете …`, `//появляется …`), и из префиксов реплик; `//скрыть`
+ * убирает персонажа, `//очистить` — сбрасывает набор.
+ */
+export function collectPassageParticipants(passage) {
+  if (!passage?.steps) return [];
+  const order = [];
+  const set = new Set();
+  const add = (raw) => {
+    const id = (raw || "").toLowerCase();
+    if (!id || id === "narrator" || set.has(id)) return;
+    set.add(id);
+    order.push(id);
+  };
+  const remove = (raw) => {
+    const id = (raw || "").toLowerCase();
+    if (!set.delete(id)) return;
+    const i = order.indexOf(id);
+    if (i >= 0) order.splice(i, 1);
+  };
+  for (const step of passage.steps) {
+    if (step.type === "line") {
+      add(step.speaker);
+      continue;
+    }
+    if (step.type !== "command") continue;
+    const body = (step.text || "").trim();
+    if (!body) continue;
+    const [head, ...rest] = body.split(/\s+/);
+    const verb = head.toLowerCase();
+    const arg = rest.join(" ").trim();
+    if (SHOW_WORDS.has(verb)) {
+      add(arg.split(/[\s,;]+/)[0]);
+      continue;
+    }
+    if (APPEAR_WORDS.has(verb)) {
+      const who = arg.split(/\s+/)[0] || "";
+      if (/^[a-z][\w-]*$/i.test(who)) add(who);
+      continue;
+    }
+    if (HIDE_WORDS.has(verb)) {
+      remove(arg.split(/[\s,;]+/)[0]);
+      continue;
+    }
+    if (CLEAR_WORDS.has(verb)) {
+      set.clear();
+      order.length = 0;
+      continue;
+    }
+    if (BAR_RE.test(body)) {
+      parseCharacterIds(body.replace(BAR_RE, "")).forEach(add);
+      continue;
+    }
+    const meet = body.match(MEET_RE);
+    if (meet) add(meet[1]);
+  }
+  return order;
+}
+
 /** Parse + dispatch one `//...` command body (without leading slashes). */
 export async function runCommand(rawBody) {
   const body = (rawBody || "").trim();
@@ -252,8 +319,9 @@ export async function runCommand(rawBody) {
     if (onBeginDayFive) await onBeginDayFive();
     return;
   }
-  if (/письмо|letter\.png/iu.test(body)) {
-    await showLetterProp();
+  const letterMatch = body.match(/^(?:письмо|letter)(?:\s+(.*\S))?\s*$/iu);
+  if (letterMatch || /letter\.png/iu.test(body)) {
+    await showLetterProp(letterMatch ? letterMatch[1] || "" : "");
     return;
   }
   if (/форма\s+email|email\s+form/iu.test(body)) {
@@ -264,14 +332,12 @@ export async function runCommand(rawBody) {
     enableGameHud();
     return;
   }
-  if (/^(?:в\s+)?баре?\s+/iu.test(body) || /^at\s+(?:the\s+)?bar\s+/iu.test(body)) {
-    const list = body.replace(/^(?:в\s+)?баре?\s+|^at\s+(?:the\s+)?bar\s+/iu, "");
+  if (BAR_RE.test(body)) {
+    const list = body.replace(BAR_RE, "");
     await showSeveral(parseCharacterIds(list));
     return;
   }
-  const meet = body.match(
-    /(?:вы\s+)?(?:встречаете|встретили|meet)\s+([\p{L}\p{N}_]+)/iu
-  );
+  const meet = body.match(MEET_RE);
   if (meet) {
     await showCharacter(meet[1].toLowerCase());
     return;

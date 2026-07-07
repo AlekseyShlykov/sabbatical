@@ -37,7 +37,8 @@
   },
   "dialogue": {
     "next": "Next",
-    "end": "End"
+    "end": "End",
+    "goHome": "Go home"
   },
   "hud": {
     "day": "Day",
@@ -62,7 +63,8 @@
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "submit": "Submit",
-    "thanks": "Thank you! We'll let you know when the game is ready."
+    "thanks": "Thank you! We'll let you know when the game is ready.",
+    "error": "Couldn't send. Please try again."
   },
   "menu": {
     "title": "Menu",
