@@ -14,10 +14,18 @@ export function showScreen(screenId) {
   all.forEach((el) => {
     if (el.getAttribute("data-screen") === screenId) {
       el.hidden = false;
-      requestAnimationFrame(() => el.classList.add("is-active"));
+      // Force a reflow so the opacity transition still plays, then activate
+      // synchronously. Using rAF here races with the delayed hide below when
+      // frames are throttled/instant (e.g. prefers-reduced-motion).
+      void el.offsetWidth;
+      el.classList.add("is-active");
     } else {
       el.classList.remove("is-active");
-      setTimeout(() => { el.hidden = true; }, DUR);
+      setTimeout(() => {
+        // Guard against a race: if this screen was re-shown before the
+        // delayed hide fired, don't clobber it back to hidden.
+        if (!el.classList.contains("is-active")) el.hidden = true;
+      }, DUR);
     }
   });
 }

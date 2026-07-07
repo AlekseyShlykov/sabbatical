@@ -20,6 +20,11 @@ import {
 } from "./dayCycle.js";
 import { showHudToast } from "./hud.js";
 import { tryForceDay4Party } from "./scheduledEvents.js";
+import {
+  onBarPartyPassageEnter,
+  onBarPartyChoicesShown,
+  filterBarPartyChoices,
+} from "./barParty.js";
 
 const TYPE_DELAY = {
   default: 22,
@@ -108,6 +113,7 @@ export async function renderPassage(name) {
 
   currentPassageName = name;
   currentPassage = p;
+  onBarPartyPassageEnter(name);
   stepIndex = 0;
 
   els.actions.innerHTML = "";
@@ -155,8 +161,10 @@ function decideAfterLine(forceEnd = false) {
     return;
   }
 
-  if (currentPassage.choices.length > 0) {
-    currentPassage.choices.forEach((c, i) => {
+  const choices = filterBarPartyChoices(currentPassage.choices);
+  if (choices.length > 0) {
+    onBarPartyChoicesShown(currentPassageName);
+    choices.forEach((c, i) => {
       const costsAction = choiceCostsAction(c.target);
       const btn = makeButton(c.label, () => {
         void (async () => {

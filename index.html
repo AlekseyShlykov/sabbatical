@@ -59,6 +59,27 @@
             <button class="lang-switch__btn" data-lang="en">EN</button>
           </div>
         </div>
+
+        <div class="splash__audio" id="splash-audio">
+          <div class="audio-row">
+            <label class="audio-row__toggle">
+              <input type="checkbox" id="splash-audio-music-enabled" />
+              <span data-i18n="menu.music"></span>
+            </label>
+            <input class="audio-row__range" type="range" id="splash-audio-music-volume"
+                   min="0" max="100" step="1"
+                   data-i18n-attr="aria-label:menu.musicVolume" />
+          </div>
+          <div class="audio-row">
+            <label class="audio-row__toggle">
+              <input type="checkbox" id="splash-audio-sounds-enabled" />
+              <span data-i18n="menu.sounds"></span>
+            </label>
+            <input class="audio-row__range" type="range" id="splash-audio-sounds-volume"
+                   min="0" max="100" step="1"
+                   data-i18n-attr="aria-label:menu.soundsVolume" />
+          </div>
+        </div>
       </div>
     </section>
 

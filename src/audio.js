@@ -230,61 +230,84 @@ export function isBackgroundMusicPlaying() {
   return Boolean(musicAudio && !musicAudio.paused);
 }
 
-export function initAudioMenu() {
-  const musicToggle = document.getElementById("audio-music-enabled");
-  const soundsToggle = document.getElementById("audio-sounds-enabled");
-  const musicVolume = document.getElementById("audio-music-volume");
-  const soundsVolume = document.getElementById("audio-sounds-volume");
-  const menuAudio = document.getElementById("menu-audio");
-  if (!musicToggle || !soundsToggle || !musicVolume || !soundsVolume) return;
+const AUDIO_CONTROL_SETS = [
+  {
+    musicToggle: "audio-music-enabled",
+    soundsToggle: "audio-sounds-enabled",
+    musicVolume: "audio-music-volume",
+    soundsVolume: "audio-sounds-volume",
+    root: "menu-audio",
+  },
+  {
+    musicToggle: "splash-audio-music-enabled",
+    soundsToggle: "splash-audio-sounds-enabled",
+    musicVolume: "splash-audio-music-volume",
+    soundsVolume: "splash-audio-sounds-volume",
+    root: "splash-audio",
+  },
+];
 
-  const sync = () => {
-    const p = getAudioPrefs();
-    musicToggle.checked = p.musicEnabled;
-    soundsToggle.checked = p.soundsEnabled;
-    musicVolume.value = String(Math.round(p.musicVolume * 100));
-    soundsVolume.value = String(Math.round(p.soundsVolume * 100));
-    musicVolume.disabled = !p.musicEnabled;
-    soundsVolume.disabled = !p.soundsEnabled;
-  };
+function getControlElements(set) {
+  const musicToggle = document.getElementById(set.musicToggle);
+  const soundsToggle = document.getElementById(set.soundsToggle);
+  const musicVolume = document.getElementById(set.musicVolume);
+  const soundsVolume = document.getElementById(set.soundsVolume);
+  if (!musicToggle || !soundsToggle || !musicVolume || !soundsVolume) return null;
+  return { musicToggle, soundsToggle, musicVolume, soundsVolume };
+}
+
+function syncControlSet(set) {
+  const els = getControlElements(set);
+  if (!els) return;
+  const p = getAudioPrefs();
+  els.musicToggle.checked = p.musicEnabled;
+  els.soundsToggle.checked = p.soundsEnabled;
+  els.musicVolume.value = String(Math.round(p.musicVolume * 100));
+  els.soundsVolume.value = String(Math.round(p.soundsVolume * 100));
+  els.musicVolume.disabled = !p.musicEnabled;
+  els.soundsVolume.disabled = !p.soundsEnabled;
+}
+
+function syncAllAudioControls() {
+  for (const set of AUDIO_CONTROL_SETS) syncControlSet(set);
+}
+
+function wireAudioControlSet(set) {
+  const els = getControlElements(set);
+  if (!els) return;
 
   const onMusicVolume = () => {
-    setAudioPrefs({ musicVolume: Number(musicVolume.value) / 100 });
+    setAudioPrefs({ musicVolume: Number(els.musicVolume.value) / 100 });
+    syncAllAudioControls();
   };
   const onSoundsVolume = () => {
-    setAudioPrefs({ soundsVolume: Number(soundsVolume.value) / 100 });
+    setAudioPrefs({ soundsVolume: Number(els.soundsVolume.value) / 100 });
+    syncAllAudioControls();
   };
 
-  musicToggle.addEventListener("change", () => {
-    setAudioPrefs({ musicEnabled: musicToggle.checked });
-    sync();
+  els.musicToggle.addEventListener("change", () => {
+    setAudioPrefs({ musicEnabled: els.musicToggle.checked });
+    syncAllAudioControls();
   });
-  soundsToggle.addEventListener("change", () => {
-    setAudioPrefs({ soundsEnabled: soundsToggle.checked });
-    sync();
+  els.soundsToggle.addEventListener("change", () => {
+    setAudioPrefs({ soundsEnabled: els.soundsToggle.checked });
+    syncAllAudioControls();
   });
-  musicVolume.addEventListener("input", onMusicVolume);
-  musicVolume.addEventListener("change", onMusicVolume);
-  soundsVolume.addEventListener("input", onSoundsVolume);
-  soundsVolume.addEventListener("change", onSoundsVolume);
+  els.musicVolume.addEventListener("input", onMusicVolume);
+  els.musicVolume.addEventListener("change", onMusicVolume);
+  els.soundsVolume.addEventListener("input", onSoundsVolume);
+  els.soundsVolume.addEventListener("change", onSoundsVolume);
 
-  menuAudio?.addEventListener("pointerdown", (e) => e.stopPropagation());
-  menuAudio?.addEventListener("click", (e) => e.stopPropagation());
+  const root = set.root ? document.getElementById(set.root) : null;
+  root?.addEventListener("pointerdown", (e) => e.stopPropagation());
+  root?.addEventListener("click", (e) => e.stopPropagation());
+}
 
-  sync();
+export function initAudioMenu() {
+  for (const set of AUDIO_CONTROL_SETS) wireAudioControlSet(set);
+  syncAllAudioControls();
 }
 
 export function syncAudioMenu() {
-  const p = getAudioPrefs();
-  const musicToggle = document.getElementById("audio-music-enabled");
-  const soundsToggle = document.getElementById("audio-sounds-enabled");
-  const musicVolume = document.getElementById("audio-music-volume");
-  const soundsVolume = document.getElementById("audio-sounds-volume");
-  if (!musicToggle) return;
-  musicToggle.checked = p.musicEnabled;
-  soundsToggle.checked = p.soundsEnabled;
-  musicVolume.value = String(Math.round(p.musicVolume * 100));
-  soundsVolume.value = String(Math.round(p.soundsVolume * 100));
-  musicVolume.disabled = !p.musicEnabled;
-  soundsVolume.disabled = !p.soundsEnabled;
+  syncAllAudioControls();
 }

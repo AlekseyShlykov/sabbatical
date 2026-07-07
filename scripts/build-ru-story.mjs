@@ -99,6 +99,11 @@ const TYPO_FIXES = [
   [/возвращение нк карту/g, "возвращение на карту"],
   [/заканчиваеся/g, "заканчивается"],
   [/низбежна/g, "неизбежна"],
+  [/не наверняка/g, "не знаю наверняка"],
+  [/персионеров/g, "пенсионеров"],
+  [/сдужились/g, "сдружились"],
+  [/пербивая/g, "перебивая"],
+  [/Моглиу/g, "Могилу"],
 ];
 
 function normalizeLink(l) {
@@ -385,7 +390,8 @@ function postProcessPassages(list) {
   }
   if (byName["Подойти к Желтой и Черному"]) {
     byName["Подойти к Желтой и Черному"].text =
-      "//фон bar\n//в баре msyellow, mrblack, mrblue, mrred\n";
+      "//фон bar\n//в баре msyellow, mrblack, mrblue, mrred\n\n" +
+      byName["Подойти к Желтой и Черному"].text.replace(/^\/\/[^\n]+\n+/i, "");
   }
   if (byName["Day 5.1 Begin"]) {
     let t = byName["Day 5.1 Begin"].text

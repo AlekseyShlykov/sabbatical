@@ -57,6 +57,36 @@ export const LINK_EN_EXTRA = {
   "Подойти к Желтой и Черному": "Join Yellow and Black",
   "Подойти к Красному и Синему": "Join Red and Blue",
   "Следующий день": "Next day",
+  "Пойти домой": "Go home",
+  "Все отлично!": "It's great!",
+  "Не очень!": "Not really!",
+  "Да, в лесу спокойно": "Yes — it's peaceful in the forest",
+  "Думаю ты меня с кем-то спутал": "I think you've confused me with someone",
+  "Я это уважаю": "I respect that",
+  "Я буду гулять в том лесу": "I'll walk in that forest",
+  "Продолжить молчать": "Keep silent",
+  "Как вам погода?": "How's the weather?",
+  "Все еще молчать": "Still silent",
+  "Не большой фанат вечеринок": "Not a big fan of parties",
+  "Неплохо!": "Not bad!",
+  "Я еще толком и не начал": "I haven't really started yet",
+  "Спасибо, мне очень нравится": "Thanks — I'm enjoying it",
+  "Я люблю когда со мной разговаривают": "I like when people talk to me",
+  "Иногда помолчать с кем-то очень приятно": "Sometimes it's nice to sit in silence with someone",
+  "Почему тебе так кажется?": "Why do you feel that way?",
+  "Меня никто из них не пугает": "None of them scare me",
+  "Меня тоже пугает Черный": "Black scares me too",
+  "Меня тоже пугают Синий и Красный": "Blue and Red scare me too",
+  "Уже кое-что написал": "I've written a bit already",
+  "Пока собираюсь с мыслями": "Still gathering my thoughts",
+  "Пока привыкаю": "Still getting used to it",
+  "Очень нравится": "I love it",
+  "Сочувствую. Вы давно дружили?": "I'm sorry. Were you friends long?",
+  "Кажется он был отличным человеком!": "He sounds like a wonderful person!",
+  "Вы так много о нем говорите!": "You talk about him so much!",
+  "А как он умер?": "How did he die?",
+  "Вы похоронили его на острове?": "Did you bury him on the island?",
+  "Сочувствую!": "I'm sorry!",
 };
 
 export const TEXT_EN_EXTRA = {
@@ -182,10 +212,65 @@ export const TEXT_EN_EXTRA = {
   "Day 4.5. Bar":
     "//background bar\n//at bar msgreen, mrpurple, msyellow, mrblack, mswhite, mrred, mrblue\n\nFrom afar you hear music. As if there weren't seven people here but seventy — a hum, everyone talking, waiting for you.\n\nmrred: At last! Welcome, Orange, to this party in your honour! We're glad you're on the island. Relax, drink what you like, talk to whoever you want — we're free here.\n",
   "Подойти к Красному и Синему":
-    "//background bar\n\nmrred: I didn't know what you like, so I ordered a bit of everything. Everyone helped prepare this morning! It's tradition.\n",
+    "//background bar\n//at bar msyellow, mrblack, mrblue, mrred\n\nmrred: I wasn't sure what you'd like, so I ordered a bit of everything. Everyone helped prepare this morning! It's tradition.\n\nmrblue: Try the beer — very good, Czech. I loved it in my past life!\n\nmrblue: By the way, how's your book? Have you started yet?\n",
   "Подойти к группе Зеленая, Пурпурный, Белая":
-    "//background barout2\n\nmswhite: Hello! Glad to see you. It felt so strange organising a party for someone else. I think my welcome party was only a couple of weeks ago.\n",
-  "Подойти к Желтой и Черному": "//background bar\n",
+    "//background barout2\n//at bar msgreen, mrpurple, mswhite\n\nmswhite: Hello! Glad to see you. It felt so strange organising a party for someone else. I think my welcome party was only a couple of weeks ago.\n\nmsgreen: Now you're properly welcome on our island of retirees!\n\nmrpurple: Hope you're enjoying the party?\n",
+  "Подойти к Желтой и Черному":
+    "//background bar\n//at bar msyellow, mrblack, mrblue, mrred\n\nmrblack: (nods)\nmsyellow: Hello! How do you like the party in your honour?\n",
+  bar1:
+    "msyellow: Whatever it's like, it's in your honour. First and last time, so enjoy.\nmrblack: Like walking in the forest? I've seen you there a couple of times.\n",
+  "Да, в лесу спокойно":
+    "mrblack: Yes. Especially when there aren't many people. You can explore other parts of the island too.\n\nmrblack: That's my forest. And I like walking there alone.\n\nmsyellow: (laughs) Yes — Black was never known for his manners.\n\nmrblack: I made my money on truth, not politeness. I say little, but I mean it.\n",
+  "Думаю ты меня с кем-то спутал":
+    "mrblack: I don't think so. There aren't many people here and I know everyone.\n\nmrblack: That's my forest. And I like walking there alone.\n\nmsyellow: (laughs) Yes — Black was never known for his manners.\n\nmrblack: I made my money on truth, not politeness. I say little, but I mean it.\n",
+  "Я это уважаю":
+    "mrblack: Thank you.\n\nEveryone falls silent.\n",
+  "Я буду гулять в том лесу":
+    "mrblack: Then don't let me catch you there.\n\nEveryone falls silent.\n",
+  "Продолжить молчать": "Everyone falls silent.\n",
+  "Как вам погода?": "msyellow: Maybe you should talk to someone else?\n",
+  "Все еще молчать":
+    "Silence. Yellow and Black exchanged a look.\n\nmsyellow: (smiling, offering her hand) Looks like another quiet one has joined our ranks.\nmrblack: (shakes hands) If you walk in my forest in silence, I'll tolerate it.\n",
+  "Не большой фанат вечеринок":
+    "msgreen: That's your right. I don't like them myself. They mean more work afterwards. Everyone here is quite elderly, after all.\n\nmrpurple: We're still going strong!\n\nmsgreen: (laughs) Oh? Wasn't it you who didn't leave the house for three days with a headache last time?\n\nmswhite: So that's where you disappeared after my party!\n\nmrpurple: (embarrassed) Well, we don't have parties every day!\n\nmsgreen: How's your book coming along?\n",
+  "Неплохо!":
+    "mswhite: I'm still waiting to read a draft!\n\nmrpurple: Have you talked to our quiet ones yet? Seen Black and Yellow? It's like they communicate telepathically. They just stare at you in silence. Creepy.\n\nmsgreen: You just like to talk and their silence unsettles you. But it's perfectly normal not to want to chat all the time.\n\nmrpurple: Maybe. But I think someone who keeps all their thoughts to themselves is more dangerous than the rest. Nobody knows what's on their mind.\n\nmswhite: Wanting silence sometimes is perfectly normal. What do you think?\n",
+  "Я еще толком и не начал":
+    "mswhite: There's still time.\n\nmrpurple: Have you talked to our quiet ones yet? Seen Black and Yellow? It's like they communicate telepathically. They just stare at you in silence. Creepy.\n\nmsgreen: You just like to talk and their silence unsettles you. But it's perfectly normal not to want to chat all the time.\n\nmrpurple: Maybe. But I think someone who keeps all their thoughts to themselves is more dangerous than the rest. Nobody knows what's on their mind.\n\nmswhite: Wanting silence sometimes is perfectly normal. What do you think?\n",
+  "Спасибо, мне очень нравится":
+    "msgreen: That's your right. I don't like them myself. They mean more work afterwards. Everyone here is quite elderly, after all.\n\nmrpurple: We're still going strong!\n\nmsgreen: (laughs) Oh? Wasn't it you who didn't leave the house for three days with a headache last time?\n\nmswhite: So that's where you disappeared after my party!\n\nmrpurple: (embarrassed) Well, we don't have parties every day!\n\nmsgreen: How's your book coming along?\n",
+  "Я люблю когда со мной разговаривают":
+    "msgreen: Let everyone keep their own opinion.\n\nmrpurple: What do you think of our council of elders — Red and Blue? Quite a pair!\n\nmswhite: They're the ones who seem creepy to me. Sometimes I feel like one of them is watching me.\n",
+  "Иногда помолчать с кем-то очень приятно":
+    "mrpurple: Let everyone keep their own opinion.\n\nmrpurple: What do you think of our council of elders — Red and Blue? Quite a pair!\n\nmswhite: They're the ones who seem creepy to me. Sometimes I feel like one of them is watching me.\n",
+  "Почему тебе так кажется?":
+    "mswhite: It's just a feeling. Sometimes it washes over me. And I seem to run into both of them more than anyone else. And I love solitude.\n\nmrpurple: You'll run into Red constantly on this island. After all, he runs everything — sometimes drops by to see if you need anything.\n\nmsgreen: He doesn't visit me that often. Probably afraid of doctors.\n\nmswhite: Laugh at me if you want. But I'm telling you something's wrong here. And it frightens me.\n\nmrpurple: If anyone frightens me, it's Yellow. I was walking this morning and met her at the lighthouse. The way she looked at me — as if I should apologise for being where she already was.\n",
+  "Меня никто из них не пугает":
+    "mswhite: Trust me — for now.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right — we've probably tired you out. Will you go talk to someone else?\n",
+  "Меня тоже пугает Черный":
+    "mrpurple: Exactly! Quite the silent type. Always keeping his own counsel.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right — we've probably tired you out. Will you go talk to someone else?\n",
+  "Меня тоже пугают Синий и Красный":
+    "mswhite: Exactly. A creepy pair. And they've lived here longest of all.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right — we've probably tired you out. Will you go talk to someone else?\n",
+  "Уже кое-что написал":
+    "mrblue: I bet the island is good for writing!\n\nmrred: How do you like the island? Getting used to our way of life?\n",
+  "Пока собираюсь с мыслями":
+    "mrblue: I think the island will be good for writing!\n\nmrred: How do you like the island? Getting used to our way of life?\n",
+  "Пока привыкаю":
+    "mrblue: I took a long time to adjust too. Orange helped me with that. We became friends quickly.\n\nmrred: Yes — he was the life of the party. Knew how to make everyone comfortable. I'm sorry he died.\n",
+  "Очень нравится":
+    "mrblue: I'm envious! I took a very long time to adjust. Orange helped me with that. We became friends quickly.\n\nmrred: Yes — he was the life of the party. Knew how to make everyone comfortable. I'm sorry he died.\n",
+  "Сочувствую. Вы давно дружили?":
+    "mrblue: (smiling) Well — who wants to go first?\n\nmrred: You go.\n\nmrblue: I met him on the island. Back then there was no rule about leaving the past behind, and we talked a lot. Remembered, shared.\n\nmrblue: I've been here ten years. For nine and a half of those I had breakfast at Orange's house every morning. A wonderful start to the day. He understood people and knew how to listen.\n\nmrblue: Green knows how to listen too. But she listens like a professional, extracting what she needs. Orange could share your feelings. We discussed ethics a lot — what was right and wrong in our pasts.\n\nmrred: (interrupting) I knew him for fifty years. Even before the island. And he was always like that. Centre of attention, life of the party. I enjoyed talking to him, though sometimes he was very tiresome.\n\nmrred: But we went through a lot together. And this island idea… it was partly his.\n\nmrred: I miss him, but that's life. We'll all die someday. Maybe today.\n\nmrblue: Well, I hope Green can delay that moment!\n",
+  "Кажется он был отличным человеком!":
+    "mrred: He certainly was!\n\nmrred: Losing friends in old age is much harder. You won't make new ones.\n\nmrblue: All right, enough. You're Orange now. The past should stay in the past.\n\nmrred: The past should stay in the past.\n",
+  "Вы так много о нем говорите!":
+    "mrblue: He only died a month ago. No wonder we haven't got over it yet, right?\n\nmrred: And losing friends in old age is much harder. You won't make new ones.\n\nmrblue: All right, enough. You're Orange now. The past should stay in the past.\n\nmrred: The past should stay in the past.\n",
+  "А как он умер?":
+    "mrred: Peacefully, in his sleep.\n\nmrblue: As usual I came for breakfast, but he hadn't woken yet. That surprised me — he was always an early riser.\n\nmrblue: First I tried to wake him, then I went inside and found him in bed. He was already dead.\n\nmrblue: Honestly I still try to avoid going into your house. It feels like he's still lying there.\n\nmrred: Then Green examined him. Her verdict was heart failure. Quiet and peaceful in his sleep.\n",
+  "Вы похоронили его на острове?":
+    "mrred: Yes, not far from the Beach. He loved walking there.\n\nmrblue: It was a very strange ceremony. We all had to take turns digging the grave so we wouldn't have to call anyone from the real world.\n\nmrred: Yes — I think it brought us closer.\n",
+  "Сочувствую!":
+    "mrred: Thank you. All right. You probably don't want to listen to our memories and lamentations all evening.\n\nmrblue: Yes — if you want silence, go to Black and Yellow. If you want conversation, try our talkative crowd on the pier.\n",
   "Следующий день": "//starts day 5.\n",
   "Day 5.1 Begin":
     "//background houseorangeinside\n\nWell, what a party last night! I didn't expect much, but it was interesting.\n\nTime to get to work!\n\nWhat's this note under the door?\n\n//letter\n\nThe intro ends here. The game is still in development. If you enjoyed it and want to play the full version — leave your email.\n\n//email form\n",

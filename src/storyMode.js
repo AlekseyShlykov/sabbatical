@@ -3,6 +3,33 @@
 import { getState, update, unlock, setFlag, getFlag } from "./state.js";
 import { getDayCycle } from "./dayCycle.js";
 
+/** Автопрогресс книг в конце календарного дня (только режим «Сюжет»). */
+const STORY_DAY_END_BOOK_BONUS = {
+  1: { science: 2 },
+  2: { novel: 3 },
+  3: { science: 1 },
+  4: { novel: 2 },
+};
+
+export function applyStoryDayEndBookBonus(completedDay) {
+  const n = Math.floor(completedDay) || 0;
+  const bonus = STORY_DAY_END_BOOK_BONUS[n];
+  if (!bonus) return;
+  update((s) => {
+    if (!s.bookProgress) s.bookProgress = { science: 0, novel: 0 };
+    if (bonus.science) {
+      s.bookProgress.science = Math.min(
+        100,
+        (s.bookProgress.science || 0) + bonus.science
+      );
+    }
+    if (bonus.novel) {
+      s.bookProgress.novel = Math.min(100, (s.bookProgress.novel || 0) + bonus.novel);
+    }
+    return s;
+  });
+}
+
 const DEFAULT_STORY_DAY_ONE = [
   "orangehouse",
   "bluehouse",

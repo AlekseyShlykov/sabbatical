@@ -86,6 +86,7 @@ import {
   isStoryMode,
   clearStoryDayFlags,
   reconcileStoryDayWithCalendar,
+  applyStoryDayEndBookBonus,
 } from "./storyMode.js";
 import {
   pickTwinePassageForLocation,
@@ -490,6 +491,9 @@ async function finishDayAtHome({ fromId, inlineDuringPassage = false } = {}) {
       if (getState().screen === "map") setCurrentMarkHighlight(homeId);
     }
 
+    const completedDay = getDayCycle().day;
+    if (isStoryMode()) applyStoryDayEndBookBonus(completedDay);
+
     advanceDay();
     if (isStoryMode()) reconcileStoryDayWithCalendar(locationsData);
     renderHud(getState());
@@ -661,6 +665,7 @@ async function beginDayFive() {
 
     const currentDay = getDayCycle().day;
     if (currentDay < 5) {
+      if (isStoryMode()) applyStoryDayEndBookBonus(currentDay);
       advanceDay();
       if (isStoryMode()) reconcileStoryDayWithCalendar(locationsData);
       renderHud(getState());

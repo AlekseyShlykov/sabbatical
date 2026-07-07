@@ -149,6 +149,22 @@ button { font: inherit; color: inherit; }
 .splash__lang {
   display: flex; align-items: center; justify-content: center; gap: 12px;
   font-size: 14px; color: #e7dcc4; opacity: 0.85;
+  margin-bottom: 20px;
+}
+.splash__audio {
+  width: min(320px, 88vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.splash__audio .audio-row__toggle {
+  color: #e7dcc4;
+  font-size: 13px;
+  opacity: 0.92;
+}
+.splash__audio .audio-row__range {
+  --track-bg: rgba(0, 0, 0, 0.28);
 }
 
 .splash__loader {
