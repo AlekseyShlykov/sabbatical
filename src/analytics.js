@@ -1,14 +1,18 @@
 // analytics.js — Google Analytics 4 (gtag.js).
-// ID задаётся в data/analytics.json. Пустой ID — аналитика выключена.
+// ID: data/analytics.json (приоритет) или FALLBACK_MEASUREMENT_ID ниже.
 
 import { getLanguage } from "./localization.js";
 
 const CONFIG_URL = "data/analytics.json";
+/** Запасной ID, если fetch конфига не удался (тот же, что в analytics.json). */
+const FALLBACK_MEASUREMENT_ID = "G-DS2F6EH736";
 
 let ready = false;
 let measurementId = "";
 let sessionStartedAt = null;
 const completedDays = new Set();
+/** События, пришедшие до готовности gtag — отправим сразу после init. */
+const pendingEvents = [];
 
 async function loadConfig() {
   try {
@@ -32,22 +36,29 @@ function injectGtag(id) {
   window.gtag("js", new Date());
   window.gtag("config", id, {
     send_page_view: true,
-    // Для SPA без роутера: страница одна, воронку строим по событиям.
     page_title: document.title,
     page_location: window.location.href,
   });
+}
+
+function flushPendingEvents() {
+  while (pendingEvents.length) {
+    const { eventName, params } = pendingEvents.shift();
+    send(eventName, params);
+  }
 }
 
 /** Загрузить gtag и конфиг. Безопасно вызывать при старте приложения. */
 export async function initAnalytics() {
   if (ready) return;
   const cfg = await loadConfig();
-  const id = String(cfg.ga4MeasurementId || "").trim();
+  const id = String(cfg.ga4MeasurementId || FALLBACK_MEASUREMENT_ID || "").trim();
   if (!id) return;
   measurementId = id;
   injectGtag(id);
   ready = true;
   wireSessionEngagement();
+  flushPendingEvents();
 }
 
 function baseParams(extra = {}) {
@@ -63,14 +74,26 @@ function sessionElapsedSec() {
 }
 
 function send(eventName, params = {}) {
-  if (!ready || typeof window.gtag !== "function") return;
+  if (!ready || typeof window.gtag !== "function") {
+    pendingEvents.push({ eventName, params });
+    return;
+  }
   window.gtag("event", eventName, baseParams(params));
+}
+
+function flushPendingEvents() {
+  if (!ready || typeof window.gtag !== "function") return;
+  while (pendingEvents.length) {
+    const { eventName, params } = pendingEvents.shift();
+    window.gtag("event", eventName, baseParams(params));
+  }
 }
 
 function markSessionStart() {
   if (sessionStartedAt) return;
   sessionStartedAt = Date.now();
-  send("session_start", { engagement_seconds: 0 });
+  // Не используем имя session_start — это зарезервированное событие GA4.
+  send("game_session_begin", { engagement_seconds: 0 });
 }
 
 function wireSessionEngagement() {
