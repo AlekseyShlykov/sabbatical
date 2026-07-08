@@ -147,8 +147,10 @@
     <section class="screen screen--location" data-screen="location" hidden>
       <div class="stage" id="stage">
         <img class="stage__bg" id="stage-bg" alt="" />
-        <img class="stage__prop stage__prop--letter" id="stage-letter" alt="" hidden />
-        <div class="stage__prop-note" id="stage-letter-note" aria-live="polite" hidden></div>
+        <div class="stage__prop-letter-wrap" id="stage-letter-wrap" hidden>
+          <img class="stage__prop stage__prop--letter" id="stage-letter" alt="" />
+          <div class="stage__prop-note" id="stage-letter-note" aria-live="polite" hidden></div>
+        </div>
         <div class="stage__slots" id="stage-slots"></div>
       </div>
 

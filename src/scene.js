@@ -15,6 +15,9 @@ const LEFT_THIRD_LAYOUT_BGS = new Set([
   "houseorangewindow",
 ]);
 
+/** Вечеринка дня 4: раскладка «бар — слева Синий+Красный, справа Чёрный+Жёлтый». */
+const PARTY_BAR_SPLIT_IDS = new Set(["mrblue", "mrred", "mrblack", "msyellow"]);
+
 const els = {
   bg: null,
   slots: null,
@@ -65,7 +68,7 @@ export async function setBackground(name) {
     els.bg.removeAttribute("src");
     els.bg.classList.remove("is-fading");
     els.bg.style.background = "linear-gradient(160deg, #c9b78d, #6e8b76)";
-    applyStageLayout(name);
+    applyStageLayout(name, [...present]);
     return;
   }
   await decodeRasterUrl(url);
@@ -73,13 +76,31 @@ export async function setBackground(name) {
   els.bg.style.background = "";
   els.bg.classList.remove("is-fading");
   els.bg.src = url;
-  applyStageLayout(name);
+  applyStageLayout(name, [...present]);
 }
 
-function applyStageLayout(bgName) {
+function resolveStageLayout(bgName, ids) {
+  if (LEFT_THIRD_LAYOUT_BGS.has(bgName)) return "left-third";
+  const count = ids.length;
+  const set = new Set(ids);
+  if (bgName === "bar" && count === 7) return "party-hub";
+  if (bgName === "barout2" && count === 3) return "party-pier";
+  if (
+    bgName === "bar" &&
+    count === 4 &&
+    PARTY_BAR_SPLIT_IDS.size === 4 &&
+    [...PARTY_BAR_SPLIT_IDS].every((id) => set.has(id))
+  ) {
+    return "party-bar-split";
+  }
+  return null;
+}
+
+function applyStageLayout(bgName, ids = [...present]) {
   if (!els.slots) return;
-  if (LEFT_THIRD_LAYOUT_BGS.has(bgName)) {
-    els.slots.dataset.layout = "left-third";
+  const layout = resolveStageLayout(bgName, ids);
+  if (layout) {
+    els.slots.dataset.layout = layout;
   } else {
     delete els.slots.dataset.layout;
   }
@@ -167,6 +188,7 @@ async function renderSlots() {
     frag.appendChild(slot);
   }
   els.slots.appendChild(frag);
+  applyStageLayout(currentBg, ids);
   applySpeakerStates();
 }
 

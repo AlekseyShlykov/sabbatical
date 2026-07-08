@@ -42,12 +42,14 @@ async function submitWaitlistEmail(email) {
   }
 }
 
+let letterWrapEl = null;
 let letterEl = null;
 let letterNoteEl = null;
 let formEl = null;
 let emailInput = null;
 
 export function initDevEnd() {
+  letterWrapEl = document.getElementById("stage-letter-wrap");
   letterEl = document.getElementById("stage-letter");
   letterNoteEl = document.getElementById("stage-letter-note");
   formEl = document.getElementById("dev-end-form");
@@ -80,10 +82,11 @@ export function initDevEnd() {
 }
 
 export async function showLetterProp(noteText = "") {
+  if (!letterWrapEl) letterWrapEl = document.getElementById("stage-letter-wrap");
   if (!letterEl) letterEl = document.getElementById("stage-letter");
-  if (!letterEl) return;
+  if (!letterWrapEl || !letterEl) return;
   letterEl.src = LETTER_URL;
-  letterEl.hidden = false;
+  letterWrapEl.hidden = false;
 
   if (!letterNoteEl) letterNoteEl = document.getElementById("stage-letter-note");
   const note = (noteText || "").trim();
@@ -92,26 +95,26 @@ export async function showLetterProp(noteText = "") {
       letterNoteEl.textContent = note;
       letterNoteEl.hidden = false;
     } else {
-      letterNoteEl.classList.remove("is-on");
       letterNoteEl.hidden = true;
       letterNoteEl.textContent = "";
     }
   }
 
-  requestAnimationFrame(() => {
-    letterEl.classList.add("is-on");
-    if (letterNoteEl && !letterNoteEl.hidden) letterNoteEl.classList.add("is-on");
-  });
+  requestAnimationFrame(() => letterWrapEl.classList.add("is-on"));
 }
 
 export function hideLetterProp() {
-  if (!letterEl) return;
-  letterEl.classList.remove("is-on");
-  letterEl.hidden = true;
-  letterEl.removeAttribute("src");
+  if (!letterWrapEl) letterWrapEl = document.getElementById("stage-letter-wrap");
+  if (!letterEl) letterEl = document.getElementById("stage-letter");
+  if (letterWrapEl) {
+    letterWrapEl.classList.remove("is-on");
+    letterWrapEl.hidden = true;
+  }
+  if (letterEl) {
+    letterEl.removeAttribute("src");
+  }
   if (!letterNoteEl) letterNoteEl = document.getElementById("stage-letter-note");
   if (letterNoteEl) {
-    letterNoteEl.classList.remove("is-on");
     letterNoteEl.hidden = true;
     letterNoteEl.textContent = "";
   }

@@ -666,16 +666,15 @@ body.has-game-hud .map {
 }
 .slot[hidden] { display: none; }
 
-/* Много персонажей на сцене (например вечеринка в баре): равномерно по ширине,
-   а не стопкой в одной точке. Работает на всех ширинах (5–7 бывает только тут). */
-.stage__slots:not([data-layout="left-third"])[data-count="5"],
-.stage__slots:not([data-layout="left-third"])[data-count="6"],
-.stage__slots:not([data-layout="left-third"])[data-count="7"] {
+/* Вечеринка дня 4: крупные фигурки, можно слегка накладываться. */
+.stage__slots[data-layout="party-hub"],
+.stage__slots[data-layout="party-pier"],
+.stage__slots[data-layout="party-bar-split"] {
   display: block;
 }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot,
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot,
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot {
+.stage__slots[data-layout="party-hub"] .slot,
+.stage__slots[data-layout="party-pier"] .slot,
+.stage__slots[data-layout="party-bar-split"] .slot {
   position: absolute;
   bottom: 0;
   height: 100%;
@@ -686,32 +685,77 @@ body.has-game-hud .map {
   transform: translateX(-50%);
   z-index: 1;
 }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot.is-speaking,
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot.is-speaking,
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot.is-speaking {
+.stage__slots[data-layout="party-hub"] .slot.is-speaking,
+.stage__slots[data-layout="party-pier"] .slot.is-speaking,
+.stage__slots[data-layout="party-bar-split"] .slot.is-speaking {
   z-index: 3;
 }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(1) { left: 10%; }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(2) { left: 30%; }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(3) { left: 50%; }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(4) { left: 70%; }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot:nth-child(5) { left: 90%; }
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(1) { left: 8%; }
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(2) { left: 25%; }
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(3) { left: 42%; }
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(4) { left: 58%; }
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(5) { left: 75%; }
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot:nth-child(6) { left: 92%; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(1) { left: 7%; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(2) { left: 21%; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(3) { left: 36%; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(4) { left: 50%; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(5) { left: 64%; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(6) { left: 79%; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot:nth-child(7) { left: 93%; }
-.stage__slots:not([data-layout="left-third"])[data-count="5"] .slot img { height: 62%; max-width: 20vw; }
-.stage__slots:not([data-layout="left-third"])[data-count="6"] .slot img { height: 56%; max-width: 17vw; }
-.stage__slots:not([data-layout="left-third"])[data-count="7"] .slot img { height: 50%; max-width: 15vw; }
+
+/* Хаб вечеринки: все 7 на экране, крупно. */
+.stage__slots[data-layout="party-hub"] .slot:nth-child(1) { left: 6%; }
+.stage__slots[data-layout="party-hub"] .slot:nth-child(2) { left: 19%; }
+.stage__slots[data-layout="party-hub"] .slot:nth-child(3) { left: 33%; }
+.stage__slots[data-layout="party-hub"] .slot:nth-child(4) { left: 50%; }
+.stage__slots[data-layout="party-hub"] .slot:nth-child(5) { left: 67%; }
+.stage__slots[data-layout="party-hub"] .slot:nth-child(6) { left: 81%; }
+.stage__slots[data-layout="party-hub"] .slot:nth-child(7) { left: 94%; }
+.stage__slots[data-layout="party-hub"] .slot img {
+  height: 78%;
+  max-width: 24vw;
+}
+
+/* Причал: Зелёная, Пурпурный, Белая — обычный размер, по ширине. */
+.stage__slots[data-layout="party-pier"] .slot:nth-child(1) { left: 15%; }
+.stage__slots[data-layout="party-pier"] .slot:nth-child(2) { left: 50%; }
+.stage__slots[data-layout="party-pier"] .slot:nth-child(3) { left: 85%; }
+.stage__slots[data-layout="party-pier"] .slot img {
+  height: 72%;
+  max-width: 30vw;
+}
+
+/* Бар: слева у края Синий+Красный, справа Чёрный+Жёлтый. */
+.stage__slots[data-layout="party-bar-split"] .slot[data-character="mrblue"] { left: 9%; }
+.stage__slots[data-layout="party-bar-split"] .slot[data-character="mrred"] { left: 22%; }
+.stage__slots[data-layout="party-bar-split"] .slot[data-character="mrblack"] { left: 78%; }
+.stage__slots[data-layout="party-bar-split"] .slot[data-character="msyellow"] { left: 91%; }
+.stage__slots[data-layout="party-bar-split"] .slot img {
+  height: 76%;
+  max-width: 28vw;
+}
+
+/* Запас: 5–6 персонажей без спец-раскладки (редко). */
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"],
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] {
+  display: block;
+}
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"] .slot,
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"] .slot:nth-child(1) { left: 10%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"] .slot:nth-child(2) { left: 30%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"] .slot:nth-child(3) { left: 50%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"] .slot:nth-child(4) { left: 70%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"] .slot:nth-child(5) { left: 90%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot:nth-child(1) { left: 8%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot:nth-child(2) { left: 25%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot:nth-child(3) { left: 42%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot:nth-child(4) { left: 58%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot:nth-child(5) { left: 75%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot:nth-child(6) { left: 92%; }
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="5"] .slot img,
+.stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="6"] .slot img {
+  height: 72%;
+  max-width: 22vw;
+}
 
 .panel {
   position: absolute;
@@ -1149,48 +1193,63 @@ body.has-game-hud .dev-restart-btn {
 }
 
 /* Letter prop on stage (Day 5 demo) */
-.stage__prop--letter {
+.stage__prop-letter-wrap {
   position: absolute;
   left: 50%;
   top: 42%;
   z-index: 4;
-  width: min(72%, 420px);
-  max-height: 55%;
-  object-fit: contain;
+  width: min(58%, 340px);
+  aspect-ratio: 1;
   transform: translate(-50%, -50%) scale(0.92);
   opacity: 0;
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
   transition: opacity 520ms var(--ease), transform 520ms var(--ease);
   pointer-events: none;
 }
-.stage__prop--letter.is-on {
+.stage__prop-letter-wrap.is-on {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
-
-/* Текст записки поверх картинки листка (появляется вместе с ним). */
-.stage__prop-note {
+.stage__prop-letter-wrap .stage__prop--letter {
   position: absolute;
-  left: 50%;
-  top: 42%;
-  z-index: 5;
-  width: min(52%, 300px);
-  transform: translate(-50%, -50%) scale(0.92);
-  opacity: 0;
-  transition: opacity 520ms var(--ease), transform 520ms var(--ease);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  transform: none;
+  opacity: 1;
+  filter: none;
+  transition: none;
+}
+
+/* Текст записки — только внутри пергамента, не шире картинки. */
+.stage__prop-letter-wrap .stage__prop-note {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  top: 24%;
+  bottom: 22%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: none;
+  opacity: 1;
+  transition: none;
   pointer-events: none;
   text-align: center;
   color: #3a2b18;
   font-family: "Georgia", "Times New Roman", serif;
   font-style: italic;
-  font-size: clamp(15px, 3.6vw, 22px);
-  line-height: 1.45;
+  font-size: clamp(10px, 2.5vw, 15px);
+  line-height: 1.35;
   text-wrap: balance;
+  overflow: hidden;
   text-shadow: 0 1px 0 rgba(255, 250, 235, 0.5);
 }
-.stage__prop-note.is-on {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+.stage__prop-letter-wrap .stage__prop-note[hidden] {
+  display: none;
 }
 
 /* Demo end email form */
@@ -1397,10 +1456,10 @@ body.has-game-hud .dev-restart-btn {
   .btn--leave .btn--icon__img { width: 48px; height: 48px; }
 
   /* Несколько персонажей: не flex-стопка по центру, а раскладка по ширине */
-  .stage__slots:not([data-layout="left-third"]) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"]) {
     display: block;
   }
-  .stage__slots:not([data-layout="left-third"]) .slot {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"]) .slot {
     position: absolute;
     bottom: 0;
     height: 100%;
@@ -1411,55 +1470,55 @@ body.has-game-hud .dev-restart-btn {
     transform: translateX(-50%);
     z-index: 1;
   }
-  .stage__slots:not([data-layout="left-third"]) .slot.is-speaking {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"]) .slot.is-speaking {
     z-index: 3;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="1"] .slot {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="1"] .slot {
     left: 50%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="2"] .slot:nth-child(1) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="2"] .slot:nth-child(1) {
     left: 24%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="2"] .slot:nth-child(2) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="2"] .slot:nth-child(2) {
     left: 76%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="3"] .slot:nth-child(1) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="3"] .slot:nth-child(1) {
     left: 15%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="3"] .slot:nth-child(2) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="3"] .slot:nth-child(2) {
     left: 50%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="3"] .slot:nth-child(3) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="3"] .slot:nth-child(3) {
     left: 85%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="4"] .slot:nth-child(1) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="4"] .slot:nth-child(1) {
     left: 12%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="4"] .slot:nth-child(2) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="4"] .slot:nth-child(2) {
     left: 36%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="4"] .slot:nth-child(3) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="4"] .slot:nth-child(3) {
     left: 64%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="4"] .slot:nth-child(4) {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="4"] .slot:nth-child(4) {
     left: 88%;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="2"] .slot img {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="2"] .slot img {
     height: 80%;
     max-width: 42vw;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="3"] .slot img {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="3"] .slot img {
     height: 72%;
     max-width: 30vw;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="4"] .slot img {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="4"] .slot img {
     height: 66%;
     max-width: 22vw;
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="3"] .slot.is-dimmed img {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="3"] .slot.is-dimmed img {
     transform: translateY(10%) scale(0.88);
   }
-  .stage__slots:not([data-layout="left-third"])[data-count="3"] .slot.is-speaking img {
+  .stage__slots:not([data-layout="left-third"]):not([data-layout="party-hub"]):not([data-layout="party-pier"]):not([data-layout="party-bar-split"])[data-count="3"] .slot.is-speaking img {
     transform: translateY(6%) scale(0.96);
   }
 
