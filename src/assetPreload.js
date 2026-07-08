@@ -34,15 +34,41 @@ async function preloadBinary(url) {
   }
 }
 
+// `canplaythrough` ненадёжен (иногда не срабатывает вовсе), поэтому ставим
+// страховочный таймаут — фоновая догрузка аудио не должна висеть бесконечно.
+const AUDIO_PRELOAD_TIMEOUT_MS = 15000;
+
 function preloadAudio(url) {
   return new Promise((resolve) => {
+    let settled = false;
     const audio = new Audio();
-    const done = () => resolve();
-    audio.addEventListener("canplaythrough", done, { once: true });
-    audio.addEventListener("error", done, { once: true });
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve();
+    };
+    const timer = setTimeout(finish, AUDIO_PRELOAD_TIMEOUT_MS);
+    audio.addEventListener("canplaythrough", finish, { once: true });
+    audio.addEventListener("error", finish, { once: true });
     audio.preload = "auto";
     audio.src = url;
     audio.load();
+  });
+}
+
+let audioPreloadStarted = false;
+
+/**
+ * Догрузить музыку и звуки в фоне. Аудио НЕ блокирует готовность сцен:
+ * картинки нужны для отрисовки, а ~14 МБ звука браузер стримит по требованию.
+ */
+function startBackgroundAudioPreload() {
+  if (audioPreloadStarted) return;
+  audioPreloadStarted = true;
+  const urls = [...SOUND_URLS, MUSIC_URL];
+  runPool(urls, (url) => preloadAudio(url)).catch(() => {
+    /* фоновая догрузка — ошибки не критичны */
   });
 }
 
@@ -65,11 +91,13 @@ async function runPool(urls, worker) {
 export async function preloadAllGameAssets({ onProgress } = {}) {
   const manifest = await loadAssetManifest();
   const rasterUrls = manifestRasterUrls(manifest);
+  // Критичные ассеты (картинки + SVG-пути) — только они гейтят готовность сцен.
+  // Аудио (~14 МБ) сюда НЕ входит: оно догружается в фоне (см. ниже), иначе
+  // ожидание `canplaythrough` растягивает загрузку заставки на 10-17 c и тормозит
+  // вход в первые сцены, хотя для их отрисовки звук не нужен.
   const queue = [
     ...rasterUrls.map((url) => ({ kind: "raster", url })),
     ...EXTRA_URLS.map((url) => ({ kind: "binary", url })),
-    ...SOUND_URLS.map((url) => ({ kind: "audio", url })),
-    { kind: "audio", url: MUSIC_URL },
   ];
 
   const total = queue.length;
@@ -82,11 +110,13 @@ export async function preloadAllGameAssets({ onProgress } = {}) {
 
   await runPool(queue, async (item) => {
     if (item.kind === "raster") await decodeRasterUrl(item.url);
-    else if (item.kind === "audio") await preloadAudio(item.url);
     else await preloadBinary(item.url);
     done += 1;
     tick();
   });
+
+  // Звук догружаем отдельно и не ждём — не блокирует ни заставку, ни сцены.
+  startBackgroundAudioPreload();
 
   return { total, done };
 }

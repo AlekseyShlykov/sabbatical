@@ -8,7 +8,7 @@
 //   * tap on stage or dialogue text finishes the typewriter early
 //   * language switch re-renders current passage by name
 
-import { setSpeaker, showCharacters, setBackground } from "./scene.js";
+import { setSpeaker, setStageCharacters, setBackground } from "./scene.js";
 import {
   runCommand,
   collectPassageParticipants,
@@ -125,11 +125,13 @@ export async function renderPassage(name) {
   els.line.dataset.speaker = "";
 
   // Показать всех действующих персонажей сразу при входе в диалог, а не по
-  // одному, когда заговорят. Фон задаём заранее (без мигания), затем состав.
+  // одному, когда заговорят. Фон задаём заранее (без мигания), затем состав
+  // РОВНО из участников пассажа — чтобы герои предыдущей сцены не оставались
+  // (иначе в ветках вечеринки видны все 7, а не только нужная подгруппа).
   const initialBg = initialBackgroundFromPassage(p);
   if (initialBg) await setBackground(initialBg);
   const participants = collectPassageParticipants(p);
-  if (participants.length) await showCharacters(participants);
+  if (participants.length) await setStageCharacters(participants);
 
   await advance();
 }

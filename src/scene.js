@@ -126,6 +126,29 @@ export async function showCharacter(id) {
   await showCharacters([id]);
 }
 
+/**
+ * Задать состав сцены РОВНО из этих id (заменяя текущий, а не добавляя).
+ * Нужно при входе в новый пассаж: иначе персонажи предыдущей сцены (например
+ * все 7 из хаба вечеринки) остаются, хотя ветка объявляет лишь свою подгруппу.
+ */
+export async function setStageCharacters(ids) {
+  const next = [];
+  const seen = new Set();
+  for (const raw of ids || []) {
+    const id = String(raw || "").toLowerCase();
+    if (!id || id === "narrator" || seen.has(id)) continue;
+    seen.add(id);
+    next.push(id);
+  }
+  const unchanged =
+    next.length === present.size && next.every((id) => present.has(id));
+  if (unchanged) return;
+  present.clear();
+  next.forEach((id) => present.add(id));
+  if (currentSpeaker && !present.has(currentSpeaker)) currentSpeaker = null;
+  await renderSlots();
+}
+
 export async function hideCharacter(id) {
   if (!id) return;
   id = id.toLowerCase();
