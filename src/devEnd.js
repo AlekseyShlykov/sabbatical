@@ -1,6 +1,7 @@
 // devEnd.js — письмо под дверью и форма email в конце демо.
 
 import { t } from "./localization.js";
+import { trackWaitlistSubmit } from "./analytics.js";
 
 const LETTER_URL = "assets/stuff/letter.png";
 
@@ -68,6 +69,7 @@ export function initDevEnd() {
 
     const msg = formEl.querySelector(".dev-end-form__thanks");
     if (ok) {
+      trackWaitlistSubmit();
       if (msg) {
         msg.hidden = false;
         msg.textContent = t("devEnd.thanks");

@@ -117,6 +117,12 @@ import {
   areAssetsReady,
   syncSplashContinueButton,
 } from "./assetPreload.js";
+import {
+  initAnalytics,
+  trackStartJourney,
+  trackModeSelect,
+  trackDayComplete,
+} from "./analytics.js";
 
 const LOCATIONS_URL = "data/locations.json";
 
@@ -133,6 +139,7 @@ bootstrap().catch((err) => {
 async function bootstrap() {
   showScreen("splash");
   initSplashLoader();
+  void initAnalytics();
 
   // Initial language: saved > browser > 'ru'
   const save = loadSave();
@@ -493,6 +500,7 @@ async function finishDayAtHome({ fromId, inlineDuringPassage = false } = {}) {
 
     const completedDay = getDayCycle().day;
     if (isStoryMode()) applyStoryDayEndBookBonus(completedDay);
+    trackDayComplete(completedDay);
 
     advanceDay();
     if (isStoryMode()) reconcileStoryDayWithCalendar(locationsData);
@@ -665,6 +673,7 @@ async function beginDayFive() {
 
     const currentDay = getDayCycle().day;
     if (currentDay < 5) {
+      trackDayComplete(currentDay);
       if (isStoryMode()) applyStoryDayEndBookBonus(currentDay);
       advanceDay();
       if (isStoryMode()) reconcileStoryDayWithCalendar(locationsData);
@@ -1018,6 +1027,7 @@ async function handleAction(action, btn) {
   switch (action) {
     case "start": {
       if (!areAssetsReady() || getState().screen !== "splash") return;
+      trackStartJourney();
       clearSave();
       resetState({
         language: getLanguage(),
@@ -1100,6 +1110,7 @@ function updateDevRestartButton(screenId) {
 }
 
 async function chooseMode(mode) {
+  trackModeSelect(mode);
   const resumeStoryExplore =
     mode === "story" &&
     (getFlag("postTutorialStoryStart") || getFlag("storyContinueExplore"));

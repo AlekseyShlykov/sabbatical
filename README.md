@@ -449,3 +449,82 @@ Content-Type: application/json
 сервисе/таблице. Ошибка сети — показывается «Не удалось отправить…», форма
 остаётся для повтора (строки `devEnd.thanks` / `devEnd.error` в
 `assets/lang/{ru,en}.json`).
+
+---
+
+## Аналитика (Google Analytics 4)
+
+Игра отправляет события в GA4 через `gtag.js`. Без настроенного ID аналитика
+**полностью выключена** — ничего не грузится и не отправляется.
+
+### Настройка (5 минут)
+
+1. Создай свойство GA4 на [analytics.google.com](https://analytics.google.com/)
+   (тип потока: **Веб**).
+2. Скопируй **Measurement ID** вида `G-XXXXXXXXXX`.
+3. Вставь его в `data/analytics.json`:
+
+```json
+{
+  "ga4MeasurementId": "G-XXXXXXXXXX"
+}
+```
+
+4. Задеплой и проверь в GA4 → **Отчёты → В реальном времени** — нажми
+   «Начать приключение» на сайте, событие должно появиться за ~30 секунд.
+
+### Отправляемые события
+
+| Событие | Когда | Параметры |
+|---------|-------|-----------|
+| `start_journey` | Клик «Начать приключение» на заставке | `language`, `engagement_seconds` |
+| `mode_select` | Выбор «История» или «Свободное исследование» | `game_mode` (`story` / `free`), `language`, `engagement_seconds` |
+| `day_complete` | Завершение календарного дня 1–4 | `day_number` (1–4), `language`, `engagement_seconds` |
+| `waitlist_submit` | Успешная отправка email из формы | `language`, `engagement_seconds` |
+| `play_session_end` | Уход со вкладки / закрытие (если сессия ≥ 5 с) | `engagement_seconds` |
+
+Язык интерфейса (`ru` / `en`) передаётся в каждом событии — можно
+сегментировать отчёты.
+
+Код: `src/analytics.js`. Точки вызова: `src/main.js` (старт, режим, дни),
+`src/devEnd.js` (форма).
+
+### Воронка прохождения
+
+В GA4 → **Исследования (Explore)** → шаблон **Воронка**:
+
+1. `start_journey`
+2. `mode_select`
+3. `day_complete` с фильтром `day_number = 1`
+4. `day_complete` с фильтром `day_number = 2`
+5. `day_complete` с фильтром `day_number = 3`
+6. `day_complete` с фильтром `day_number = 4`
+7. `waitlist_submit`
+
+Так видно, на каком шаге игроки отваливаются. Дополнительно можно
+построить воронку только для `game_mode = story` или `free` (фильтр на шаге
+`mode_select`).
+
+### Время прохождения
+
+- **Среднее время на сайте:** Отчёты → Вовлечённость → Страницы и экраны →
+  «Среднее время взаимодействия».
+- **Время до конкретного шага:** в Исследованиях создай отчёт **Свободная
+  форма** — измерение `Имя события`, метрика `Среднее engagement_seconds`
+  (параметр события). Сгруппируй по `day_number` или смотри на
+  `waitlist_submit`.
+- **`play_session_end`** — суммарное время сессии при уходе со страницы
+  (дополняет встроенный учёт GA4).
+
+### Отладка в браузере
+
+1. Установи расширение [Google Analytics Debugger](https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephafjilhbla) или открой DevTools → Network → фильтр `collect`.
+2. Убедись, что в `data/analytics.json` указан реальный `G-…` ID.
+3. События уходят на `google-analytics.com/g/collect` — в payload будут
+   `en=start_journey`, `en=mode_select` и т.д.
+
+### Конфиденциальность
+
+Аналитика не собирает email из формы — только факт успешной отправки
+(`waitlist_submit`). Если нужно отключить на локалке, оставь
+`ga4MeasurementId` пустым.
