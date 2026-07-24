@@ -41,13 +41,6 @@ function injectGtag(id) {
   });
 }
 
-function flushPendingEvents() {
-  while (pendingEvents.length) {
-    const { eventName, params } = pendingEvents.shift();
-    send(eventName, params);
-  }
-}
-
 /** Загрузить gtag и конфиг. Безопасно вызывать при старте приложения. */
 export async function initAnalytics() {
   if (ready) return;

@@ -106,7 +106,7 @@ button { font: inherit; color: inherit; }
   position: absolute; inset: 0;
   background-image: image-set(
     url("assets/map/map.webp") type("image/webp"),
-    url("assets/map/map.png") type("image/png")
+    url("assets/map/map.jpg") type("image/jpeg")
   );
   background-position: center;
   background-size: cover;
