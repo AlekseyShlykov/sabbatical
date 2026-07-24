@@ -49,6 +49,7 @@ let currentPassageName = null;
 let currentPassage = null;
 let stepIndex = 0;
 let typingState = null;       // { done: bool, finish: fn }
+let renderGeneration = 0;     // prevents stale typewriter completions changing new scenes
 let onEndCb = null;
 let onChoiceCb = null;        // optional: external observer
 let afterPassageHook = null;
@@ -107,6 +108,7 @@ export async function renderPassage(name) {
     showRaw(t("errors.missingPassage") + ": " + name, "narrator");
     return;
   }
+  renderGeneration += 1;
   if (typingState && !typingState.done) typingState.cancel();
 
   // Пассажи-заметки сценариста: только хук движка, без «фиктивных» команд.
@@ -145,6 +147,7 @@ export function getCurrentPassage() { return currentPassageName; }
 
 /** Process steps until the next visible line, then render it. */
 async function advance() {
+  const generation = renderGeneration;
   while (stepIndex < currentPassage.steps.length) {
     const step = currentPassage.steps[stepIndex++];
     if (step.type === "command") {
@@ -153,8 +156,14 @@ async function advance() {
     }
     if (step.type === "line") {
       await setSpeaker(step.speaker);
-      await showLine(step.speaker, step.text);
-      decideAfterLine();
+      // Start typing, but do not keep a screen transition waiting for the
+      // entire line. The fade can open immediately while the text continues
+      // to type on the visible scene. Actions still appear only when typing
+      // has finished.
+      void showLine(step.speaker, step.text).then(() => {
+        if (generation !== renderGeneration) return;
+        decideAfterLine();
+      });
       return;
     }
   }
