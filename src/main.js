@@ -118,11 +118,11 @@ import {
   syncSplashContinueButton,
 } from "./assetPreload.js";
 import {
-  initAnalytics,
+  initGtagEvents,
   trackStartJourney,
   trackModeSelect,
   trackDayComplete,
-} from "./analytics.js";
+} from "./gtagEvents.js";
 
 const LOCATIONS_URL = "data/locations.json";
 
@@ -139,7 +139,7 @@ bootstrap().catch((err) => {
 async function bootstrap() {
   showScreen("splash");
   initSplashLoader();
-  void initAnalytics();
+  initGtagEvents();
 
   // Initial language: saved > browser > 'ru'
   const save = loadSave();

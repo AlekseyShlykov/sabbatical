@@ -454,22 +454,14 @@ Content-Type: application/json
 
 ## Аналитика (Google Analytics 4)
 
-Игра отправляет события в GA4 через `gtag.js`. Без настроенного ID аналитика
-**полностью выключена** — ничего не грузится и не отправляется.
+Игра отправляет события в GA4 через основной Google Tag в `index.html`.
 
 ### Настройка (5 минут)
 
 1. Создай свойство GA4 на [analytics.google.com](https://analytics.google.com/)
    (тип потока: **Веб**).
 2. Скопируй **Measurement ID** вида `G-XXXXXXXXXX`.
-3. Вставь его в `data/analytics.json`:
-
-```json
-{
-  "ga4MeasurementId": "G-XXXXXXXXXX"
-}
-```
-
+3. Замени Measurement ID в обоих местах основного тега в `index.html`.
 4. Задеплой и проверь в GA4 → **Отчёты → В реальном времени** — нажми
    «Начать приключение» на сайте, событие должно появиться за ~30 секунд.
 
@@ -477,16 +469,17 @@ Content-Type: application/json
 
 | Событие | Когда | Параметры |
 |---------|-------|-----------|
+| `game_session_begin` | Первый запуск игры после открытия страницы | `language`, `engagement_seconds` |
 | `start_journey` | Клик «Начать приключение» на заставке | `language`, `engagement_seconds` |
 | `mode_select` | Выбор «История» или «Свободное исследование» | `game_mode` (`story` / `free`), `language`, `engagement_seconds` |
 | `day_complete` | Завершение календарного дня 1–4 | `day_number` (1–4), `language`, `engagement_seconds` |
 | `waitlist_submit` | Успешная отправка email из формы | `language`, `engagement_seconds` |
-| `play_session_end` | Уход со вкладки / закрытие (если сессия ≥ 5 с) | `engagement_seconds` |
+| `play_session_end` | Уход со вкладки / закрытие (если сессия ≥ 5 с) | `language`, `engagement_seconds` |
 
 Язык интерфейса (`ru` / `en`) передаётся в каждом событии — можно
 сегментировать отчёты.
 
-Код: `src/analytics.js`. Точки вызова: `src/main.js` (старт, режим, дни),
+Код событий: `src/gtagEvents.js`. Точки вызова: `src/main.js` (старт, режим, дни),
 `src/devEnd.js` (форма).
 
 ### Воронка прохождения
@@ -519,12 +512,12 @@ Content-Type: application/json
 ### Отладка в браузере
 
 1. Установи расширение [Google Analytics Debugger](https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephafjilhbla) или открой DevTools → Network → фильтр `collect`.
-2. Убедись, что в `data/analytics.json` указан реальный `G-…` ID.
+2. Убедись, что в основном теге в `index.html` указан реальный `G-…` ID.
 3. События уходят на `google-analytics.com/g/collect` — в payload будут
    `en=start_journey`, `en=mode_select` и т.д.
 
 ### Конфиденциальность
 
-Аналитика не собирает email из формы — только факт успешной отправки
-(`waitlist_submit`). Если нужно отключить на локалке, оставь
-`ga4MeasurementId` пустым.
+Аналитика не собирает email из формы, только факт успешной отправки
+(`waitlist_submit`). Чтобы отключить аналитику, удали основной Google Tag из
+`index.html`.

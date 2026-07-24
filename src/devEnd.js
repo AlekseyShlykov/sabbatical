@@ -1,7 +1,7 @@
 // devEnd.js — письмо под дверью и форма email в конце демо.
 
 import { t } from "./localization.js";
-import { trackWaitlistSubmit } from "./analytics.js";
+import { trackWaitlistSubmit } from "./gtagEvents.js";
 
 const LETTER_URL = "assets/stuff/letter.png";
 
