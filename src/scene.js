@@ -30,7 +30,11 @@ let renderGeneration = 0;           // drop stale concurrent renderSlots()
 
 const rasterUrlCache = new Map();   // `${dir}|${name}` → url | null
 const existsCache = new Map();      // url → boolean
-const decodedCache = new Set();     // url already decoded in memory
+// Keep the Image objects alive after preload. A Set of URLs is not enough:
+// browsers may discard the decoded bitmap once the temporary Image is
+// collected, forcing the first visible scene to decode it again.
+const decodedImageCache = new Map(); // url → decoded Image
+const decodePromiseCache = new Map(); // url → in-flight Promise
 let assetManifest = null;           // { "assets/backgrounds/bar": [".webp", ".jpg"] }
 
 export function initScene() {
@@ -298,20 +302,29 @@ export async function resolveRasterUrl(dir, name) {
 
 /** Decode raster into browser cache before showing on stage. */
 export async function decodeRasterUrl(url) {
-  if (!url || decodedCache.has(url)) return;
+  if (!url || decodedImageCache.has(url)) return;
+  if (decodePromiseCache.has(url)) return decodePromiseCache.get(url);
+
   const im = new Image();
   im.decoding = "async";
-  await new Promise((resolve) => {
-    im.onload = () => resolve();
-    im.onerror = () => resolve();
-    im.src = url;
+  const pending = (async () => {
+    const loaded = await new Promise((resolve) => {
+      im.onload = () => resolve(true);
+      im.onerror = () => resolve(false);
+      im.src = url;
+    });
+    if (!loaded) return;
+    try {
+      await im.decode();
+    } catch {
+      /* The load event still confirms that the raster is usable. */
+    }
+    decodedImageCache.set(url, im);
+  })().finally(() => {
+    decodePromiseCache.delete(url);
   });
-  try {
-    await im.decode();
-  } catch {
-    /* decode optional */
-  }
-  decodedCache.add(url);
+  decodePromiseCache.set(url, pending);
+  return pending;
 }
 
 /** Preload several assets (`dir` + `name` pairs) in parallel. */

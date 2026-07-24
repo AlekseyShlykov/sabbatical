@@ -16,12 +16,25 @@ const CONCURRENCY = 8;
 
 let preloadPromise = null;
 
+// These are needed immediately after the intro. Put them at the front of the
+// splash queue so they are warm even while the remaining assets are loading.
+const PROLOGUE_RASTER_BASES = [
+  "assets/backgrounds/barout2",
+  "assets/backgrounds/houseorangeinside",
+  "assets/characters/mrred",
+];
+
 function manifestRasterUrls(manifest) {
   const files = manifest?.files || manifest || {};
-  return Object.entries(files).map(([base, exts]) => {
+  const urlsByBase = new Map(Object.entries(files).map(([base, exts]) => {
     const ext = Array.isArray(exts) && exts.length ? exts[0] : "";
-    return base + ext;
-  });
+    return [base, base + ext];
+  }));
+  const orderedBases = [
+    ...PROLOGUE_RASTER_BASES.filter((base) => urlsByBase.has(base)),
+    ...urlsByBase.keys(),
+  ];
+  return [...new Set(orderedBases)].map((base) => urlsByBase.get(base));
 }
 
 async function preloadBinary(url) {

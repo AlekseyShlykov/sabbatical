@@ -3,7 +3,7 @@
   "languageName": "English",
   "splash": {
     "subtitle": "a quiet story you can take your time with",
-    "start": "Start Adventure",
+    "start": "Start",
     "continue": "Continue",
     "languageLabel": "Language",
     "loading": "Loading…",
@@ -12,9 +12,9 @@
   "intro": {
     "continue": "Continue",
     "slide0a": "You are a professor at an elite university. Students love you, colleagues respect you, and you enjoy your subject.",
-    "slide0b": "But everyone reaches a moment when it's time to write a book that makes sense of your experience—to articulate your theories more clearly. That moment has come for you. You've taken a sabbatical: a paid year off to write your book.",
-    "slide1a": "Over the summer you wrapped up your obligations and rented a house on a remote island so nothing would distract you from writing. Maybe even two books—who knows.",
-    "slide1b": "And now, having gathered everything you need—your laptop, plenty of paper, and the rest—you're riding a small boat to the home that will be yours for the next year. The landlord is supposed to meet you at the dock and show you around."
+    "slide0b": "Lately, you've felt the need to put your ideas into a book. A sabbatical gives you a full paid year to do it.",
+    "slide1a": "Over the summer, you finished your other work and rented a house on a remote island. There should be nothing there to distract you. You might even write two books.",
+    "slide1b": "Your laptop and papers are packed. A small boat is taking you to your new home for the next year. The landlord should be waiting at the dock to show you around."
   },
   "modeSelect": {
     "title": "How would you like to walk?",
@@ -48,8 +48,8 @@
     "todayProgress": "+{n}% today",
     "noActions": "No actions left today. Rest to start a new day.",
     "dailyBookCap": "You can only add 3% to this book per day.",
-    "dayEndReturnHome": "Today's day is over — time to return home.",
-    "day4PartyCall": "3 p.m. — time for the Bar. I'd better not be late!",
+    "dayEndReturnHome": "That's enough for today. Time to head home.",
+    "day4PartyCall": "It's 3 p.m. Time for the bar. I'd better not be late!",
     "dayTitle": "Day {n}"
   },
   "dayTransition": {
@@ -59,7 +59,7 @@
     "restartFromStart": "Start over"
   },
   "devEnd": {
-    "lead": "The intro ends here. The game is still in development. If you enjoyed it and want the full version — leave your email.",
+    "lead": "That's the end of the demo. Leave your email if you'd like to hear when the full game is ready.",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "submit": "Submit",

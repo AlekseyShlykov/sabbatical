@@ -9,7 +9,7 @@
           "link": "Привет, Майк! Приятно познакомиться"
         },
         {
-          "name": "Wow — a whole island!",
+          "name": "Wow, a whole island!",
           "link": "Ничего себе, целый остров!"
         }
       ]
@@ -33,7 +33,7 @@
       "text": "//appears mrblue\nmrblue: Hello! Why shout? You could have knocked.\n",
       "links": [
         {
-          "name": "Sorry — I wasn't sure anyone was home",
+          "name": "Sorry, I wasn't sure anyone was home",
           "link": "Извините, не знал есть ли кто дома"
         },
         {
@@ -51,7 +51,7 @@
           "link": "Что за шутка?"
         },
         {
-          "name": "Yes — Mike already told me about it",
+          "name": "Yes, Mike already told me about it",
           "link": "Да, Майк уже рассказал мне о ней"
         }
       ]
@@ -65,7 +65,7 @@
           "link": "Что за шутка?"
         },
         {
-          "name": "Yes — Mike already told me about it",
+          "name": "Yes, Mike already told me about it",
           "link": "Да, Майк уже рассказал мне о ней"
         }
       ]
@@ -79,21 +79,21 @@
           "link": "Что за шутка?"
         },
         {
-          "name": "Yes — Mike already told me about it",
+          "name": "Yes, Mike already told me about it",
           "link": "Да, Майк уже рассказал мне о ней"
         }
       ]
     },
     {
       "name": "Что за шутка?",
-      "text": "mrblue: We're a small community here — we don't love strangers much, and we value everyone minding their own business.\nmrblue: We started calling each other by the colours our houses are painted. It began as a joke, then it stuck.\nmrblue: By the way, we rented you this place because you're a redhead. Okay, only partly true. We really do like scientists here, especially professors and writers. And you're both a professor and a writer!\n",
+      "text": "mrblue: We're a small community here, we don't love strangers much, and we value everyone minding their own business.\nmrblue: We started calling each other by the colours our houses are painted. It began as a joke, then it stuck.\nmrblue: By the way, we rented you this place because you're a redhead. Okay, only partly true. We really do like scientists here, especially professors and writers. And you're both a professor and a writer!\n",
       "links": [
         {
-          "name": "Yes — I'm planning to write a book",
+          "name": "Yes, I'm planning to write a book",
           "link": "Да, я планирую написать книгу"
         },
         {
-          "name": "Thanks — I'd better go",
+          "name": "Thanks, I'd better go",
           "link": "Спасибо, я пожалуй пойду"
         }
       ]
@@ -119,7 +119,7 @@
     },
     {
       "name": "black2",
-      "text": "No one answers — it seems no one is home.\n",
+      "text": "No one answers, it seems no one is home.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -162,7 +162,7 @@
     },
     {
       "name": "purple2",
-      "text": "No one answers — it seems no one is home.\n",
+      "text": "No one answers, it seems no one is home.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -172,7 +172,7 @@
     },
     {
       "name": "white2",
-      "text": "No one answers — it seems no one is home.\n",
+      "text": "No one answers, it seems no one is home.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -210,7 +210,7 @@
     },
     {
       "name": "green2",
-      "text": "No one answers — it seems no one is home.\n",
+      "text": "No one answers, it seems no one is home.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -220,7 +220,7 @@
     },
     {
       "name": "yellow2",
-      "text": "No one answers — it seems no one is home.\n",
+      "text": "No one answers, it seems no one is home.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -244,7 +244,7 @@
     },
     {
       "name": "red2",
-      "text": "No one answers — it seems no one is home.\n",
+      "text": "No one answers, it seems no one is home.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -268,7 +268,7 @@
     },
     {
       "name": "Немного прогуляться",
-      "text": "//you meet msgreen\nmsgreen: Hello, newcomer! I'm Monica, but you can call me Miss Green. As you see, I've taken my colour — I even dress to match.\nmsgreen: Lucky it suits me. After decades in a white coat, it's not easy to switch. But enough about me. What brought you here?\n",
+      "text": "//you meet msgreen\nmsgreen: Hello, newcomer! I'm Monica, but you can call me Miss Green. I took the colour theme seriously. Even my clothes match.\nmsgreen: Luckily, green suits me. After decades in a white coat, the change takes some getting used to. But enough about me. What brought you here?\n",
       "links": [
         {
           "name": "I'm not sure myself",
@@ -282,10 +282,10 @@
     },
     {
       "name": "Я и сам не знаю",
-      "text": "msgreen: Yes — sometimes lost souls end up here, with nowhere else to go. And it seems like a pretty good place. I see you're already ginger and living in the orange house. I think you'll fit into our little community, if you want.\n",
+      "text": "msgreen: Yes, sometimes lost souls end up here, with nowhere else to go. And it seems like a pretty good place. I see you're already ginger and living in the orange house. I think you'll fit into our little community, if you want.\n",
       "links": [
         {
-          "name": "Thanks — I should go!",
+          "name": "Thanks, I should go!",
           "link": "Спасибо, но мне пора!"
         },
         {
@@ -315,17 +315,17 @@
     },
     {
       "name": "Вы были врачом?",
-      "text": "msgreen: Yes — all my life, and now I'm retired. I still help out — I treat aches and give advice. After all, this is an island of old folks; people come here when they want quiet.\n",
+      "text": "msgreen: Yes, I was a doctor all my life. I'm retired now, but I still treat minor ailments and offer advice. This is an island of old people, after all. Most come here for some peace and quiet.\n",
       "links": [
         {
-          "name": "Yes — that's why I came too",
+          "name": "Yes, that's why I came too",
           "link": "Да, понимаю, я сюда приехал за этим же"
         }
       ]
     },
     {
       "name": "Да, понимаю, я сюда приехал за этим же",
-      "text": "msgreen: You'll certainly find peace here. Just don't get caught up in political games. You'd think eight people would be enough — yet grudges always turn up. What do you need the quiet for?\n",
+      "text": "msgreen: You'll certainly find peace here. Just don't get caught up in political games. You'd think eight people would be enough, yet grudges always turn up. What do you need the quiet for?\n",
       "links": [
         {
           "name": "Just to rest",
@@ -339,7 +339,7 @@
     },
     {
       "name": "Просто отдохнуть",
-      "text": "msgreen: Oh, there's more than enough rest here. But enough — that's plenty for a first meeting. We're almost all introverts. We'll see each other again; lovely to meet you!\n",
+      "text": "msgreen: Oh, you'll get plenty of rest here. I think that's enough for our first meeting, though. Most of us are introverts. I'm sure we'll meet again. It was good to meet you!\n",
       "links": [
         {
           "name": "Back to the map",
@@ -349,7 +349,7 @@
     },
     {
       "name": "Я сначала хотел написать научную книгу, но в душе думаю о романе",
-      "text": "msgreen: I hope I'm among the first eight readers! But enough — that's plenty for a first meeting. We're almost all introverts. We'll see each other again; lovely to meet you!\n",
+      "text": "msgreen: I hope I'm one of your first eight readers! I think that's enough for our first meeting, though. Most of us are introverts. I'm sure we'll meet again. It was good to meet you!\n",
       "links": [
         {
           "name": "Back to the map",
@@ -359,7 +359,7 @@
     },
     {
       "name": "Это будет научная книга о моей теории",
-      "text": "msgreen: I hope I'm among the first eight readers! But enough — that's plenty for a first meeting. We're almost all introverts. We'll see each other again; lovely to meet you!\n",
+      "text": "msgreen: I hope I'm one of your first eight readers! I think that's enough for our first meeting, though. Most of us are introverts. I'm sure we'll meet again. It was good to meet you!\n",
       "links": [
         {
           "name": "Back to the map",
@@ -403,7 +403,7 @@
     },
     {
       "name": "Bar",
-      "text": "//in the bar mrred, msyellow, mrpurple\n\nmrred: Sorry — we'd be glad to talk, but a little later; we have private business and would rather not be interrupted.\n",
+      "text": "//in the bar mrred, msyellow, mrpurple\n\nmrred: Sorry, we'd be glad to talk, but a little later; we have private business and would rather not be interrupted.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -413,24 +413,24 @@
     },
     {
       "name": "Полюбоваться видом",
-      "text": "You stand and gaze into the distance.\n//appears mswhite\nmswhite: (muttering) Why is there no quiet place anywhere!\nmswhite: Hello — let's get acquainted! I think I heard you're a writer?\n",
+      "text": "You stand and gaze into the distance.\n//appears mswhite\nmswhite: (muttering) Why is there no quiet place anywhere!\nmswhite: Hello, let's get acquainted! I think I heard you're a writer?\n",
       "links": [
         {
-          "name": "Almost — I came to write a book, but it's scholarly",
+          "name": "Almost, I came to write a book, but it's scholarly",
           "link": "Почти, я приехал написать книгу, но она научная"
         },
         {
-          "name": "Yes — I'm going to write a novel",
+          "name": "Yes, I'm going to write a novel",
           "link": "Да, я собираюсь написать роман"
         }
       ]
     },
     {
       "name": "Почти, я приехал написать книгу, но она научная",
-      "text": "mswhite: Oh? How interesting — I'm not a big fan of thick science books. I hope you're not writing a dictionary?\n",
+      "text": "mswhite: Oh? I'm not much of a reader of heavy science books. You're not writing a dictionary, are you?\n",
       "links": [
         {
-          "name": "No — it's an account of my theory",
+          "name": "No, it's an account of my theory",
           "link": "Нет, это описание моей теории"
         },
         {
@@ -441,7 +441,7 @@
     },
     {
       "name": "Да, я собираюсь написать роман",
-      "text": "mswhite: Interesting! I'm intrigued. But wait — don't tell me. Just promise you'll let me read at least the first chapter!\n",
+      "text": "mswhite: Interesting! I'm intrigued. But wait, don't tell me. Just promise you'll let me read at least the first chapter!\n",
       "links": [
         {
           "name": "All right",
@@ -452,14 +452,14 @@
           "link": "lighthouse2"
         },
         {
-          "name": "It's very personal — I'm not ready yet",
+          "name": "It's very personal, I'm not ready yet",
           "link": "lighthouse2"
         }
       ]
     },
     {
       "name": "Нет, это описание моей теории",
-      "text": "mswhite: (sighing) How interesting! But forgive me — you should go. I wanted to be alone, and since I've lived here longer than you, I'd be grateful if you left.\n",
+      "text": "mswhite: (sighing) How interesting! Now, if you don't mind, I'd like to be alone. I was here first, so I'm afraid you'll have to leave.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -479,7 +479,7 @@
     },
     {
       "name": "lighthouse2",
-      "text": "mswhite: Good. And you should go — I wanted to be alone for a bit, and since I've lived here longer than you, I'd be grateful if you'd leave.\n",
+      "text": "mswhite: Good. Now, if you don't mind, I'd like to be alone. I was here first, so I'm afraid you'll have to leave.\n",
       "links": [
         {
           "name": "Back to the map",
@@ -492,7 +492,7 @@
       "text": "mrred: Let me tell you a bit about our island. I'll bring you up to speed.\nmrred: This is a place for people who want peace and quiet. You can enjoy your retirement, relax, or write a book. I heard you're planning to write one.\n",
       "links": [
         {
-          "name": "Yes — I brought everything I need to sail away in a year with a finished book",
+          "name": "Yes, I brought everything I need to sail away in a year with a finished book",
           "link": "Да, взял все необходимое чтобы через год уплыть отсюда с написанной книгой"
         },
         {
@@ -503,7 +503,7 @@
     },
     {
       "name": "Ничего себе, целый остров!",
-      "text": "mrred: Yes — I bought it many, many years ago with money from my old business. Now I'm retired; I just enjoy my old age and the company of wonderful people I rent to. They're friends more than tenants. I hope we'll become friends too.\n",
+      "text": "mrred: Yes. I bought it many years ago with money from my old business. I'm retired now, and I enjoy the company of the people who rent from me. They're more like friends than tenants. I hope we'll become friends too.\n",
       "links": [
         {
           "name": "Absolutely",
@@ -520,7 +520,7 @@
       "text": "mrred: Just go easy with that wish! This is an island for people who want peace and quiet. We don't pry into each other's affairs. You can enjoy your retirement, relax, or write a book. I heard you're planning to write one.\n",
       "links": [
         {
-          "name": "Yes — I brought everything I need to sail away in a year with a finished book",
+          "name": "Yes, I brought everything I need to sail away in a year with a finished book",
           "link": "Да, взял все необходимое чтобы через год уплыть отсюда с написанной книгой"
         },
         {
@@ -534,7 +534,7 @@
       "text": "mrred: Who wouldn't! This is an island for people who want peace and quiet. You can enjoy your retirement, relax, or write a book. I heard you're planning to write one.\n",
       "links": [
         {
-          "name": "Yes — I brought everything I need to sail away in a year with a finished book",
+          "name": "Yes, I brought everything I need to sail away in a year with a finished book",
           "link": "Да, взял все необходимое чтобы через год уплыть отсюда с написанной книгой"
         },
         {
@@ -555,7 +555,7 @@
     },
     {
       "name": "И это вам известно?",
-      "text": "mrred: No secret — my agent looked into you before renting the house! You're fifty-six, a professor at an elite university, going through something like a creative crisis, and you need time alone.\n\nmrred: This place is perfect for that. Let me show you your house.\n",
+      "text": "mrred: No secret, my agent looked into you before renting the house! You're fifty-six, a professor at an elite university, going through something like a creative crisis, and you need time alone.\n\nmrred: This place is perfect for that. Let me show you your house.\n",
       "links": [
         {
           "name": "Let's go",
@@ -565,26 +565,26 @@
     },
     {
       "name": "Давайте",
-      "text": "//after «let's go»: tutorial map — only the orange house\n",
+      "text": "//after «let's go»: tutorial map, only the orange house\n",
       "links": []
     },
     {
       "name": "orange house inside",
-      "text": "//background orange house inside\n//show mrred\nmrred: Here is your house. Food is delivered once a week, on Mondays. If you get tired of the standard meals, come to me at the bar and say what to order. You can just leave a note. You won't be able to call — there's no mobile signal on the island.\n",
+      "text": "//background orange house inside\n//show mrred\nmrred: Here is your house. Food is delivered once a week, on Mondays. If you get tired of the standard meals, come to me at the bar and say what to order. You can just leave a note. You won't be able to call, there's no mobile signal on the island.\n",
       "links": [
         {
           "name": "That's a bit unsettling",
           "link": "Это жутковато"
         },
         {
-          "name": "That's what I need — a break from the phone",
+          "name": "That's what I need, a break from the phone",
           "link": "То что мне нужно, отдохну от телефона"
         }
       ]
     },
     {
       "name": "Это жутковато",
-      "text": "//background orange house inside\nmrred: They've been offering to put up a tower for ages, but I refuse. I like the atmosphere of my youth. If you need anything — just come and tell me.\nmrred: It helps with privacy too.\n",
+      "text": "//background orange house inside\nmrred: They've been offering to put up a tower for ages, but I refuse. I like the atmosphere of my youth. If you need anything, just come and tell me.\nmrred: It helps with privacy too.\n",
       "links": [
         {
           "name": "I see",
@@ -594,7 +594,7 @@
     },
     {
       "name": "То что мне нужно, отдохну от телефона",
-      "text": "//background orange house inside\nmrred: Yes — they've been offering to put up a tower for ages, but I refuse. I like the atmosphere of my youth. If you need anything — just come and tell me.\nmrred: It helps with privacy. And we value that here.\n",
+      "text": "//background orange house inside\nmrred: Yes, they've been offering to put up a tower for ages, but I refuse. I like the atmosphere of my youth. If you need anything, just come and tell me.\nmrred: It helps with privacy. And we value that here.\n",
       "links": [
         {
           "name": "I see",
@@ -618,7 +618,7 @@
     },
     {
       "name": "Ну мне казалось это невежливым",
-      "text": "mrred: I'll tell you anyway — it matters.\nmrred: Every house on the island has its own colour — roof, walls, furniture. Besides privacy, we all value respect for personal matters. So instead of surnames we use colours. As you see, I'm Mister Red.\nmrred: Many people underline it with their hair or clothes. You're free to do as you like — just try to respect others' space and don't pry.\n",
+      "text": "mrred: I'll tell you anyway. It matters.\nmrred: Every house on the island has its own colour. The roof, the walls, the furniture, everything. We value privacy here, so we use colours instead of surnames. I'm Mister Red.\nmrred: Some people match their hair or clothes to the colour. You don't have to. Just respect other people's space and don't pry.\n",
       "links": [
         {
           "name": "All right",
@@ -632,7 +632,7 @@
     },
     {
       "name": "Просто не было возможности",
-      "text": "mrred: I'll tell you anyway — it matters.\nmrred: Every house on the island has its own colour — roof, walls, furniture. Besides privacy, we all value respect for personal matters. So instead of surnames we use colours. As you see, I'm Mister Red.\nmrred: Many people underline it with their hair or clothes. You're free to do as you like — just try to respect others' space and don't pry.\n",
+      "text": "mrred: I'll tell you anyway. It matters.\nmrred: Every house on the island has its own colour. The roof, the walls, the furniture, everything. We value privacy here, so we use colours instead of surnames. I'm Mister Red.\nmrred: Some people match their hair or clothes to the colour. You don't have to. Just respect other people's space and don't pry.\n",
       "links": [
         {
           "name": "All right",
@@ -646,7 +646,7 @@
     },
     {
       "name": "Хорошо",
-      "text": "mrred: Good. There's no mystery here — everyone is older, and everyone has a past. You don't always need to dig it up.\n\nmrred: All right, settle in, look around your home, walk the island, write your book, or drop in on someone — make yourself at home. I must go!\n//hide mrred\n",
+      "text": "mrred: Good. There's no mystery here, everyone is older, and everyone has a past. You don't always need to dig it up.\n\nmrred: All right, settle in, look around your home, walk the island, write your book, or drop in on someone, make yourself at home. I must go!\n//hide mrred\n",
       "links": [
         {
           "name": "See you",
@@ -656,7 +656,7 @@
     },
     {
       "name": "Звучит таинственно",
-      "text": "mrred: There's no mystery — everyone is older, and everyone has a past. You don't always need to dig it up.\n\nmrred: All right, settle in, look around your home, walk the island, write your book, or drop in on someone — make yourself at home. I must go!\n//hide mrred\n",
+      "text": "mrred: There's no mystery, everyone is older, and everyone has a past. You don't always need to dig it up.\n\nmrred: All right, settle in, look around your home, walk the island, write your book, or drop in on someone, make yourself at home. I must go!\n//hide mrred\n",
       "links": [
         {
           "name": "See you",
@@ -750,7 +750,7 @@
     },
     {
       "name": "Да, Майк уже рассказал мне о ней",
-      "text": "mrblue: You mean Mister Red?\nmrblue: All right, relax — I know it's hard to get used to; I'm not fully used to it myself, though I've lived here more than ten years.\n",
+      "text": "mrblue: You mean Mister Red?\nmrblue: All right, relax, I know it's hard to get used to; I'm not fully used to it myself, though I've lived here more than ten years.\n",
       "links": [
         {
           "name": "Ten years?",
@@ -760,7 +760,7 @@
     },
     {
       "name": "10 лет?",
-      "text": "mrblue: Yes — hard to believe! I moved here when I turned sixty-seven. I decided to live for myself, and this place has everything I need.\n",
+      "text": "mrblue: Yes, hard to believe! I moved here when I turned sixty-seven. I decided to live for myself, and this place has everything I need.\n",
       "links": [
         {
           "name": "Interesting",
@@ -788,20 +788,20 @@
     },
     {
       "name": "Хочу написать научную книгу",
-      "text": "mrblue: Great — you'll have people to discuss it with, especially Miss Green; she loves books here. If you meet her, she'll surely ask to read the first chapters.\n",
+      "text": "mrblue: Great, you'll have people to discuss it with, especially Miss Green; she loves books here. If you meet her, she'll surely ask to read the first chapters.\n",
       "links": [
         {
-          "name": "Thanks — I'd better go",
+          "name": "Thanks, I'd better go",
           "link": "Спасибо, я пожалуй пойду"
         }
       ]
     },
     {
       "name": "Давно хочу написать роман",
-      "text": "mrblue: Well, scholarly books matter — someone reads them. I think you'll find people to talk to; especially Mister Black loves science here. If you meet him, he'll probably offer to review your book.\n",
+      "text": "mrblue: Well, scholarly books matter, someone reads them. I think you'll find people to talk to; especially Mister Black loves science here. If you meet him, he'll probably offer to review your book.\n",
       "links": [
         {
-          "name": "Thanks — I'd better go",
+          "name": "Thanks, I'd better go",
           "link": "Спасибо, я пожалуй пойду"
         }
       ]
@@ -811,7 +811,7 @@
       "text": "mrblue: Well, don't be too curious. People don't like that here. Talking about science and books is always welcome. But I wouldn't try to bring up the past.\n",
       "links": [
         {
-          "name": "Thanks — I'd better go",
+          "name": "Thanks, I'd better go",
           "link": "Спасибо, я пожалуй пойду"
         }
       ]
@@ -821,7 +821,7 @@
       "text": "mrblue: Sorry for being blunt, but that's none of your business. People don't like that here. Talking about science and books is always welcome. But I wouldn't try to bring up the past.\n",
       "links": [
         {
-          "name": "Thanks — I'd better go",
+          "name": "Thanks, I'd better go",
           "link": "Спасибо, я пожалуй пойду"
         }
       ]
@@ -831,7 +831,7 @@
       "text": "//background houseblueout\n//show mrblue\nmrblue: Hello, Mister Orange! How are you? Off for a walk? Care to come in?\n",
       "links": [
         {
-          "name": "Thanks — I'd rather take a walk",
+          "name": "Thanks, I'd rather take a walk",
           "link": "Спасибо, но я хочу прогуляться"
         },
         {
@@ -847,7 +847,7 @@
     },
     {
       "name": "Да, с радостью",
-      "text": "//background houseblueinside\nmrblue: I'll bet this is the first house you've been inside — apart from your own, of course.\n",
+      "text": "//background houseblueinside\nmrblue: I'll bet this is the first house you've been inside, apart from your own, of course.\n",
       "links": [
         {
           "name": "Yes, you're right",
@@ -861,27 +861,27 @@
     },
     {
       "name": "Да, ты прав",
-      "text": "mrblue: Yes — we don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
+      "text": "mrblue: Yes, we don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
       "links": [
         {
-          "name": "Thanks — I'll keep that in mind!",
+          "name": "Thanks, I'll keep that in mind!",
           "link": "question"
         }
       ]
     },
     {
       "name": "Ну формально я был еще в баре",
-      "text": "mrblue: Yes — the bar is always open. We don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
+      "text": "mrblue: Yes, the bar is always open. We don't much like guests here; we usually meet at the bar on the pier. So if you want to chat or hear the latest news, that's the best place. Especially busy in the mornings.\n",
       "links": [
         {
-          "name": "Thanks — I'll keep that in mind!",
+          "name": "Thanks, I'll keep that in mind!",
           "link": "question"
         }
       ]
     },
     {
       "name": "Как ты тут оказался?",
-      "text": "mrblue: As I said, I sailed here ten years ago. Red, Purple, and Orange were already living here.\n\nmrblue: Circumstances meant I needed a quiet place. I had enough money, and someone introduced me to Red. He was just thinking of creating this little community for people who want a peaceful retirement.\n\nmrblue: Literally a week later I was on this island. And here we are, ten years on.\n\nmrblue: (thoughtfully) Yes — time flies here. Before you know it, a year or two will have passed.\n",
+      "text": "mrblue: As I said, I sailed here ten years ago. Red, Purple, and Orange were already living here.\n\nmrblue: Circumstances meant I needed a quiet place. I had enough money, and someone introduced me to Red. He was just thinking of creating this little community for people who want a peaceful retirement.\n\nmrblue: Literally a week later I was on this island. And here we are, ten years on.\n\nmrblue: (thoughtfully) Yes, time flies here. Before you know it, a year or two will have passed.\n",
       "links": [
         {
           "name": "Mister Orange? The one who lived in my house before?",
@@ -895,21 +895,21 @@
     },
     {
       "name": "Расскажи мне об острове",
-      "text": "mrblue: Well, it's a retirees' dream island. If you have enough money, you can live out your days here in comfort and joy. And none of the residents are simple folk — everyone has their quirks, their skeletons in the closet.\n\nmrblue: (laughs) Though who doesn't, by retirement age?\n",
+      "text": "mrblue: It's a retiree's dream. If you have enough money, you can spend your final years here quite comfortably. The people aren't dull either. Everyone has a few quirks and a few secrets.\n\nmrblue: (laughs) Who doesn't, by retirement age?\n",
       "links": [
         {
           "name": "But how did I end up here? I'm not retired.",
           "link": "Но как тогда здесь оказался я? Ведь я не на пенсии."
         },
         {
-          "name": "Thanks — I'd rather take a walk",
+          "name": "Thanks, I'd rather take a walk",
           "link": "Спасибо, но я хочу прогуляться"
         }
       ]
     },
     {
       "name": "Мистер Красный всем тут владеет?",
-      "text": "mrblue: Something like that. I'm not entirely sure how everything works here. But yes — this island belongs to him. And he built all the houses we live in. Well, not him personally — his companies.\n\nmrblue: Except for Miss White's house — she insisted on a design of her own. And strangely, Red agreed.\n",
+      "text": "mrblue: Something like that. I'm not entirely sure how everything works here. But yes, this island belongs to him. And he built all the houses we live in. Well, not him personally, his companies.\n\nmrblue: Except for Miss White's house, she insisted on a design of her own. And strangely, Red agreed.\n",
       "links": [
         {
           "name": "Do you know why?",
@@ -923,7 +923,7 @@
     },
     {
       "name": "А не знаешь почему?",
-      "text": "mrblue: Even someone as talkative as me knows where the line is — and which questions not to ask.\n",
+      "text": "mrblue: Even someone as talkative as me knows where the line is, and which questions not to ask.\n",
       "links": [
         {
           "name": "I see",
@@ -948,7 +948,7 @@
           "link": "Мистер Красный всем тут владеет?"
         },
         {
-          "name": "Thanks — I'd rather take a walk",
+          "name": "Thanks, I'd rather take a walk",
           "link": "Спасибо, но я хочу прогуляться"
         }
       ]
@@ -970,14 +970,14 @@
           "link": "Мистер Красный всем тут владеет?"
         },
         {
-          "name": "Thanks — I'd rather take a walk",
+          "name": "Thanks, I'd rather take a walk",
           "link": "Спасибо, но я хочу прогуляться"
         }
       ]
     },
     {
       "name": "Оранжевый? Тот кто раньше жил в моем доме?",
-      "text": "mrblue: We were neighbours, so we became friends. He was the oldest among us and kept his beard ginger to the end. The nickname Mister Orange suited him perfectly.\n\nmrblue: He loved to tell stories — but only about the distant past. Gradually his mind grew weaker, until he died this year. I miss him.\n\nmrblue: But forgive me — I got carried away with memories. Would you like to know anything else?\n",
+      "text": "mrblue: We were neighbours, so we became friends. He was the oldest among us and kept his beard ginger to the end. The nickname Mister Orange suited him perfectly.\n\nmrblue: He loved to tell stories, but only about the distant past. Gradually his mind grew weaker, until he died this year. I miss him.\n\nmrblue: But forgive me, I got carried away with memories. Would you like to know anything else?\n",
       "links": [
         {
           "name": "How did you end up here?",
@@ -992,14 +992,14 @@
           "link": "Мистер Красный всем тут владеет?"
         },
         {
-          "name": "Thanks — I'd rather take a walk",
+          "name": "Thanks, I'd rather take a walk",
           "link": "Спасибо, но я хочу прогуляться"
         }
       ]
     },
     {
       "name": "Но как тогда здесь оказался я? Ведь я не на пенсии.",
-      "text": "mrblue: You know, I ask myself the same question. Mister Red doesn't invite random people here. I think it's best to ask him — though I suspect he won't answer.\n",
+      "text": "mrblue: You know, I ask myself the same question. Mister Red doesn't invite random people here. I think it's best to ask him, though I suspect he won't answer.\n",
       "links": [
         {
           "name": "How did you end up here?",
@@ -1014,14 +1014,14 @@
           "link": "Мистер Красный всем тут владеет?"
         },
         {
-          "name": "Thanks — I'd rather take a walk",
+          "name": "Thanks, I'd rather take a walk",
           "link": "Спасибо, но я хочу прогуляться"
         }
       ]
     },
     {
       "name": "Day 2.2. Green",
-      "text": "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello — how's the book coming along?\n",
+      "text": "//background housegreeninside\n//show msgreen\n\nmsgreen: Hello, how's the book coming along?\n",
       "links": [
         {
           "name": "I've only just started",
@@ -1035,7 +1035,7 @@
     },
     {
       "name": "questions2green",
-      "text": "msgreen: I still hope I'll get to read it.\n\nmsgreen: I'm sure you're curious about many things. We already know each other, and straight answers are a luxury on this island. But I can afford them. So ask away — don't be shy.\n",
+      "text": "msgreen: I still hope I'll get to read it.\n\nmsgreen: I'm sure you have questions. We've met before, so I can be more direct with you now. Go ahead and ask.\n",
       "links": [
         {
           "name": "Tell me more about yourself",
@@ -1050,14 +1050,14 @@
           "link": "Как вы здесь оказались?"
         },
         {
-          "name": "Thanks — I'd rather go for a walk",
+          "name": "Thanks, I'd rather go for a walk",
           "link": "Спасибо, я лучше пойду погуляю"
         }
       ]
     },
     {
       "name": "Как вам этот остров?",
-      "text": "msgreen: I like it here. I can live at peace with my beliefs — in the real world that wasn't always possible. And I still feel useful: if someone needs help with treatment, my opinion is valued.\n\nmsgreen: I also love the view from the lighthouse. If you haven't been there yet, you really should go!\n",
+      "text": "msgreen: I like it here. I can live at peace with my beliefs, in the real world that wasn't always possible. And I still feel useful: if someone needs help with treatment, my opinion is valued.\n\nmsgreen: I also love the view from the lighthouse. If you haven't been there yet, you really should go!\n",
       "links": [
         {
           "name": "Tell me more about yourself",
@@ -1068,14 +1068,14 @@
           "link": "Как вы здесь оказались?"
         },
         {
-          "name": "Thanks — I'd rather go for a walk",
+          "name": "Thanks, I'd rather go for a walk",
           "link": "Спасибо, я лучше пойду погуляю"
         }
       ]
     },
     {
       "name": "Как вы здесь оказались?",
-      "text": "msgreen: Where to begin. I came here seven years ago at Red's invitation. I'm probably the only one who formally works here rather than renting a house.\n\nmsgreen: In those seven years I've grown used to this island. A beautiful place to die peacefully. I appreciate that.\n\nmsgreen: And in those seven years I've learned a lot about everyone who lives here. I'm a doctor — people tell doctors their secrets, if only to get a more accurate diagnosis. But medical ethics, you understand. I'm not a gossip.\n\nmsgreen: And I cared for Mister Orange. The previous Orange, I mean. The first death on the island. He was a good man and loved books too, especially plays. But I'm not ready to talk about that yet.\n",
+      "text": "msgreen: Where to begin. I came here seven years ago at Red's invitation. I'm probably the only one who formally works here rather than renting a house.\n\nmsgreen: In those seven years I've grown used to this island. A beautiful place to die peacefully. I appreciate that.\n\nmsgreen: And in those seven years I've learned a lot about everyone who lives here. I'm a doctor, people tell doctors their secrets, if only to get a more accurate diagnosis. But medical ethics, you understand. I'm not a gossip.\n\nmsgreen: And I cared for Mister Orange. The previous Orange, I mean. The first death on the island. He was a good man and loved books too, especially plays. But I'm not ready to talk about that yet.\n",
       "links": [
         {
           "name": "Tell me more about yourself",
@@ -1086,14 +1086,14 @@
           "link": "Как вам этот остров?"
         },
         {
-          "name": "Thanks — I'd rather go for a walk",
+          "name": "Thanks, I'd rather go for a walk",
           "link": "Спасибо, я лучше пойду погуляю"
         }
       ]
     },
     {
       "name": "Расскажите больше о себе",
-      "text": "msgreen: I was a doctor all my life. And I still am one, though my patient list has shrunk considerably.\n\nmsgreen: I like helping people, and I'm good at it. I worked a lot with the elderly and helped them to the very end. So on this island my skills are especially valued.\n\nmsgreen: And as you've gathered, I love to read — especially good novels. Red once bought a whole shipping container of books to fill the library in my house when I complained that ordering books through him every time was too difficult.\n",
+      "text": "msgreen: I was a doctor all my life. I still am, though my patient list is much shorter now.\n\nmsgreen: I like helping people, and I'm good at it. I spent much of my career caring for elderly patients, right to the end. That experience is useful on this island.\n\nmsgreen: I also love a good novel. Once, after I complained about how hard it was to order books through him, Red bought a whole shipping container of them for my library.\n",
       "links": [
         {
           "name": "How do you like this island?",
@@ -1104,7 +1104,7 @@
           "link": "Как вы здесь оказались?"
         },
         {
-          "name": "Thanks — I'd rather go for a walk",
+          "name": "Thanks, I'd rather go for a walk",
           "link": "Спасибо, я лучше пойду погуляю"
         }
       ]
@@ -1116,7 +1116,7 @@
     },
     {
       "name": "Day 2.3. Red",
-      "text": "//background bar\n//show mrred\nmrred: Hello — how are you? How did you sleep? The first night is often unsettling because of the silence.\n",
+      "text": "//background bar\n//show mrred\nmrred: Hello, how are you? How did you sleep? The first night is often unsettling because of the silence.\n",
       "links": [
         {
           "name": "I'm fine, thanks",
@@ -1130,7 +1130,7 @@
     },
     {
       "name": "questions3",
-      "text": "mrred: Well, however it was, you always remember your first night.\n\nmrred: Sorry I showed you out rather rudely yesterday, but we had an important private discussion. We're straightforward people here, so I told you plainly.\n\nmrred: But today I'm at your disposal — ask whatever interests you! If I can, I'll answer.\n",
+      "text": "mrred: Good or bad, you always remember your first night.\n\nmrred: Sorry I rushed you out yesterday. We had something private to discuss. People here tend to be blunt, and so was I.\n\nmrred: Today I have time. Ask me anything you like, and I'll answer if I can.\n",
       "links": [
         {
           "name": "Tell me about the people who live here",
@@ -1170,7 +1170,7 @@
     },
     {
       "name": "Как ты выбираешь людей, которым сдаешь жилье?",
-      "text": "mrred: (laughs) You ask good questions. And I give good answers.\n\nmrred: Let's say I choose people who need quiet and calm. For different reasons — some want time alone, some like you need seclusion to write a book. And a solid sum in the bank. I'm a businessman, after all.\n",
+      "text": "mrred: (laughs) You ask good questions. And I give good answers.\n\nmrred: Let's say I choose people who need quiet and calm. For different reasons, some want time alone, some like you need seclusion to write a book. And a solid sum in the bank. I'm a businessman, after all.\n",
       "links": [
         {
           "name": "Tell me about the people who live here",
@@ -1193,7 +1193,7 @@
     },
     {
       "name": "Как так получилось что у тебя есть целый остров?",
-      "text": "mrred: That one I'll tell you about. No secret there. About forty years ago I was looking for a quiet place for my old age. In retirement I wanted to live with my friends. At first I planned to build a whole village somewhere in the mountains.\n\nmrred: But quite by chance, one of my business partners mentioned that some mad old man who'd made his money back in the Great Depression had gone bust and was selling his property — including this island.\n\nmrred: It took me only a week to find a loan and make the first payment for this island. Then I gradually built all these houses and made it comfortable for retirement.\n\nmrred: And here I am — though none of my friends lived to see the island finished. So I started renting out the houses. Over time I made new friends.\n\nmrred: (laughs) Now I'm the mad old man who owns an island! Hope I don't go bankrupt.\n",
+      "text": "mrred: I can tell you that. It's no secret. About forty years ago, I started looking for somewhere quiet to retire with my friends. At first, I planned to build a village in the mountains.\n\nmrred: Then a business partner told me about an eccentric old man who had made his fortune during the Great Depression. He'd gone bankrupt and was selling his property, including this island.\n\nmrred: Within a week, I had a loan and had made the first payment. I built the houses gradually and turned the island into a comfortable place to retire.\n\nmrred: None of my old friends lived to see it finished. I began renting out the houses instead, and made new friends over time.\n\nmrred: (laughs) Now I'm the mad old man who owns an island! Let's hope I don't go bankrupt.\n",
       "links": [
         {
           "name": "Tell me about the people who live here",
@@ -1224,7 +1224,7 @@
       "text": "mrblack: (after a long silence) Are you staying long?\n",
       "links": [
         {
-          "name": "For a year — I want to write a book",
+          "name": "For a year, I want to write a book",
           "link": "На год, хочу написать книгу"
         },
         {
@@ -1235,17 +1235,17 @@
     },
     {
       "name": "На год, хочу написать книгу",
-      "text": "mrblack: Good. I hope it works out.\n\nmrblack: I'll go for a walk — I like walking in this forest; it's peaceful here. I like walking alone.\n\n//return to map\n",
+      "text": "mrblack: Good. I hope it works out.\n\nmrblack: I'll go for a walk, I like walking in this forest; it's peaceful here. I like walking alone.\n\n//return to map\n",
       "links": []
     },
     {
       "name": "На год",
-      "text": "mrblack: Good.\n\nmrblack: I'll go for a walk — I like walking in this forest; it's peaceful here. I like walking alone.\n\n//return to map\n",
+      "text": "mrblack: Good.\n\nmrblack: I'll go for a walk, I like walking in this forest; it's peaceful here. I like walking alone.\n\n//return to map\n",
       "links": []
     },
     {
       "name": "Day 2.5 Yellow",
-      "text": "//background houseyellowout\n//show msyellow\n\nmsyellow: Hello — I don't think we've met yet. I'm Miss Yellow.\n\nmsyellow: What brought you here?\n",
+      "text": "//background houseyellowout\n//show msyellow\n\nmsyellow: Hello, I don't think we've met yet. I'm Miss Yellow.\n\nmsyellow: What brought you here?\n",
       "links": [
         {
           "name": "I want to write a book",
@@ -1265,7 +1265,7 @@
     },
     {
       "name": "Я профессор университета",
-      "text": "msyellow: Yes — you're as talkative as Purple. Meet him; you'll get along. He loves telling stories about the past too. Though it's worth remembering that on this island discussing the past is taboo. Some people pay a lot of money for that.\n\nmsyellow: I'm not going to talk about myself, but maybe in time we'll get along — if you know how to keep your distance, and you're not as unhinged as White.\n\nmsyellow: That's enough for an introduction. See you later.\n\n//return to map\n",
+      "text": "msyellow: Yes, you're as talkative as Purple. Meet him; you'll get along. He loves telling stories about the past too. Though it's worth remembering that on this island discussing the past is taboo. Some people pay a lot of money for that.\n\nmsyellow: I'm not going to talk about myself, but maybe in time we'll get along, if you know how to keep your distance, and you're not as unhinged as White.\n\nmsyellow: That's enough for an introduction. See you later.\n\n//return to map\n",
       "links": []
     },
     {
@@ -1284,7 +1284,7 @@
     },
     {
       "name": "Давай прогуляемся",
-      "text": "//map travel from purple house to beach\n//background beach\n\nmrpurple: Tell me — what's your book about?\n",
+      "text": "//map travel from purple house to beach\n//background beach\n\nmrpurple: Tell me, what's your book about?\n",
       "links": [
         {
           "name": "It's a scholarly book",
@@ -1298,7 +1298,7 @@
     },
     {
       "name": "Зайти в дом",
-      "text": "//background housepurpleinside\n\nmrpurple: Tell me — what's your book about?\n",
+      "text": "//background housepurpleinside\n\nmrpurple: Tell me, what's your book about?\n",
       "links": [
         {
           "name": "It's a scholarly book",
@@ -1312,7 +1312,7 @@
     },
     {
       "name": "Это научная книга",
-      "text": "mrpurple: Not my favourite genre. Someone's probably already told you I write books too. I'm working on another one right now. But I prefer adventure novels. Scholarly books put me to sleep.\n\nmrpurple: I hope it'll at least be useful for your career — if you manage to return to the real world.\n\nmrpurple: How do you like the island?\n",
+      "text": "mrpurple: Not my favourite genre. Someone's probably already told you I write books too. I'm working on another one right now. But I prefer adventure novels. Scholarly books put me to sleep.\n\nmrpurple: I hope it'll at least be useful for your career, if you manage to return to the real world.\n\nmrpurple: How do you like the island?\n",
       "links": [
         {
           "name": "Mysterious",
@@ -1330,7 +1330,7 @@
     },
     {
       "name": "Это будет художественный роман",
-      "text": "mrpurple: Oh! I love novels! Someone's probably told you I write books too. I'm working on another one — an adventure novel about a professor. You'll like it!\n\nmrpurple: I hope when I'm ready to show it to the world, you'll be one of the first readers?\n\nmrpurple: But all right — let's leave that for later. How do you like the island?\n",
+      "text": "mrpurple: Oh! I love novels! Someone's probably told you I write books too. I'm working on another one, an adventure novel about a professor. You'll like it!\n\nmrpurple: I hope when I'm ready to show it to the world, you'll be one of the first readers?\n\nmrpurple: But all right, let's leave that for later. How do you like the island?\n",
       "links": [
         {
           "name": "Mysterious",
@@ -1370,7 +1370,7 @@
     },
     {
       "name": "Как ты оказался на острове?",
-      "text": "mrpurple: I've been here twelve years already. A long time. Sometimes I visit the real world, but I'm more at ease with my thoughts and books.\n\nmrpurple: Twelve years ago I sailed here as one of the first. Red and Orange were already living here. I became the third islander. It was quite an honour, actually.\n\nmrpurple: At the time I was looking for a quiet place to retire — I'd just turned seventy and wanted to step back. I'd saved a fair amount, left something to my children, then transferred the rest to Red; since then I've been writing books and enjoying a well-earned rest.\n\nmrpurple: Sometimes I check sports results — football, tennis. But less and less in recent years.\n\nmrpurple: (laughs) Hard to follow a long championship when you're not sure you'll live to see the end. Though Green helps me a lot — she knows a great deal about old age.\n",
+      "text": "mrpurple: I've been here twelve years already. A long time. Sometimes I visit the real world, but I'm more at ease with my thoughts and books.\n\nmrpurple: Twelve years ago I sailed here as one of the first. Red and Orange were already living here. I became the third islander. It was quite an honour, actually.\n\nmrpurple: At the time I was looking for a quiet place to retire, I'd just turned seventy and wanted to step back. I'd saved a fair amount, left something to my children, then transferred the rest to Red; since then I've been writing books and enjoying a well-earned rest.\n\nmrpurple: Sometimes I check sports results, football, tennis. But less and less in recent years.\n\nmrpurple: (laughs) Hard to follow a long championship when you're not sure you'll live to see the end. Though Green helps me a lot, she knows a great deal about old age.\n",
       "links": [
         {
           "name": "Tell me about Miss Green",
@@ -1410,7 +1410,7 @@
     },
     {
       "name": "Что думаешь о других?",
-      "text": "mrpurple: You're clever. You worked out how to ask. Yes — everyone here dislikes talking about themselves. But nobody minds picking apart someone else.\n\nmrpurple: Where to begin… Red has lived here longest — fifteen years, I think. What he did before is a mystery to me. But he has a lot of money. Then came Orange, who died a couple of months ago. Thanks to Green, it all passed quietly.\n\nmrpurple: I was third on the island. Then Blue sailed in. Around then colours replaced names, and we became Mister Red, Orange, Blue, and Purple.\n\nmrpurple: Then Black arrived. All I know is he made his fortune on the internet — something in the grey zone, no details. He won't say more. Neither will I.\n\nmrpurple: Then Green appeared — Red invited her personally when Orange's health declined. That was seven years ago. As far as I know, she's the only one who doesn't pay rent; money is paid to her. To her children, rather.\n\nmrpurple: Yellow came three years ago. Around then the atmosphere on the island soured. She was always shutting people down when they talked about the past.\n\nmrpurple: White arrived about a year ago. I know little about her — she's irritable and rarely talks to anyone. But she's the only one who got to build a house to her own design.\n\nmrpurple: Seen her house? Very modern. Different from the others. I don't know what she paid Red for the privilege. But it was worth it — the sunset from her place is stunning!\n\nmrpurple: Orange died a couple of months ago. And you appeared yesterday. I hope we learn more about you than we did about Yellow, and that you're more talkative than she is.\n",
+      "text": "mrpurple: You're clever. You worked out how to ask. Yes, everyone here dislikes talking about themselves. But nobody minds picking apart someone else.\n\nmrpurple: Where to begin… Red has lived here longest, fifteen years, I think. What he did before is a mystery to me. But he has a lot of money. Then came Orange, who died a couple of months ago. Thanks to Green, it all passed quietly.\n\nmrpurple: I was third on the island. Then Blue sailed in. Around then colours replaced names, and we became Mister Red, Orange, Blue, and Purple.\n\nmrpurple: Then Black arrived. All I know is he made his fortune on the internet, something in the grey zone, no details. He won't say more. Neither will I.\n\nmrpurple: Then Green appeared, Red invited her personally when Orange's health declined. That was seven years ago. As far as I know, she's the only one who doesn't pay rent; money is paid to her. To her children, rather.\n\nmrpurple: Yellow came three years ago. Around then the atmosphere on the island soured. She was always shutting people down when they talked about the past.\n\nmrpurple: White arrived about a year ago. I know little about her, she's irritable and rarely talks to anyone. But she's the only one who got to build a house to her own design.\n\nmrpurple: Seen her house? Very modern. Different from the others. I don't know what she paid Red for the privilege. But it was worth it, the sunset from her place is stunning!\n\nmrpurple: Orange died a couple of months ago. And you appeared yesterday. I hope we learn more about you than we did about Yellow, and that you're more talkative than she is.\n",
       "links": [
         {
           "name": "How did you end up on the island?",
@@ -1428,7 +1428,7 @@
     },
     {
       "name": "Расскажи о Зеленой",
-      "text": "mrpurple: Well… She's the local doctor, psychologist, herbalist — all at once. She knows a lot about plants and medicine, and how to brew a sleeping draught. Very useful in old age, you know.\n\nmrpurple: I don't think you'll find anyone on the island who speaks ill of her. Except Yellow — she just dislikes Green's bluntness, and that she speaks openly about her past without fear.\n\nmrpurple: But that's their business. I don't want to interfere. Though Yellow could be more polite.\n",
+      "text": "mrpurple: Well… She's the local doctor, psychologist, herbalist, all at once. She knows a lot about plants and medicine, and how to brew a sleeping draught. Very useful in old age, you know.\n\nmrpurple: I don't think you'll find anyone on the island who speaks ill of her. Except Yellow, she just dislikes Green's bluntness, and that she speaks openly about her past without fear.\n\nmrpurple: But that's their business. I don't want to interfere. Though Yellow could be more polite.\n",
       "links": [
         {
           "name": "What's wrong with Miss Yellow?",
@@ -1524,7 +1524,7 @@
     },
     {
       "name": "Day 3.1. Red",
-      "text": "//background orange house inside\n//show mrred\nmrred: Good morning! I see you like your sleep!\n\nmrred: I have a little tradition — I always throw a party for a new guest. Tomorrow I want to throw one for you. You'll meet anyone you haven't seen yet, if anyone's left.\n\nmrred: Come tomorrow at three — and don't be late!\n",
+      "text": "//background orange house inside\n//show mrred\nmrred: Good morning! I see you like your sleep!\n\nmrred: I have a little tradition, I always throw a party for a new guest. Tomorrow I want to throw one for you. You'll meet anyone you haven't seen yet, if anyone's left.\n\nmrred: Come tomorrow at three, and don't be late!\n",
       "links": [
         {
           "name": "Thanks for the invitation",
@@ -1538,7 +1538,7 @@
     },
     {
       "name": "Спасибо за приглашение",
-      "text": "mrred: It's not just for you — the others need to look you over, get acquainted, understand what you're about. We have a very cosy little world here and we're wary of outsiders.\n\nmrred: That sounded a bit ominous, but it'll be fine — just come to the Bar tomorrow at three o'clock. See you tomorrow!\n",
+      "text": "mrred: The party isn't only for you. The others want to meet you and see what you're like. We're a close group, and strangers make us cautious.\n\nmrred: That sounded ominous, didn't it? It'll be fine. Just come to the bar tomorrow at three. See you then!\n",
       "links": [
         {
           "name": "See you tomorrow",
@@ -1548,7 +1548,7 @@
     },
     {
       "name": "Но я не хочу идти",
-      "text": "mrred: Sorry, but I insist. It's not just for you — the others need to look you over, get acquainted, understand what you're about. We have a very cosy little world here and we're wary of outsiders.\n\nmrred: That sounded a bit ominous, but it'll be fine — just come to the Bar tomorrow at three o'clock. See you tomorrow!\n",
+      "text": "mrred: Sorry, but I insist. The party isn't only for you. The others want to meet you and see what you're like. We're a close group, and strangers make us cautious.\n\nmrred: That sounded ominous, didn't it? It'll be fine. Just come to the bar tomorrow at three. See you then!\n",
       "links": [
         {
           "name": "See you tomorrow",
@@ -1563,7 +1563,7 @@
     },
     {
       "name": "Я пишу книгу",
-      "text": "mswhite: Yes, how interesting. I remember something like that — you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
+      "text": "mswhite: Yes, how interesting. I remember something like that, you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
       "links": [
         {
           "name": "It's a book based on my research",
@@ -1577,7 +1577,7 @@
     },
     {
       "name": "Уже и сам не знаю",
-      "text": "mswhite: Yes, how interesting. I remember something like that — you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
+      "text": "mswhite: Yes, how interesting. I remember something like that, you said it when we met last time. Sorry I wasn't at my best; remind me what it's about.\n",
       "links": [
         {
           "name": "It's a book based on my research",
@@ -1601,7 +1601,7 @@
     },
     {
       "name": "Я пишу роман",
-      "text": "mswhite: That definitely interests me — I love books. I even wrote myself.\n\nmswhite: Ten years of life wasted. I wrote two novels. The first was even published. But it was such a deafening flop. I still can't finish the second.\n\nmswhite: And I've made peace with the idea that writing isn't for me.\n",
+      "text": "mswhite: That definitely interests me, I love books. I even wrote myself.\n\nmswhite: Ten years of life wasted. I wrote two novels. The first was even published. But it was such a deafening flop. I still can't finish the second.\n\nmswhite: And I've made peace with the idea that writing isn't for me.\n",
       "links": [
         {
           "name": "Tell me more about yourself",
@@ -1618,14 +1618,14 @@
           "link": "Иногда правила можно и нарушить"
         },
         {
-          "name": "You're right — better not",
+          "name": "You're right, better not",
           "link": "Да, ты права, не стоит"
         }
       ]
     },
     {
       "name": "Иногда правила можно и нарушить",
-      "text": "mswhite: I was born a long time ago. Life wasn't sweet. Since childhood I found it hard to connect with peers and keep friends.\n\nmswhite: But I finished school, then went to university. I wanted to study chemistry. I liked the idea of becoming the best experimenter in the USA. But study didn't agree with me — I couldn't stand the pressure.\n\nmswhite: Then for several years I recovered; luckily I was never short of money. My mother left me a large inheritance, so I could do whatever I wanted.\n\nmswhite: But figuring out what I wanted turned out to be very hard. Photography, acting, writing — at one point I even studied finance, but that didn't help much.\n\nmswhite: (thoughtfully) Yes — that's how life went. From one problem to the next.\n",
+      "text": "mswhite: I was born a long time ago. Growing up wasn't easy. I struggled to get along with people my age or keep friends.\n\nmswhite: I finished school and went to university to study chemistry. I wanted to become the best experimental chemist in the country. I couldn't handle the pressure, though.\n\nmswhite: It took me several years to recover. Luckily, money was never a problem. My mother left me a large inheritance, so I could do whatever I wanted.\n\nmswhite: The hard part was deciding what I wanted. I tried photography, acting, and writing. I even studied finance for a while. None of it helped much.\n\nmswhite: (thoughtfully) That's how my life went. One problem after another.\n",
       "links": [
         {
           "name": "Thank you for sharing",
@@ -1656,19 +1656,19 @@
           "link": "Иногда правила можно и нарушить"
         },
         {
-          "name": "You're right — better not",
+          "name": "You're right, better not",
           "link": "Да, ты права, не стоит"
         }
       ]
     },
     {
       "name": "question32",
-      "text": "mswhite: I understand. I've lived here a year, but I still haven't figured it out for myself. Sometimes I love this place. Sometimes I want to escape. Sometimes I'm glad to be in such a cosy world, sometimes I want to return to the big world.\n\nmswhite: Our talk gave me food for thought. Sorry — I want to be alone and take a walk. Thanks for the conversation. I hope you'll remember this as a proper introduction. And sorry I was rude last time. That happens with me.\n\nmswhite: Have a good day.\n\n//White leaves; map\n",
+      "text": "mswhite: I understand. I've lived here for a year, and I still can't decide how I feel about it. Some days I love this place. Other days I want to escape. The island can feel safe one moment and stifling the next.\n\nmswhite: I need some time alone to think. Thanks for talking with me. I hope this counts as a proper introduction. And I'm sorry I was rude last time. I can be like that.\n\nmswhite: Have a good day.\n\n//White leaves; map\n",
       "links": []
     },
     {
       "name": "Спасибо что поделилась",
-      "text": "mswhite: All right — let's not talk about the past. Sometimes it hurts to remember.\n\nmswhite: How do you like the island? Have you got used to the isolation yet?\n",
+      "text": "mswhite: All right, let's not talk about the past. Sometimes it hurts to remember.\n\nmswhite: How do you like the island? Have you got used to the isolation yet?\n",
       "links": [
         {
           "name": "Пока нет",
@@ -1682,7 +1682,7 @@
     },
     {
       "name": "Day 3.3. Bar.",
-      "text": "//background bar\n//show mrred\n//show msyellow\n\nmrred: (fragment of conversation) I'm not sure that'll help her.\n\nmrred: Oh, hello, Orange! Haven't seen you this morning.\n\nmsyellow: Hello.\n\nmrred: I forgot to ask — what do you prefer to drink at the party?\n",
+      "text": "//background bar\n//show mrred\n//show msyellow\n\nmrred: (fragment of conversation) I'm not sure that'll help her.\n\nmrred: Oh, hello, Orange! Haven't seen you this morning.\n\nmsyellow: Hello.\n\nmrred: I forgot to ask, what do you prefer to drink at the party?\n",
       "links": [
         {
           "name": "Wine",
@@ -1704,7 +1704,7 @@
     },
     {
       "name": "Я не пью",
-      "text": "mrred: Well I'll be!\n\nmrred: (turning to Yellow) I told you you have more in common than you think.\n\nmrred: Fine — I'll order something non-alcoholic for you.\n",
+      "text": "mrred: Well I'll be!\n\nmrred: (turning to Yellow) I told you you have more in common than you think.\n\nmrred: Fine, I'll order something non-alcoholic for you.\n",
       "links": [
         {
           "name": "Thanks",
@@ -1724,7 +1724,7 @@
     },
     {
       "name": "Спасибо",
-      "text": "mrred: All right — see you tomorrow, and don't be late!\n\nmsyellow: Bye.\n\n//return to map\n",
+      "text": "mrred: All right, see you tomorrow, and don't be late!\n\nmsyellow: Bye.\n\n//return to map\n",
       "links": []
     },
     {
@@ -1743,7 +1743,7 @@
     },
     {
       "name": "Прогуляться по лесу",
-      "text": "You walked through the forest — beautiful and peaceful. Many herbs and shrubs grow around that you know nothing about.\n\nYou didn't meet a soul the whole walk.\n\n//return to map\n",
+      "text": "You walked through the forest, beautiful and peaceful. Many herbs and shrubs grow around that you know nothing about.\n\nYou didn't meet a soul the whole walk.\n\n//return to map\n",
       "links": []
     },
     {
@@ -1825,7 +1825,7 @@
     },
     {
       "name": "Day 4.5. Bar",
-      "text": "//background bar\n//at bar msgreen, mrpurple, msyellow, mrblack, mswhite, mrred, mrblue\n\nFrom afar you hear music. As if there weren't seven people here but seventy — a hum, everyone talking, waiting for you.\n\nmrred: At last! Welcome, Orange, to this party in your honour! We're glad you're on the island. Relax, drink what you like, talk to whoever you want — we're free here.\n",
+      "text": "//background bar\n//at bar msgreen, mrpurple, msyellow, mrblack, mswhite, mrred, mrblue\n\nFrom afar you hear music. As if there weren't seven people here but seventy, a hum, everyone talking, waiting for you.\n\nmrred: At last! Welcome, Orange, to this party in your honour! We're glad you're on the island. Relax, drink what you like, talk to whoever you want, we're free here.\n",
       "links": [
         {
           "name": "Join Green, Purple, and White",
@@ -1843,7 +1843,7 @@
     },
     {
       "name": "Подойти к Красному и Синему",
-      "text": "//background bar\n//at bar msyellow, mrblack, mrblue, mrred\n\nmrred: I wasn't sure what you'd like, so I ordered a bit of everything. Everyone helped prepare this morning! It's tradition.\n\nmrblue: Try the beer — very good, Czech. I loved it in my past life!\n\nmrblue: By the way, how's your book? Have you started yet?\n",
+      "text": "//background bar\n//at bar msyellow, mrblack, mrblue, mrred\n\nmrred: I wasn't sure what you'd like, so I ordered a bit of everything. Everyone helped prepare this morning! It's tradition.\n\nmrblue: Try the beer, very good, Czech. I loved it in my past life!\n\nmrblue: By the way, how's your book? Have you started yet?\n",
       "links": [
         {
           "name": "I've written a bit already",
@@ -1860,7 +1860,7 @@
       "text": "//background barout2\n//at bar msgreen, mrpurple, mswhite\n\nmswhite: Hello! Glad to see you. It felt so strange organising a party for someone else. I think my welcome party was only a couple of weeks ago.\n\nmsgreen: Now you're properly welcome on our island of retirees!\n\nmrpurple: Hope you're enjoying the party?\n",
       "links": [
         {
-          "name": "Thanks — I'm enjoying it",
+          "name": "Thanks, I'm enjoying it",
           "link": "Спасибо, мне очень нравится"
         },
         {
@@ -1885,7 +1885,7 @@
     },
     {
       "name": "Day 5.1 Begin",
-      "text": "//background houseorangeinside\n\nWell, what a party last night! I didn't expect much, but it was interesting.\n\nTime to get to work!\n\nWhat's this note under the door?\n\n//letter The second one died this morning. Death is inevitable.\n\nThe intro ends here. The game is still in development. If you enjoyed it and want to play the full version — leave your email.\n\n//email form\n",
+      "text": "//background houseorangeinside\n\nWhat a party. I wasn't expecting much, but I had a good time.\n\nTime to get to work.\n\nWhat's this note under the door?\n\n//letter The second one died this morning. Death is inevitable.\n\nThat's the end of the demo. Leave your email if you'd like to hear when the full game is ready.\n\n//email form\n",
       "links": []
     },
     {
@@ -1898,7 +1898,7 @@
       "text": "msyellow: Whatever it's like, it's in your honour. First and last time, so enjoy.\nmrblack: Like walking in the forest? I've seen you there a couple of times.\n",
       "links": [
         {
-          "name": "Yes — it's peaceful in the forest",
+          "name": "Yes, it's peaceful in the forest",
           "link": "Да, в лесу спокойно"
         },
         {
@@ -1909,7 +1909,7 @@
     },
     {
       "name": "Да, в лесу спокойно",
-      "text": "mrblack: Yes. Especially when there aren't many people. You can explore other parts of the island too.\n\nmrblack: That's my forest. And I like walking there alone.\n\nmsyellow: (laughs) Yes — Black was never known for his manners.\n\nmrblack: I made my money on truth, not politeness. I say little, but I mean it.\n",
+      "text": "mrblack: Yes. Especially when there aren't many people. You can explore other parts of the island too.\n\nmrblack: That's my forest. And I like walking there alone.\n\nmsyellow: (laughs) Yes, Black was never known for his manners.\n\nmrblack: I made my money on truth, not politeness. I say little, but I mean it.\n",
       "links": [
         {
           "name": "I respect that",
@@ -1923,7 +1923,7 @@
     },
     {
       "name": "Думаю ты меня с кем-то спутал",
-      "text": "mrblack: I don't think so. There aren't many people here and I know everyone.\n\nmrblack: That's my forest. And I like walking there alone.\n\nmsyellow: (laughs) Yes — Black was never known for his manners.\n\nmrblack: I made my money on truth, not politeness. I say little, but I mean it.\n",
+      "text": "mrblack: I don't think so. There aren't many people here and I know everyone.\n\nmrblack: That's my forest. And I like walking there alone.\n\nmsyellow: (laughs) Yes, Black was never known for his manners.\n\nmrblack: I made my money on truth, not politeness. I say little, but I mean it.\n",
       "links": [
         {
           "name": "I respect that",
@@ -2071,7 +2071,7 @@
     },
     {
       "name": "Я люблю когда со мной разговаривают",
-      "text": "msgreen: Let everyone keep their own opinion.\n\nmrpurple: What do you think of our council of elders — Red and Blue? Quite a pair!\n\nmswhite: They're the ones who seem creepy to me. Sometimes I feel like one of them is watching me.\n",
+      "text": "msgreen: Let everyone keep their own opinion.\n\nmrpurple: What do you think of our council of elders, Red and Blue? Quite a pair!\n\nmswhite: They're the ones who seem creepy to me. Sometimes I feel like one of them is watching me.\n",
       "links": [
         {
           "name": "Why do you feel that way?",
@@ -2081,7 +2081,7 @@
     },
     {
       "name": "Иногда помолчать с кем-то очень приятно",
-      "text": "mrpurple: Let everyone keep their own opinion.\n\nmrpurple: What do you think of our council of elders — Red and Blue? Quite a pair!\n\nmswhite: They're the ones who seem creepy to me. Sometimes I feel like one of them is watching me.\n",
+      "text": "mrpurple: Let everyone keep their own opinion.\n\nmrpurple: What do you think of our council of elders, Red and Blue? Quite a pair!\n\nmswhite: They're the ones who seem creepy to me. Sometimes I feel like one of them is watching me.\n",
       "links": [
         {
           "name": "Why do you feel that way?",
@@ -2091,7 +2091,7 @@
     },
     {
       "name": "Почему тебе так кажется?",
-      "text": "mswhite: It's just a feeling. Sometimes it washes over me. And I seem to run into both of them more than anyone else. And I love solitude.\n\nmrpurple: You'll run into Red constantly on this island. After all, he runs everything — sometimes drops by to see if you need anything.\n\nmsgreen: He doesn't visit me that often. Probably afraid of doctors.\n\nmswhite: Laugh at me if you want. But I'm telling you something's wrong here. And it frightens me.\n\nmrpurple: If anyone frightens me, it's Yellow. I was walking this morning and met her at the lighthouse. The way she looked at me — as if I should apologise for being where she already was.\n",
+      "text": "mswhite: It's just a feeling. Sometimes it washes over me. And I seem to run into both of them more than anyone else. And I love solitude.\n\nmrpurple: You'll run into Red constantly on this island. After all, he runs everything, sometimes drops by to see if you need anything.\n\nmsgreen: He doesn't visit me that often. Probably afraid of doctors.\n\nmswhite: Laugh at me if you want. But I'm telling you something's wrong here. And it frightens me.\n\nmrpurple: If anyone frightens me, it's Yellow. I was walking this morning and met her at the lighthouse. The way she looked at me, as if I should apologise for being where she already was.\n",
       "links": [
         {
           "name": "None of them scare me",
@@ -2109,7 +2109,7 @@
     },
     {
       "name": "Меня никто из них не пугает",
-      "text": "mswhite: Trust me — for now.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right — we've probably tired you out. Will you go talk to someone else?\n",
+      "text": "mswhite: Trust me, for now.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right, we've probably tired you out. Will you go talk to someone else?\n",
       "links": [
         {
           "name": "Join Yellow and Black",
@@ -2123,7 +2123,7 @@
     },
     {
       "name": "Меня тоже пугает Черный",
-      "text": "mrpurple: Exactly! Quite the silent type. Always keeping his own counsel.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right — we've probably tired you out. Will you go talk to someone else?\n",
+      "text": "mrpurple: Exactly! Quite the silent type. Always keeping his own counsel.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right, we've probably tired you out. Will you go talk to someone else?\n",
       "links": [
         {
           "name": "Join Yellow and Black",
@@ -2137,7 +2137,7 @@
     },
     {
       "name": "Меня тоже пугают Синий и Красный",
-      "text": "mswhite: Exactly. A creepy pair. And they've lived here longest of all.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right — we've probably tired you out. Will you go talk to someone else?\n",
+      "text": "mswhite: Exactly. A creepy pair. And they've lived here longest of all.\n\nmsgreen: Oh, stop frightening him. Everything's fine here. People are just different.\n\nmrpurple: All right, we've probably tired you out. Will you go talk to someone else?\n",
       "links": [
         {
           "name": "Join Yellow and Black",
@@ -2183,7 +2183,7 @@
     },
     {
       "name": "Пока привыкаю",
-      "text": "mrblue: I took a long time to adjust too. Orange helped me with that. We became friends quickly.\n\nmrred: Yes — he was the life of the party. Knew how to make everyone comfortable. I'm sorry he died.\n",
+      "text": "mrblue: I took a long time to adjust too. Orange helped me with that. We became friends quickly.\n\nmrred: Yes, he was the life of the party. Knew how to make everyone comfortable. I'm sorry he died.\n",
       "links": [
         {
           "name": "I'm sorry. Were you friends long?",
@@ -2193,7 +2193,7 @@
     },
     {
       "name": "Очень нравится",
-      "text": "mrblue: I'm envious! I took a very long time to adjust. Orange helped me with that. We became friends quickly.\n\nmrred: Yes — he was the life of the party. Knew how to make everyone comfortable. I'm sorry he died.\n",
+      "text": "mrblue: I'm envious! I took a very long time to adjust. Orange helped me with that. We became friends quickly.\n\nmrred: Yes, he was the life of the party. Knew how to make everyone comfortable. I'm sorry he died.\n",
       "links": [
         {
           "name": "I'm sorry. Were you friends long?",
@@ -2203,7 +2203,7 @@
     },
     {
       "name": "Сочувствую. Вы давно дружили?",
-      "text": "mrblue: (smiling) Well — who wants to go first?\n\nmrred: You go.\n\nmrblue: I met him on the island. Back then there was no rule about leaving the past behind, and we talked a lot. Remembered, shared.\n\nmrblue: I've been here ten years. For nine and a half of those I had breakfast at Orange's house every morning. A wonderful start to the day. He understood people and knew how to listen.\n\nmrblue: Green knows how to listen too. But she listens like a professional, extracting what she needs. Orange could share your feelings. We discussed ethics a lot — what was right and wrong in our pasts.\n\nmrred: (interrupting) I knew him for fifty years. Even before the island. And he was always like that. Centre of attention, life of the party. I enjoyed talking to him, though sometimes he was very tiresome.\n\nmrred: But we went through a lot together. And this island idea… it was partly his.\n\nmrred: I miss him, but that's life. We'll all die someday. Maybe today.\n\nmrblue: Well, I hope Green can delay that moment!\n",
+      "text": "mrblue: (smiling) Well, who wants to go first?\n\nmrred: You go.\n\nmrblue: I met him on the island. Back then there was no rule about leaving the past behind, and we talked a lot. Remembered, shared.\n\nmrblue: I've been here ten years. For nine and a half of those I had breakfast at Orange's house every morning. A wonderful start to the day. He understood people and knew how to listen.\n\nmrblue: Green knows how to listen too. But she listens like a professional, extracting what she needs. Orange could share your feelings. We discussed ethics a lot, what was right and wrong in our pasts.\n\nmrred: (interrupting) I knew him for fifty years. Even before the island. And he was always like that. Centre of attention, life of the party. I enjoyed talking to him, though sometimes he was very tiresome.\n\nmrred: But we went through a lot together. And this island idea… it was partly his.\n\nmrred: I miss him, but that's life. We'll all die someday. Maybe today.\n\nmrblue: Well, I hope Green can delay that moment!\n",
       "links": [
         {
           "name": "He sounds like a wonderful person!",
@@ -2245,7 +2245,7 @@
     },
     {
       "name": "А как он умер?",
-      "text": "mrred: Peacefully, in his sleep.\n\nmrblue: As usual I came for breakfast, but he hadn't woken yet. That surprised me — he was always an early riser.\n\nmrblue: First I tried to wake him, then I went inside and found him in bed. He was already dead.\n\nmrblue: Honestly I still try to avoid going into your house. It feels like he's still lying there.\n\nmrred: Then Green examined him. Her verdict was heart failure. Quiet and peaceful in his sleep.\n",
+      "text": "mrred: Peacefully, in his sleep.\n\nmrblue: As usual I came for breakfast, but he hadn't woken yet. That surprised me, he was always an early riser.\n\nmrblue: First I tried to wake him, then I went inside and found him in bed. He was already dead.\n\nmrblue: Honestly I still try to avoid going into your house. It feels like he's still lying there.\n\nmrred: Then Green examined him. Her verdict was heart failure. Quiet and peaceful in his sleep.\n",
       "links": [
         {
           "name": "Did you bury him on the island?",
@@ -2259,7 +2259,7 @@
     },
     {
       "name": "Вы похоронили его на острове?",
-      "text": "mrred: Yes, not far from the Beach. He loved walking there.\n\nmrblue: It was a very strange ceremony. We all had to take turns digging the grave so we wouldn't have to call anyone from the real world.\n\nmrred: Yes — I think it brought us closer.\n",
+      "text": "mrred: Yes, not far from the Beach. He loved walking there.\n\nmrblue: It was a very strange ceremony. We all had to take turns digging the grave so we wouldn't have to call anyone from the real world.\n\nmrred: Yes, I think it brought us closer.\n",
       "links": [
         {
           "name": "How did he die?",
@@ -2273,7 +2273,7 @@
     },
     {
       "name": "Сочувствую!",
-      "text": "mrred: Thank you. All right. You probably don't want to listen to our memories and lamentations all evening.\n\nmrblue: Yes — if you want silence, go to Black and Yellow. If you want conversation, try our talkative crowd on the pier.\n",
+      "text": "mrred: Thank you. All right. You probably don't want to listen to our memories and lamentations all evening.\n\nmrblue: Yes, if you want silence, go to Black and Yellow. If you want conversation, try our talkative crowd on the pier.\n",
       "links": [
         {
           "name": "Join Green, Purple, and White",
