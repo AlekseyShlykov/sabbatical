@@ -416,7 +416,7 @@
       "text": "You stand and gaze into the distance.\n//appears mswhite\nmswhite: (muttering) Why is there no quiet place anywhere!\nmswhite: Hello, let's get acquainted! I think I heard you're a writer?\n",
       "links": [
         {
-          "name": "Almost, I came to write a book, but it's scholarly",
+          "name": "Not quite. I came to write a scholarly book",
           "link": "Почти, я приехал написать книгу, но она научная"
         },
         {
@@ -452,7 +452,7 @@
           "link": "lighthouse2"
         },
         {
-          "name": "It's very personal, I'm not ready yet",
+          "name": "It's very personal. I'm not ready yet",
           "link": "lighthouse2"
         }
       ]
@@ -577,7 +577,7 @@
           "link": "Это жутковато"
         },
         {
-          "name": "That's what I need, a break from the phone",
+          "name": "That's what I need: a break from the phone",
           "link": "То что мне нужно, отдохну от телефона"
         }
       ]
@@ -898,7 +898,7 @@
       "text": "mrblue: It's a retiree's dream. If you have enough money, you can spend your final years here quite comfortably. The people aren't dull either. Everyone has a few quirks and a few secrets.\n\nmrblue: (laughs) Who doesn't, by retirement age?\n",
       "links": [
         {
-          "name": "But how did I end up here? I'm not retired.",
+          "name": "Then why am I here? I'm not retired.",
           "link": "Но как тогда здесь оказался я? Ведь я не на пенсии."
         },
         {
@@ -1224,7 +1224,7 @@
       "text": "mrblack: (after a long silence) Are you staying long?\n",
       "links": [
         {
-          "name": "For a year, I want to write a book",
+          "name": "For a year. I want to write a book",
           "link": "На год, хочу написать книгу"
         },
         {
@@ -1618,7 +1618,7 @@
           "link": "Иногда правила можно и нарушить"
         },
         {
-          "name": "You're right, better not",
+          "name": "You're right. Better not",
           "link": "Да, ты права, не стоит"
         }
       ]
@@ -1638,11 +1638,11 @@
       "text": "mswhite: How do you like the island? Have you got used to the isolation yet?\n",
       "links": [
         {
-          "name": "Пока нет",
+          "name": "Not yet",
           "link": "question32"
         },
         {
-          "name": "Мне все нравится",
+          "name": "I like everything so far",
           "link": "question32"
         }
       ]
@@ -1656,7 +1656,7 @@
           "link": "Иногда правила можно и нарушить"
         },
         {
-          "name": "You're right, better not",
+          "name": "You're right. Better not",
           "link": "Да, ты права, не стоит"
         }
       ]
@@ -1671,11 +1671,11 @@
       "text": "mswhite: All right, let's not talk about the past. Sometimes it hurts to remember.\n\nmswhite: How do you like the island? Have you got used to the isolation yet?\n",
       "links": [
         {
-          "name": "Пока нет",
+          "name": "Not yet",
           "link": "question32"
         },
         {
-          "name": "Мне все нравится",
+          "name": "I like everything so far",
           "link": "question32"
         }
       ]
@@ -1902,7 +1902,7 @@
           "link": "Да, в лесу спокойно"
         },
         {
-          "name": "I think you've confused me with someone",
+          "name": "I think you've mistaken me for someone else",
           "link": "Думаю ты меня с кем-то спутал"
         }
       ]
