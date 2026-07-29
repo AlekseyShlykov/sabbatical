@@ -30,7 +30,7 @@ const APPEAR_WORDS = new Set(["появляется", "появить", "appears
 const MAP_WORDS = new Set(["карта", "map", "карту"]);
 const LOC_WORDS = new Set(["локация", "location", "место"]);
 
-const BAR_RE = /^(?:в\s+)?баре?\s+|^at\s+(?:the\s+)?bar\s+/iu;
+const BAR_RE = /^(?:в\s+)?баре?\s+|^(?:at|in)\s+(?:the\s+)?bar\s+/iu;
 const MEET_RE = /(?:вы\s+)?(?:встречаете|встретили|meet)\s+([\p{L}\p{N}_]+)/iu;
 
 const ENGINE_COMMAND_HEAD =
@@ -53,7 +53,10 @@ export function isEngineCommandBody(body) {
     return true;
   }
   if (/появляется\s+графа|writing\s+progress\s+bar/iu.test(trimmed)) return true;
-  if (/^(?:в\s+)?баре?\s+/iu.test(trimmed) || /^at\s+(?:the\s+)?bar\s+/iu.test(trimmed)) {
+  if (
+    /^(?:в\s+)?баре?\s+/iu.test(trimmed) ||
+    /^(?:at|in)\s+(?:the\s+)?bar\s+/iu.test(trimmed)
+  ) {
     return true;
   }
   if (/(?:встречаете|встретили|meet)\s+[\p{L}\p{N}_]+/iu.test(trimmed)) return true;
