@@ -67,7 +67,7 @@ export function isEngineCommandBody(body) {
   if (/форма\s+email|email\s+form/iu.test(trimmed)) return true;
   if (/переход на следующую сцену/i.test(trimmed)) return true;
   if (/^новый\s+фон/i.test(trimmed)) return true;
-  if (/белая уходит|игрок возвращается на карту/i.test(trimmed)) return true;
+  if (/белая уходит|white leaves|игрок возвращается на карту/i.test(trimmed)) return true;
   if (/на часах\s*15|15\.00.*бар/i.test(trimmed)) return true;
   if (/^(?:появляется|появить|appears|appear)\s+[a-z][\w-]*$/iu.test(trimmed)) {
     return true;
@@ -289,7 +289,7 @@ export async function runCommand(rawBody) {
     if (onReturnToMap) void onReturnToMap();
     return;
   }
-  if (/белая уходит|игрок возвращается на карту/i.test(body)) {
+  if (/белая уходит|white leaves|игрок возвращается на карту/i.test(body)) {
     if (onReturnToMap) void onReturnToMap();
     return;
   }
